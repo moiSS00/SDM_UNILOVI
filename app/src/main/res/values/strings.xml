@@ -7,8 +7,16 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Editar perfil</string>
 
+    <!-- Pantalla inicial de los 3 botones -->
     <string name="menu_home">Inicio</string>
     <string name="menu_solicitudes">Solicitudes y matches</string>
     <string name="menu_preferencias">Preferencias de búsqueda</string>
+
+    <!-- Pantalla lista de usuarios -->
+    <string name="nombreUsuario">Moisés</string>
+    <string name="facultadUsuario">Informática</string>
+
+    <!-- Pantalla de edición de preferencias -->
     <string name="no_guardado">Debes elegir un sexo como mínimo</string>
+
 </resources>

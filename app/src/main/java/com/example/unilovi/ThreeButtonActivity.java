@@ -30,7 +30,8 @@ public class ThreeButtonActivity extends AppCompatActivity {
         btnSolicitudes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent usersListIntent = new Intent(ThreeButtonActivity.this, UsersRecyclerActivity.class);
+                startActivity(usersListIntent);
             }
         });
 

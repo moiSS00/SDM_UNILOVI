@@ -1,6 +1,9 @@
 package com.example.unilovi.model;
 
-public class User {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class User implements Parcelable {
 
     public String name;
     public String email;
@@ -78,4 +81,41 @@ public class User {
                 '}';
     }
 
+    // --- Métodos para que categoría sea parceable ---
+
+    protected User(Parcel in) {
+        name = in.readString();
+        email = in.readString();
+        age = in.readInt();
+        school = in.readString();
+        career = in.readString();
+        photo = in.readString();
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int i) {
+            return new User[i];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(name);
+        parcel.writeString(email);
+        parcel.writeInt(age);
+        parcel.writeString(school);
+        parcel.writeString(career);
+        parcel.writeString(photo);
+    }
 }

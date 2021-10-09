@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UserDetailsActivity">
+
+    <TextView
+        android:id="@+id/nombreUsuarioText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="@integer/tamanoFuente"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.068" />
+
+    <TextView
+        android:id="@+id/emailUsuarioText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="@integer/tamanoFuente"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/nombreUsuarioText"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/nombreUsuarioText"
+        app:layout_constraintTop_toBottomOf="@+id/nombreUsuarioText"
+        app:layout_constraintVertical_bias="0.037" />
+
+    <TextView
+        android:id="@+id/edadUsuarioText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="@integer/tamanoFuente"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/emailUsuarioText"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/emailUsuarioText"
+        app:layout_constraintTop_toBottomOf="@+id/emailUsuarioText"
+        app:layout_constraintVertical_bias="0.048" />
+
+    <TextView
+        android:id="@+id/escuelaUsuarioText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="@integer/tamanoFuente"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/edadUsuarioText"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/edadUsuarioText"
+        app:layout_constraintTop_toBottomOf="@+id/edadUsuarioText"
+        app:layout_constraintVertical_bias="0.048" />
+
+    <TextView
+        android:id="@+id/carreraUsuarioText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="408dp"
+        android:ems="@integer/tamanoFuente"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/escuelaUsuarioText"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/escuelaUsuarioText"
+        app:layout_constraintTop_toBottomOf="@+id/escuelaUsuarioText"
+        app:layout_constraintVertical_bias="0.272" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Unilovi">
         <activity
+            android:name=".UserDetailsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".UsersRecyclerActivity"
+            android:exported="true" />
+        <activity
             android:name=".SearchPreferencesActivity"
             android:exported="true" />
         <activity

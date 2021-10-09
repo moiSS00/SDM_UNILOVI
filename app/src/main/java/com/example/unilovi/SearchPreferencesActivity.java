@@ -29,6 +29,8 @@ public class SearchPreferencesActivity extends AppCompatActivity {
     private Button btnGuardarPreferencias;
     private List<String> listaFacultades;
     private Spinner spinnerFacultades;
+    private List<String> listaCiudades;
+    private Spinner spinnerCiudades;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +55,7 @@ public class SearchPreferencesActivity extends AppCompatActivity {
                 if (Integer.parseInt(edadMinima.getText().toString()) >= Integer.parseInt(edadMaxima.getText().toString())) {
                     int edad2 = Integer.parseInt(edadMinima.getText().toString()) + 1;
                     edadMaxima.setText(edad2 + "");
-                    seekBarMaxima.setProgress(seekBarMinima.getProgress() + 1);
+                    seekBarMaxima.setProgress(seekBarMinima.getProgress());
                 }
             }
 
@@ -76,7 +78,7 @@ public class SearchPreferencesActivity extends AppCompatActivity {
                 if (Integer.parseInt(edadMaxima.getText().toString()) <= Integer.parseInt(edadMinima.getText().toString())) {
                     int edad2 = Integer.parseInt(edadMaxima.getText().toString()) - 1;
                     edadMinima.setText(edad2 + "");
-                    seekBarMinima.setProgress(seekBarMaxima.getProgress() - 1);
+                    seekBarMinima.setProgress(seekBarMaxima.getProgress());
                 }
             }
 
@@ -100,6 +102,17 @@ public class SearchPreferencesActivity extends AppCompatActivity {
         spinnerFacultades = findViewById(R.id.spinnerFacultades);
 
         rellenarSpinner(spinnerFacultades, listaFacultades);
+
+        listaCiudades = new ArrayList<String>();
+        listaCiudades.add("Sin definir");
+        listaCiudades.add("Gijón");
+        listaCiudades.add("Oviedo");
+        listaCiudades.add("Avilés");
+        listaCiudades.add("...");
+
+        spinnerCiudades = findViewById(R.id.spinnerCiudades);
+
+        rellenarSpinner(spinnerCiudades, listaCiudades);
 
         checkHombre = findViewById(R.id.checkHombre);
         checkMujer = findViewById(R.id.checkMujer);

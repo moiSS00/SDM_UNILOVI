@@ -20,6 +20,7 @@ import java.util.List;
 
 public class SearchPreferencesActivity extends AppCompatActivity {
 
+    // Atribitos que contendrán una referencia a los componentes usados
     private SeekBar seekBarMinima;
     private SeekBar seekBarMaxima;
     private TextView edadMinima;
@@ -27,26 +28,52 @@ public class SearchPreferencesActivity extends AppCompatActivity {
     private CheckBox checkHombre;
     private CheckBox checkMujer;
     private Button btnGuardarPreferencias;
-    private List<String> listaFacultades;
     private Spinner spinnerFacultades;
-    private List<String> listaCiudades;
     private Spinner spinnerCiudades;
+
+    // Atributos auxiliares
+    private List<String> listaFacultades;
+    private List<String> listaCiudades;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_preferences);
 
+        // Inicializa el modelo de datos
+        listaFacultades = new ArrayList<String>();
+        listaFacultades.add("Sin definir");
+        listaFacultades.add("Facultad de ciencias");
+        listaFacultades.add("Facultad de medicina");
+        listaFacultades.add("...");
+
+        listaCiudades = new ArrayList<String>();
+        listaCiudades.add("Sin definir");
+        listaCiudades.add("Gijón");
+        listaCiudades.add("Oviedo");
+        listaCiudades.add("Avilés");
+        listaCiudades.add("...");
+
+        // Obtenemos referencias a los componentes
+        edadMaxima = (TextView) findViewById(R.id.edadMaxima);
+        edadMinima = (TextView) findViewById(R.id.edadMinima);
+        seekBarMaxima = (SeekBar) findViewById(R.id.seekBarEdadMaxima);
         seekBarMinima = (SeekBar) findViewById(R.id.seekBarEdadMinima);
-        edadMinima = findViewById(R.id.edadMinima);
+        spinnerFacultades = (Spinner) findViewById(R.id.spinnerFacultades);
+        spinnerCiudades = (Spinner) findViewById(R.id.spinnerCiudades);
+        checkHombre = (CheckBox) findViewById(R.id.checkHombre);
+        checkMujer = (CheckBox) findViewById(R.id.checkMujer);
+        btnGuardarPreferencias = (Button) findViewById(R.id.btnGuardarPreferencias);
 
+        // Asignamos valores por defecto
         edadMinima.setText("17");
-
-        seekBarMaxima = findViewById(R.id.seekBarEdadMaxima);
-        edadMaxima = findViewById(R.id.edadMaxima);
-
         edadMaxima.setText("50");
+        rellenarSpinner(spinnerFacultades, listaFacultades);
+        rellenarSpinner(spinnerCiudades, listaCiudades);
 
+        // Asignamos listeners
+
+        // -- Para la barra de edad mínima --
         seekBarMinima.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -68,8 +95,10 @@ public class SearchPreferencesActivity extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {
 
             }
+
         });
 
+        // -- Para la barra de edad máxima --
         seekBarMaxima.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -93,32 +122,7 @@ public class SearchPreferencesActivity extends AppCompatActivity {
             }
         });
 
-        listaFacultades = new ArrayList<String>();
-        listaFacultades.add("Sin definir");
-        listaFacultades.add("Facultad de ciencias");
-        listaFacultades.add("Facultad de medicina");
-        listaFacultades.add("...");
-
-        spinnerFacultades = findViewById(R.id.spinnerFacultades);
-
-        rellenarSpinner(spinnerFacultades, listaFacultades);
-
-        listaCiudades = new ArrayList<String>();
-        listaCiudades.add("Sin definir");
-        listaCiudades.add("Gijón");
-        listaCiudades.add("Oviedo");
-        listaCiudades.add("Avilés");
-        listaCiudades.add("...");
-
-        spinnerCiudades = findViewById(R.id.spinnerCiudades);
-
-        rellenarSpinner(spinnerCiudades, listaCiudades);
-
-        checkHombre = findViewById(R.id.checkHombre);
-        checkMujer = findViewById(R.id.checkMujer);
-
-        btnGuardarPreferencias = findViewById(R.id.btnGuardarPreferencias);
-
+        // -- Asignamos una acción al botón de guardar referencias --
         btnGuardarPreferencias.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -135,9 +139,16 @@ public class SearchPreferencesActivity extends AppCompatActivity {
         });
     }
 
-    public void rellenarSpinner(Spinner spinner, List<String> array) {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, array);
+    /**
+     * Rellena un spinner dado con una lista de strings dada
+     * @param spinner Spinner concreto a rellenar
+     * @param list Lista de strings
+     */
+    private void rellenarSpinner(Spinner spinner, List<String> list) {
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>
+                (this, android.R.layout.simple_spinner_item, list);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
     }
+
 }

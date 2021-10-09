@@ -9,13 +9,24 @@ import android.widget.Button;
 
 public class ThreeButtonActivity extends AppCompatActivity {
 
+    // Atribitos que contendrán una referencia a los componentes usados
+    private Button btnSolicitudes;
+    private Button btnPreferencias;
+    private Button btnAjustes;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_three_button);
 
-        Button btnSolicitudes = findViewById(R.id.btnSolicitudes);
+        // Obtenemos referencias a los componentes
+        btnSolicitudes = (Button) findViewById(R.id.btnSolicitudes);
+        btnPreferencias = (Button) findViewById(R.id.btnPreferencias);
+        btnAjustes = (Button) findViewById(R.id.btnAjustes);
 
+        // Asignamos listeners
+
+        // -- Botón para acceder a la activity de solicitudes y matches --
         btnSolicitudes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -23,8 +34,7 @@ public class ThreeButtonActivity extends AppCompatActivity {
             }
         });
 
-        Button btnPreferencias = findViewById(R.id.btnPreferencias);
-
+        // -- Botón para acceder a la activity de edición de preferencias --
         btnPreferencias.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -33,8 +43,7 @@ public class ThreeButtonActivity extends AppCompatActivity {
             }
         });
 
-        Button btnAjustes = findViewById(R.id.btnAjustes);
-
+        // -- Botón para acceder a la activity de ajustes de usuario --
         btnAjustes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

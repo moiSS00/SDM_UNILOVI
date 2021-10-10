@@ -100,6 +100,7 @@ public class User implements Parcelable {
         school = in.readString();
         career = in.readString();
         photo = in.readString();
+        preferences = in.readParcelable(Preferences.class.getClassLoader());
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -127,5 +128,6 @@ public class User implements Parcelable {
         parcel.writeString(school);
         parcel.writeString(career);
         parcel.writeString(photo);
+        parcel.writeParcelable(preferences, i);
     }
 }

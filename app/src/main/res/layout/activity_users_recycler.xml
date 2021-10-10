@@ -9,10 +9,21 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/matchesRecyclerView"
-        android:layout_width="328dp"
-        android:layout_height="620dp"
+        android:layout_width="347dp"
+        android:layout_height="286dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.096" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/solicitudesRecyclerView"
+        android:layout_width="347dp"
+        android:layout_height="280dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/matchesRecyclerView"
+        app:layout_constraintVertical_bias="0.295" />
 </androidx.constraintlayout.widget.ConstraintLayout>

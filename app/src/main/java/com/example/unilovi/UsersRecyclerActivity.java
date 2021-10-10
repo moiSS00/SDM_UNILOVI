@@ -20,6 +20,7 @@ public class UsersRecyclerActivity extends AppCompatActivity {
 
     // Atribitos que contendrán una referencia a los componentes usados
     private RecyclerView listaMatchesView;
+    private RecyclerView listaSolicitudesView;
 
     // Atributos auxiliares
     private List<User> listaMatches; // Usuarios con los que tenemos me gusta mutuo
@@ -34,24 +35,36 @@ public class UsersRecyclerActivity extends AppCompatActivity {
         listaMatches = new ArrayList<User>();
         listaSolicitudes = new ArrayList<User>();
         listaMatches.add(new User("Nombre1", "email1@email.com",20,
-                "Facultad1", "Carrera1", "foto1"));
+                "Facultad1", "Carrera1", "foto1", null));
         listaMatches.add(new User("Nombre2", "email2@email.com",21,
-                "Facultad2", "Carrera2", "foto2"));
+                "Facultad2", "Carrera2", "foto2", null));
         listaSolicitudes.add(new User("Nombre3", "email3@email.com",23,
-                "Facultad3", "Carrera3", "foto3"));
+                "Facultad3", "Carrera3", "foto3", null));
         listaSolicitudes.add(new User("Nombre4", "email4@email.com",22,
-                "Facultad4", "Carrera4", "foto4"));
+                "Facultad4", "Carrera4", "foto4", null));
 
         // Obtenemos referencias a los componentes
         listaMatchesView = (RecyclerView) findViewById(R.id.matchesRecyclerView);
+        listaSolicitudesView = (RecyclerView) findViewById(R.id.solicitudesRecyclerView);
 
         // Configuramos el RecyclerView con la lista de matches
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        LinearLayoutManager layoutManagerMatches = new LinearLayoutManager(getApplicationContext());
+        LinearLayoutManager layoutManagerSolicitudes = new LinearLayoutManager(getApplicationContext());
         listaMatchesView.setHasFixedSize(true);
-        listaMatchesView.setLayoutManager(layoutManager);
+        listaMatchesView.setLayoutManager(layoutManagerMatches);
+        listaSolicitudesView.setHasFixedSize(true);
+        listaSolicitudesView.setLayoutManager(layoutManagerSolicitudes);
 
-        // Creamos el adapter
-        ListaUsuariosAdapter luAdater = new ListaUsuariosAdapter(listaMatches,
+        // Creamos los adapters
+        ListaUsuariosAdapter lmAdater = new ListaUsuariosAdapter(listaMatches,
+                new ListaUsuariosAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(User usuario) {
+                        clickonItem(usuario);
+                    }
+                });
+
+        ListaUsuariosAdapter lsAdater = new ListaUsuariosAdapter(listaSolicitudes,
                 new ListaUsuariosAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(User usuario) {
@@ -60,8 +73,9 @@ public class UsersRecyclerActivity extends AppCompatActivity {
                 });
 
 
-        // Asignamos el adapter creado
-        listaMatchesView.setAdapter(luAdater);
+        // Asignamos los adapters
+        listaMatchesView.setAdapter(lmAdater);
+        listaSolicitudesView.setAdapter(lsAdater);
     }
 
     /**

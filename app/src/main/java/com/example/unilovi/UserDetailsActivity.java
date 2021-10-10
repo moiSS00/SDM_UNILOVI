@@ -33,10 +33,11 @@ public class UserDetailsActivity extends AppCompatActivity {
         // Recepción de datos
         Intent intent = getIntent();
         User usuarioSeleccionado = intent.getParcelableExtra(UsersRecyclerActivity.USUARIO_SELECCIONADO);
-        nombreUsuarioText.setText(usuarioSeleccionado.getName());
-        emailUsuarioText.setText(usuarioSeleccionado.getEmail());
-        edadUsuarioText.setText(String.valueOf(usuarioSeleccionado.getAge())); // Cuidado con el tipo de la edad
-        escuelaUsuarioText.setText(usuarioSeleccionado.getSchool());
-        carreraUsuarioText.setText(usuarioSeleccionado.getCareer());
+        nombreUsuarioText.setText("Nombre: " + usuarioSeleccionado.getName());
+        emailUsuarioText.setText("Email: " + usuarioSeleccionado.getEmail());
+        edadUsuarioText.setText("Edad: "
+                + String.valueOf(usuarioSeleccionado.getAge())); // Cuidado con el tipo de la edad
+        escuelaUsuarioText.setText("Facultad: " + usuarioSeleccionado.getSchool());
+        carreraUsuarioText.setText("Carrera: " + usuarioSeleccionado.getCareer());
     }
 }

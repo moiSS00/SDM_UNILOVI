@@ -11,14 +11,24 @@ public class User implements Parcelable {
     public String school;
     public String career;
     public String photo;
+    public Preferences preferences;
 
-    public User(String name, String email, int age, String school, String career, String photo) {
+    public User(String name, String email, int age, String school, String career, String photo, Preferences preferences) {
         this.name = name;
         this.email = email;
         this.age = age;
         this.school = school;
         this.career = career;
         this.photo = photo;
+        this.preferences = preferences;
+    }
+
+    public Preferences getPreferences() {
+        return preferences;
+    }
+
+    public void setPreferences(Preferences preferences) {
+        this.preferences = preferences;
     }
 
     public String getName() {

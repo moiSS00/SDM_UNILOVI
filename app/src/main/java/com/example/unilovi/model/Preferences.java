@@ -1,6 +1,9 @@
 package com.example.unilovi.model;
 
-public class Preferences {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Preferences implements Parcelable {
 
     public String sexo;
     public String facultad;
@@ -15,6 +18,40 @@ public class Preferences {
         this.edadMinima = edadMinima;
         this.edadMaxima = edadMaxima;
     }
+
+    protected Preferences(Parcel in) {
+        sexo = in.readString();
+        facultad = in.readString();
+        ciudad = in.readString();
+        edadMinima = in.readInt();
+        edadMaxima = in.readInt();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(sexo);
+        dest.writeString(facultad);
+        dest.writeString(ciudad);
+        dest.writeInt(edadMinima);
+        dest.writeInt(edadMaxima);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Preferences> CREATOR = new Creator<Preferences>() {
+        @Override
+        public Preferences createFromParcel(Parcel in) {
+            return new Preferences(in);
+        }
+
+        @Override
+        public Preferences[] newArray(int size) {
+            return new Preferences[size];
+        }
+    };
 
     public String getSexo() {
         return sexo;

@@ -9,7 +9,7 @@
     android:padding="@dimen/spacing_xlarge">
 
     <ImageView
-        android:id="@+id/imagen"
+        android:id="@+id/imagenUsuarioLineaImg"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:contentDescription="@string/app_name"
@@ -24,14 +24,14 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/titulopeli"
+            android:id="@+id/nombreUsuarioLineaText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/nombreUsuario"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <TextView
-            android:id="@+id/fechaestreno"
+            android:id="@+id/facultadUsuarioLineaText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/facultadUsuario"

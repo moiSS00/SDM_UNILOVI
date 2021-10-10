@@ -8,7 +8,7 @@
     tools:context=".UsersRecyclerActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/usuariosRecyclerView"
+        android:id="@+id/matchesRecyclerView"
         android:layout_width="328dp"
         android:layout_height="620dp"
         app:layout_constraintBottom_toBottomOf="parent"

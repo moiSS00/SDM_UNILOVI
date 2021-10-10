@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -16,6 +17,8 @@ import android.widget.TextView;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class SearchPreferencesActivity extends AppCompatActivity {
@@ -29,10 +32,12 @@ public class SearchPreferencesActivity extends AppCompatActivity {
     private CheckBox checkMujer;
     private Button btnGuardarPreferencias;
     private Spinner spinnerFacultades;
+    private Spinner spinnerCarreras;
     private Spinner spinnerCiudades;
 
     // Atributos auxiliares
     private List<String> listaFacultades;
+    private HashMap<String, List<String>> tablaCarreras;
     private List<String> listaCiudades;
 
     @Override
@@ -43,9 +48,15 @@ public class SearchPreferencesActivity extends AppCompatActivity {
         // Inicializa el modelo de datos
         listaFacultades = new ArrayList<String>();
         listaFacultades.add("Sin definir");
+        listaFacultades.add("Escuela de ingeniería informática");
         listaFacultades.add("Facultad de ciencias");
-        listaFacultades.add("Facultad de medicina");
-        listaFacultades.add("...");
+        listaFacultades.add("Facultad de derecho");
+
+        tablaCarreras = new HashMap<>();
+        tablaCarreras.put("Sin definir", new ArrayList<String>(Arrays.asList("Sin definir")));
+        tablaCarreras.put("Escuela de ingeniería informática", new ArrayList<String>(Arrays.asList("Ingeniería Informática")));
+        tablaCarreras.put("Facultad de ciencias", new ArrayList<String>(Arrays.asList("Sin definir", "Matemáticas", "Física", "...")));
+        tablaCarreras.put("Facultad de derecho", new ArrayList<String>(Arrays.asList("Sin definir", "Derecho", "Derecho y Economía", "...")));
 
         listaCiudades = new ArrayList<String>();
         listaCiudades.add("Sin definir");
@@ -54,12 +65,14 @@ public class SearchPreferencesActivity extends AppCompatActivity {
         listaCiudades.add("Avilés");
         listaCiudades.add("...");
 
+
         // Obtenemos referencias a los componentes
         edadMaxima = (TextView) findViewById(R.id.edadMaxima);
         edadMinima = (TextView) findViewById(R.id.edadMinima);
         seekBarMaxima = (SeekBar) findViewById(R.id.seekBarEdadMaxima);
         seekBarMinima = (SeekBar) findViewById(R.id.seekBarEdadMinima);
         spinnerFacultades = (Spinner) findViewById(R.id.spinnerFacultades);
+        spinnerCarreras = (Spinner) findViewById(R.id.spinnerCarreras);
         spinnerCiudades = (Spinner) findViewById(R.id.spinnerCiudades);
         checkHombre = (CheckBox) findViewById(R.id.checkHombre);
         checkMujer = (CheckBox) findViewById(R.id.checkMujer);
@@ -69,6 +82,7 @@ public class SearchPreferencesActivity extends AppCompatActivity {
         edadMinima.setText("17");
         edadMaxima.setText("50");
         rellenarSpinner(spinnerFacultades, listaFacultades);
+        rellenarSpinner(spinnerCarreras, tablaCarreras.get("Sin definir"));
         rellenarSpinner(spinnerCiudades, listaCiudades);
 
         // Asignamos listeners
@@ -121,6 +135,20 @@ public class SearchPreferencesActivity extends AppCompatActivity {
 
             }
         });
+
+        // -- Para el spinner de facultades --
+        spinnerFacultades.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                rellenarSpinner(spinnerCarreras, tablaCarreras.get(spinnerFacultades.getItemAtPosition(i).toString()));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
 
         // -- Asignamos una acción al botón de guardar referencias --
         btnGuardarPreferencias.setOnClickListener(new View.OnClickListener() {

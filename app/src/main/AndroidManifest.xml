@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Unilovi">
         <activity
+            android:name=".UserSettingsActivity"
+            android:exported="true" />
+        <activity
             android:name=".UserDetailsActivity"
             android:exported="true" />
         <activity

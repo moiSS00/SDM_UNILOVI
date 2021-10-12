@@ -3,15 +3,18 @@ package com.example.unilovi.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Preferences implements Parcelable {
 
-    public String sexo;
+    public ArrayList<String> sexo;
     public String facultad;
     public String ciudad;
     public int edadMinima;
     public int edadMaxima;
 
-    public Preferences(String sexo, String facultad, String ciudad, int edadMinima, int edadMaxima) {
+    public Preferences(ArrayList<String> sexo, String facultad, String ciudad, int edadMinima, int edadMaxima) {
         this.sexo = sexo;
         this.facultad = facultad;
         this.ciudad = ciudad;
@@ -20,7 +23,7 @@ public class Preferences implements Parcelable {
     }
 
     protected Preferences(Parcel in) {
-        sexo = in.readString();
+        sexo = in.readArrayList(ArrayList.class.getClassLoader());
         facultad = in.readString();
         ciudad = in.readString();
         edadMinima = in.readInt();
@@ -29,7 +32,7 @@ public class Preferences implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(sexo);
+        dest.writeList(sexo);
         dest.writeString(facultad);
         dest.writeString(ciudad);
         dest.writeInt(edadMinima);
@@ -53,11 +56,11 @@ public class Preferences implements Parcelable {
         }
     };
 
-    public String getSexo() {
+    public ArrayList<String> getSexo() {
         return sexo;
     }
 
-    public void setSexo(String sexo) {
+    public void setSexo(ArrayList<String> sexo) {
         this.sexo = sexo;
     }
 

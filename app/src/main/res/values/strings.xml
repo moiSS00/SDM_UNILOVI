@@ -17,7 +17,7 @@
     <string name="facultadUsuario">Informática</string>
 
     <!-- Pantalla de edición de preferencias -->
-    <string name="no_guardado">Debes elegir un sexo como mínimo</string>
+    <string name="no_guardado">Debes elegir un género como mínimo</string>
     <string name="listaMatches">Lista de matches:</string>
     <string name="listaSolicitudes">Lista de solicitudes:</string>
 

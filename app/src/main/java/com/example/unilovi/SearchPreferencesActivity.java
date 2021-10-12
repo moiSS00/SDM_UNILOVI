@@ -30,6 +30,7 @@ public class SearchPreferencesActivity extends AppCompatActivity {
     private TextView edadMaxima;
     private CheckBox checkHombre;
     private CheckBox checkMujer;
+    private CheckBox checkNoBinario;
     private Button btnGuardarPreferencias;
     private Spinner spinnerFacultades;
     private Spinner spinnerCarreras;
@@ -76,6 +77,7 @@ public class SearchPreferencesActivity extends AppCompatActivity {
         spinnerCiudades = (Spinner) findViewById(R.id.spinnerCiudades);
         checkHombre = (CheckBox) findViewById(R.id.checkHombre);
         checkMujer = (CheckBox) findViewById(R.id.checkMujer);
+        checkNoBinario = (CheckBox) findViewById(R.id.checkNoBinario);
         btnGuardarPreferencias = (Button) findViewById(R.id.btnGuardarPreferencias);
 
         // Asignamos valores por defecto
@@ -154,7 +156,7 @@ public class SearchPreferencesActivity extends AppCompatActivity {
         btnGuardarPreferencias.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (checkHombre.isChecked() || checkMujer.isChecked()) {
+                if (checkHombre.isChecked() || checkMujer.isChecked() || checkNoBinario.isChecked()) {
                     Intent intentResultado = new Intent();
                     setResult(RESULT_OK, intentResultado);
                     finish();

@@ -14,6 +14,7 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.unilovi.database.Database;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -37,9 +38,7 @@ public class SearchPreferencesActivity extends AppCompatActivity {
     private Spinner spinnerCiudades;
 
     // Atributos auxiliares
-    private List<String> listaFacultades;
-    private HashMap<String, List<String>> tablaCarreras;
-    private List<String> listaCiudades;
+    private Database database = new Database();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,24 +46,7 @@ public class SearchPreferencesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search_preferences);
 
         // Inicializa el modelo de datos
-        listaFacultades = new ArrayList<String>();
-        listaFacultades.add("Sin definir");
-        listaFacultades.add("Escuela de ingeniería informática");
-        listaFacultades.add("Facultad de ciencias");
-        listaFacultades.add("Facultad de derecho");
-
-        tablaCarreras = new HashMap<>();
-        tablaCarreras.put("Sin definir", new ArrayList<String>(Arrays.asList("Sin definir")));
-        tablaCarreras.put("Escuela de ingeniería informática", new ArrayList<String>(Arrays.asList("Ingeniería Informática")));
-        tablaCarreras.put("Facultad de ciencias", new ArrayList<String>(Arrays.asList("Sin definir", "Matemáticas", "Física", "...")));
-        tablaCarreras.put("Facultad de derecho", new ArrayList<String>(Arrays.asList("Sin definir", "Derecho", "Derecho y Economía", "...")));
-
-        listaCiudades = new ArrayList<String>();
-        listaCiudades.add("Sin definir");
-        listaCiudades.add("Gijón");
-        listaCiudades.add("Oviedo");
-        listaCiudades.add("Avilés");
-        listaCiudades.add("...");
+        database.init();
 
 
         // Obtenemos referencias a los componentes
@@ -83,9 +65,9 @@ public class SearchPreferencesActivity extends AppCompatActivity {
         // Asignamos valores por defecto
         edadMinima.setText("17");
         edadMaxima.setText("50");
-        rellenarSpinner(spinnerFacultades, listaFacultades);
-        rellenarSpinner(spinnerCarreras, tablaCarreras.get("Sin definir"));
-        rellenarSpinner(spinnerCiudades, listaCiudades);
+        rellenarSpinner(spinnerFacultades, database.getListaFacultades());
+        rellenarSpinner(spinnerCarreras, database.getTablaCarreras().get("Sin definir"));
+        rellenarSpinner(spinnerCiudades, database.getListaCiudades());
 
         // Asignamos listeners
 
@@ -142,7 +124,7 @@ public class SearchPreferencesActivity extends AppCompatActivity {
         spinnerFacultades.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                rellenarSpinner(spinnerCarreras, tablaCarreras.get(spinnerFacultades.getItemAtPosition(i).toString()));
+                rellenarSpinner(spinnerCarreras, database.getTablaCarreras().get(spinnerFacultades.getItemAtPosition(i).toString()));
             }
 
             @Override

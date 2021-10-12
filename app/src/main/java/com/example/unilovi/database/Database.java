@@ -11,14 +11,14 @@ public class Database {
     private HashMap<String, List<String>> tablaCarreras;
     private List<String> listaCiudades;
 
-    public Database(){
+    public Database() {
         listaFacultades = new ArrayList<String>();
         tablaCarreras = new HashMap<>();
         listaCiudades = new ArrayList<String>();
     }
 
     // Inicializa el modelo de datos
-    public void init(){
+    public void init() {
         listaFacultades.add("Sin definir");
         listaFacultades.add("Escuela de ingeniería informática");
         listaFacultades.add("Facultad de ciencias");

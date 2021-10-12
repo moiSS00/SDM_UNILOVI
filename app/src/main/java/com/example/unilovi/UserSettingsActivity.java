@@ -24,14 +24,15 @@ public class UserSettingsActivity extends AppCompatActivity {
     private Button btnGuardarAjustes;
     private Button btnCancelarAjustes;
 
-    //Inicializmos la bd
-    private Database database=new Database();
+    // Atributos auxiliares
+    private Database database = new Database();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_settings);
 
+        // Inicializar la base de datos
         database.init();
 
         //Referencias a componentes Settings

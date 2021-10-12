@@ -3,7 +3,11 @@ package com.example.unilovi.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+
 public class User implements Parcelable {
+
+    public static final String MASCULINO = "M";
+    public static final String FEMENINO = "F";
 
     public String name;
     public String email;
@@ -12,8 +16,9 @@ public class User implements Parcelable {
     public String career;
     public String photo;
     public Preferences preferences;
+    public String sexo;
 
-    public User(String name, String email, int age, String school, String career, String photo, Preferences preferences) {
+    public User(String name, String email, int age, String school, String career, String photo, Preferences preferences, String sexo) {
         this.name = name;
         this.email = email;
         this.age = age;
@@ -21,6 +26,15 @@ public class User implements Parcelable {
         this.career = career;
         this.photo = photo;
         this.preferences = preferences;
+        this.sexo = sexo;
+    }
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
     }
 
     public Preferences getPreferences() {
@@ -101,6 +115,7 @@ public class User implements Parcelable {
         career = in.readString();
         photo = in.readString();
         preferences = in.readParcelable(Preferences.class.getClassLoader());
+        sexo = in.readString();
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -129,5 +144,6 @@ public class User implements Parcelable {
         parcel.writeString(career);
         parcel.writeString(photo);
         parcel.writeParcelable(preferences, i);
+        parcel.writeString(sexo);
     }
 }

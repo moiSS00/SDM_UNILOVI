@@ -35,13 +35,13 @@ public class UsersRecyclerActivity extends AppCompatActivity {
         listaMatches = new ArrayList<User>();
         listaSolicitudes = new ArrayList<User>();
         listaMatches.add(new User("Moises00", "moi@email.com",20,
-                "Escuela de ingeniería informática", "Ingeniería informática", "foto1", null));
+                "Escuela de ingeniería informática", "Ingeniería informática", "foto1", null, User.MASCULINO));
         listaMatches.add(new User("Dani32", "dan@email.com",21,
-                "Facultad 2", "Física", "foto2", null));
+                "Facultad 2", "Física", "foto2", null, User.MASCULINO));
         listaSolicitudes.add(new User("Ruben_xx", "r0en@email.com",23,
-                "Facultad 3", "Matemáticas", "foto3", null));
+                "Facultad 3", "Matemáticas", "foto3", null, User.MASCULINO));
         listaSolicitudes.add(new User("PradLove", "lovep@email.com",22,
-                "Facultad 4", "Biología", "foto4", null));
+                "Facultad 4", "Biología", "foto4", null, User.FEMENINO));
 
         // Obtenemos referencias a los componentes
         listaMatchesView = (RecyclerView) findViewById(R.id.matchesRecyclerView);

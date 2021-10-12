@@ -6,9 +6,16 @@ import android.os.Parcelable;
 
 public class User implements Parcelable {
 
+    // Géneros posibles
     public static final String MASCULINO = "M";
     public static final String FEMENINO = "F";
     public static final String NO_BINARIO = "NB";
+
+    // Combinaciones de géneros para las preferencias de búsqueda
+    public static final String MASCULINO_FEMENINO = "MF";
+    public static final String MASCULINO_NO_BINARIO = "MNB";
+    public static final String FEMENINO_NO_BINARIO = "FNB";
+    public static final String TODOS = "MFNB";
 
     public String name;
     public String email;

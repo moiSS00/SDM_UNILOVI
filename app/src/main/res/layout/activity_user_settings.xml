@@ -122,7 +122,7 @@
             android:id="@+id/radioNoBinario"
             android:layout_width="99dp"
             android:layout_height="41dp"
-            android:text="No binario" />
+            android:text="Otro" />
 
         <RadioButton
             android:id="@+id/radioMasculino"

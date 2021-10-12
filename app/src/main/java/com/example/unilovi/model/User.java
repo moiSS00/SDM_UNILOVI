@@ -9,9 +9,9 @@ public class User implements Parcelable {
     // Géneros posibles
     public static final String MASCULINO = "M";
     public static final String FEMENINO = "F";
-    public static final String NO_BINARIO = "NB";
+    public static final String OTRO = "O";
 
-    // Combinaciones de géneros para las preferencias de búsqueda
+    // Combinaciones de géneros para las preferencias de búsqueda             CAMBIAR ESTO A UNA LISTA, EN LA CLASE PREFERENCES SEXO SERÁ UNA LISTA DE STRINGS NO UN STRING
     public static final String MASCULINO_FEMENINO = "MF";
     public static final String MASCULINO_NO_BINARIO = "MNB";
     public static final String FEMENINO_NO_BINARIO = "FNB";

@@ -35,7 +35,7 @@ public class UsersRecyclerActivity extends AppCompatActivity {
         listaMatches = new ArrayList<User>();
         listaSolicitudes = new ArrayList<User>();
         listaMatches.add(new User("Moises00", "moi@email.com",20,
-                "Escuela de ingeniería informática", "Ingeniería informática", "foto1", null, User.NO_BINARIO, "Piedras Blancas"));
+                "Escuela de ingeniería informática", "Ingeniería informática", "foto1", null, User.OTRO, "Piedras Blancas"));
         listaMatches.add(new User("Dani32", "dan@email.com",21,
                 "Facultad 2", "Física", "foto2", null, User.MASCULINO, "Piedras Negras"));
         listaSolicitudes.add(new User("Ruben_xx", "r0en@email.com",23,

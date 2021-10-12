@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import com.example.unilovi.database.Database;
@@ -23,6 +25,10 @@ public class UserSettingsActivity extends AppCompatActivity {
     private Spinner spinnerSettingsCiudades;
     private Button btnGuardarAjustes;
     private Button btnCancelarAjustes;
+    private RadioGroup radioGroupSettings;
+    private RadioButton radioButtonMasc;
+    private RadioButton radioButtonFem;
+    private RadioButton radioButtonNoBinario;
 
     // Atributos auxiliares
     private Database database = new Database();

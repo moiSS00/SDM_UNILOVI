@@ -8,6 +8,7 @@ public class User implements Parcelable {
 
     public static final String MASCULINO = "M";
     public static final String FEMENINO = "F";
+    public static final String NO_BINARIO = "NB";
 
     public String name;
     public String email;
@@ -17,8 +18,9 @@ public class User implements Parcelable {
     public String photo;
     public Preferences preferences;
     public String sexo;
+    public String city;
 
-    public User(String name, String email, int age, String school, String career, String photo, Preferences preferences, String sexo) {
+    public User(String name, String email, int age, String school, String career, String photo, Preferences preferences, String sexo, String city) {
         this.name = name;
         this.email = email;
         this.age = age;
@@ -27,6 +29,15 @@ public class User implements Parcelable {
         this.photo = photo;
         this.preferences = preferences;
         this.sexo = sexo;
+        this.city = city;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getSexo() {
@@ -102,10 +113,12 @@ public class User implements Parcelable {
                 ", school='" + school + '\'' +
                 ", career='" + career + '\'' +
                 ", photo='" + photo + '\'' +
+                ", sexo='" + sexo + '\'' +
+                ", city='" + city + '\'' +
                 '}';
     }
 
-    // --- Métodos para que categoría sea parceable ---
+// --- Métodos para que categoría sea parceable ---
 
     protected User(Parcel in) {
         name = in.readString();
@@ -116,6 +129,7 @@ public class User implements Parcelable {
         photo = in.readString();
         preferences = in.readParcelable(Preferences.class.getClassLoader());
         sexo = in.readString();
+        city = in.readString();
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -145,5 +159,6 @@ public class User implements Parcelable {
         parcel.writeString(photo);
         parcel.writeParcelable(preferences, i);
         parcel.writeString(sexo);
+        parcel.writeString(city);
     }
 }

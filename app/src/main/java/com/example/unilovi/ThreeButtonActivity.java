@@ -48,7 +48,8 @@ public class ThreeButtonActivity extends AppCompatActivity {
         btnAjustes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent settingsIntent = new Intent(ThreeButtonActivity.this, UserSettingsActivity.class);
+                startActivity(settingsIntent);
             }
         });
     }

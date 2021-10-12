@@ -104,8 +104,9 @@
 
     <RadioGroup
         android:id="@+id/radioGroupGenero"
-        android:layout_width="370dp"
-        android:layout_height="147dp"
+        android:layout_width="290dp"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -114,21 +115,20 @@
 
         <RadioButton
             android:id="@+id/radioFemenino"
-            android:layout_width="95dp"
-            android:layout_height="41dp"
+            android:layout_width="109dp"
+            android:layout_height="match_parent"
             android:text="Femenino" />
 
         <RadioButton
             android:id="@+id/radioNoBinario"
-            android:layout_width="99dp"
-            android:layout_height="41dp"
+            android:layout_width="73dp"
+            android:layout_height="match_parent"
             android:text="Otro" />
 
         <RadioButton
             android:id="@+id/radioMasculino"
-            android:layout_width="103dp"
-            android:layout_height="43dp"
-            android:layout_marginStart="16dp"
+            android:layout_width="108dp"
+            android:layout_height="match_parent"
             android:text="Masculino" />
 
     </RadioGroup>

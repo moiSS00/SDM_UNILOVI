@@ -35,13 +35,17 @@ public class UsersRecyclerActivity extends AppCompatActivity {
         listaMatches = new ArrayList<User>();
         listaSolicitudes = new ArrayList<User>();
         listaMatches.add(new User("Moises00", "moi@email.com",20,
-                "Escuela de ingeniería informática", "Ingeniería informática", "foto1", null, User.OTRO, "Piedras Blancas"));
+                "Escuela de ingeniería informática", "Ingeniería informática",
+                "https://ibb.co/NLZcc1h", null, User.OTRO, "Piedras Blancas", "Descripción de prueba"));
         listaMatches.add(new User("Dani32", "dan@email.com",21,
-                "Facultad 2", "Física", "foto2", null, User.MASCULINO, "Piedras Negras"));
+                "Facultad 2", "Física",
+                "https://ibb.co/R0dY94V", null, User.MASCULINO, "Piedras Negras", "Descripción de prueba"));
         listaSolicitudes.add(new User("Ruben_xx", "r0en@email.com",23,
-                "Facultad 3", "Matemáticas", "foto3", null, User.MASCULINO, "Piedras Azules"));
+                "Facultad 3", "Matemáticas",
+                "https://ibb.co/NxQXygY", null, User.MASCULINO, "Piedras Azules", "Descripción de prueba"));
         listaSolicitudes.add(new User("PradLove", "lovep@email.com",22,
-                "Facultad 4", "Biología", "foto4", null, User.FEMENINO, "Piedras Rojas"));
+                "Facultad 4", "Biología",
+                "enlaceErroneo", null, User.FEMENINO, "Piedras Rojas", "Descripción de prueba"));
 
         // Obtenemos referencias a los componentes
         listaMatchesView = (RecyclerView) findViewById(R.id.matchesRecyclerView);
@@ -85,7 +89,7 @@ public class UsersRecyclerActivity extends AppCompatActivity {
     public void clickonItem(User usuario) {
         Log.i("Click adpater", "Item clicked " + usuario.getName());
         // Paso al modo de apertura
-        Intent intent = new Intent(UsersRecyclerActivity.this, UserDetailsActivity.class);
+        Intent intent = new Intent(UsersRecyclerActivity.this, ShowUserActivity.class);
         intent.putExtra(USUARIO_SELECCIONADO, usuario);
         startActivity(intent);
     }

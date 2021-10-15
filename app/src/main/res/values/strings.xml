@@ -1,4 +1,6 @@
 <resources>
+
+    <!-- Genéricos -->
     <string name="app_name">Unilovi</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -12,13 +14,28 @@
     <string name="menu_solicitudes">Solicitudes y matches</string>
     <string name="menu_preferencias">Preferencias de búsqueda</string>
 
-    <!-- Pantalla lista de usuarios -->
-    <string name="nombreUsuario">Moisés</string>
-    <string name="facultadUsuario">Informática</string>
+    <!-- Pantalla lista de solicitudes y matches -->
+    <string name="listaMatches">Lista de matches</string>
+    <string name="listaSolicitudes">Lista de solicitudes</string>
+
+    <!-- Pantalla que muestra los detalles del ususario (ShowUserActivity) -->
+    <string name="email">Email</string>
+    <string name="edad">Edad</string>
+    <string name="facultad">Facultad</string>
+    <string name="carrera">Carrera</string>
+    <string name="sobreMi">Sobre mí</string>
+
+    <string name="nombre_usuario">Moisés</string>
+    <string name="email_usuario">Moisés@email.com</string>
+    <string name="edad_usuario">21</string>
+    <string name="facultad_usuario">Escuela ingeniería informática Oviedo</string>
+    <string name="carrera_usuario">Ingeniería del software</string>
+    <string name="sobreMi_usuario">Mi descripción</string>
+    <string name="imagen_usuario">imagen</string>
+    <string name="desc_imagen_usuario">Descripción imagen</string>
 
     <!-- Pantalla de edición de preferencias -->
     <string name="no_guardado">Debes elegir un género como mínimo</string>
-    <string name="listaMatches">Lista de matches:</string>
-    <string name="listaSolicitudes">Lista de solicitudes:</string>
+    <string name="title_activity_show_user">ShowUserActivity</string>
 
 </resources>

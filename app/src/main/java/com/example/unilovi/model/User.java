@@ -11,17 +11,19 @@ public class User implements Parcelable {
     public static final String FEMENINO = "F";
     public static final String OTRO = "O";
 
-    public String name;
-    public String email;
-    public int age;
-    public String school;
-    public String career;
-    public String photo;
-    public Preferences preferences;
-    public String sexo;
-    public String city;
+    private String name;
+    private String email;
+    private int age;
+    private String school;
+    private String career;
+    private String photo;
+    private Preferences preferences;
+    private String sexo;
+    private String city;
+    private String aboutMe;
 
-    public User(String name, String email, int age, String school, String career, String photo, Preferences preferences, String sexo, String city) {
+    public User(String name, String email, int age, String school, String career, String photo,
+                Preferences preferences, String sexo, String city, String aboutMe) {
         this.name = name;
         this.email = email;
         this.age = age;
@@ -31,6 +33,7 @@ public class User implements Parcelable {
         this.preferences = preferences;
         this.sexo = sexo;
         this.city = city;
+        this.aboutMe = aboutMe;
     }
 
     public String getCity() {
@@ -105,6 +108,14 @@ public class User implements Parcelable {
         this.photo = photo;
     }
 
+    public String getAboutMe() {
+        return aboutMe;
+    }
+
+    public void setAboutMe(String aboutMe) {
+        this.aboutMe = aboutMe;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -131,6 +142,7 @@ public class User implements Parcelable {
         preferences = in.readParcelable(Preferences.class.getClassLoader());
         sexo = in.readString();
         city = in.readString();
+        aboutMe = in.readString();
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -161,5 +173,6 @@ public class User implements Parcelable {
         parcel.writeParcelable(preferences, i);
         parcel.writeString(sexo);
         parcel.writeString(city);
+        parcel.writeString(aboutMe);
     }
 }

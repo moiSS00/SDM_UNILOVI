@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.unilovi">
 
+    <!-- Permisos que necesita la aplicación -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,10 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Unilovi">
         <activity
-            android:name=".UserSettingsActivity"
-            android:exported="true" />
+            android:name=".ShowUserActivity"
+            android:exported="true"
+            android:label="@string/title_activity_show_user"
+            android:theme="@style/Theme.Unilovi.NoActionBar" />
         <activity
-            android:name=".UserDetailsActivity"
+            android:name=".UserSettingsActivity"
             android:exported="true" />
         <activity
             android:name=".UsersRecyclerActivity"

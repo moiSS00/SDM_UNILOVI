@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.unilovi.model.User;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -79,6 +80,7 @@ public class ListaUsuariosAdapter extends RecyclerView.Adapter<ListaUsuariosAdap
         public void bindUser(final User usuario, final OnItemClickListener listener) {
             nombre.setText(usuario.getName());
             facultad.setText(usuario.getSchool());
+            Picasso.get().load("https://i.postimg.cc/vBx065cX/default-user-image.png").into(imagen);
             itemView.setOnClickListener((v) -> {
                 listener.onItemClick(usuario);
             });

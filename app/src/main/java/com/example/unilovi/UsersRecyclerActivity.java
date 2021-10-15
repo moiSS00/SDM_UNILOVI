@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.example.unilovi.adapters.ListaUsuariosAdapter;
 import com.example.unilovi.model.User;
 
 import java.util.ArrayList;
@@ -45,7 +46,8 @@ public class UsersRecyclerActivity extends AppCompatActivity {
                 "https://ibb.co/NxQXygY", null, User.MASCULINO, "Piedras Azules", "Descripción de prueba"));
         listaSolicitudes.add(new User("PradLove", "lovep@email.com",22,
                 "Facultad 4", "Biología",
-                "enlaceErroneo", null, User.FEMENINO, "Piedras Rojas", "Descripción de prueba"));
+                "enlaceErroneo", null, User.FEMENINO, "Piedras Rojas", "Descripción de prueba con varias " +
+                "lineas para probar si hay scrol prueba de scroll"));
 
         // Obtenemos referencias a los componentes
         listaMatchesView = (RecyclerView) findViewById(R.id.matchesRecyclerView);

@@ -1,4 +1,4 @@
-package com.example.unilovi;
+package com.example.unilovi.adapters;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.unilovi.R;
 import com.example.unilovi.model.User;
 import com.squareup.picasso.Picasso;
 

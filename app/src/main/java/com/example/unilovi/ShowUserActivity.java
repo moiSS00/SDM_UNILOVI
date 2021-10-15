@@ -25,7 +25,6 @@ public class ShowUserActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     private CollapsingToolbarLayout toolBarLayout;
 
-    private TextView email;
     private TextView facultad;
     private TextView carrera;
     private TextView sobreMi;
@@ -43,7 +42,6 @@ public class ShowUserActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         // Obtenemos referencias a los componentes
-        email = (TextView) findViewById(R.id.emailUsuarioText);
         facultad = (TextView) findViewById(R.id.facultadUsuarioText);
         carrera = (TextView) findViewById(R.id.carreraUsuarioText);
         sobreMi = (TextView) findViewById(R.id.sobreMiUsuarioText);
@@ -86,7 +84,6 @@ public class ShowUserActivity extends AppCompatActivity {
 
         // Actualizar componentes con valores de la película específica
         toolBarLayout.setTitle(user.getName() + ", " + user.getAge());
-        email.setText(user.getEmail());
         facultad.setText(user.getSchool());
         carrera.setText(user.getCareer());
         sobreMi.setText(user.getAboutMe());

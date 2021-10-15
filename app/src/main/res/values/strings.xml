@@ -21,14 +21,14 @@
     <!-- Pantalla que muestra los detalles del ususario (ShowUserActivity) -->
     <string name="email">Email</string>
     <string name="edad">Edad</string>
-    <string name="facultad">Facultad</string>
-    <string name="carrera">Carrera</string>
-    <string name="sobreMi">Sobre mí</string>
+    <string name="facultad">Facultad:</string>
+    <string name="carrera">Carrera:</string>
+    <string name="sobreMi">Sobre mí:</string>
 
     <string name="nombre_usuario">Moisés</string>
     <string name="email_usuario">Moisés@email.com</string>
     <string name="edad_usuario">21</string>
-    <string name="facultad_usuario">Escuela ingeniería informática Oviedo</string>
+    <string name="facultad_usuario">Escuela ingeniería informática</string>
     <string name="carrera_usuario">Ingeniería del software</string>
     <string name="sobreMi_usuario">Mi descripción</string>
     <string name="imagen_usuario">imagen</string>

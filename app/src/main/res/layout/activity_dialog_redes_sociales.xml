@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/layout_drawable_rrss"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".dialog_redes_sociales">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_margin="14dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/emailRRSS"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/email_rrss"
+            android:textColor="@android:color/background_dark"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/instagram"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ejemplo_RRSS"
+            android:textColor="@android:color/background_dark"
+            android:textSize="18sp"
+            tools:layout_editor_absoluteX="35dp"
+            tools:layout_editor_absoluteY="33dp"
+            tools:text="@string/ejemplo_RRSS" />
+
+        <TextView
+            android:id="@+id/tiktok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ejemplo_RRSS"
+            android:textColor="@android:color/background_dark"
+            android:textSize="18sp"
+            tools:text="@string/ejemplo_RRSS" />
+
+        <TextView
+            android:id="@+id/twitter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ejemplo_RRSS"
+            android:textColor="@android:color/background_dark"
+            android:textSize="18sp"
+            tools:text="@string/ejemplo_RRSS" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.7dp"
+        android:alpha="0.8"
+        android:background="@android:color/darker_gray"
+    />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+        <View
+            android:layout_width="0.7dp"
+            android:layout_height="match_parent"
+            android:alpha="0.8"
+            android:background="@android:color/darker_gray"
+            />
+
+        <Button
+            android:id="@+id/volverRRSS"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/dialog_volver"
+            tools:layout_editor_absoluteX="158dp"
+            tools:layout_editor_absoluteY="265dp"
+            tools:text="@string/dialog_volver" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

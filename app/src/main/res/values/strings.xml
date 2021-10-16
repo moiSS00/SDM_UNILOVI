@@ -38,4 +38,10 @@
     <string name="no_guardado">Debes elegir un género como mínimo</string>
     <string name="title_activity_show_user">ShowUserActivity</string>
 
+    <!-- Dialog -->
+    <string name="dialog_rrss">Redes sociales</string>
+    <string name="dialog_volver">Volver</string>
+    <string name="ejemplo_RRSS">\@ejemplo111</string>
+    <string name="email_rrss">prueba@email.com</string>
+
 </resources>

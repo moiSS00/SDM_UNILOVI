@@ -1,6 +1,8 @@
 package com.example.unilovi;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import com.example.unilovi.model.User;
@@ -8,12 +10,16 @@ import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.unilovi.databinding.ActivityShowUserBinding;
 import com.squareup.picasso.Picasso;
@@ -60,14 +66,14 @@ public class ShowUserActivity extends AppCompatActivity {
         if (user != null)
             abrirModoConsulta(user);
 
+
         // Asignamos listeners
 
         // --- Acción para el botón fab ---
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                showDialog();
             }
         });
     }
@@ -88,6 +94,26 @@ public class ShowUserActivity extends AppCompatActivity {
         carrera.setText(user.getCareer());
         sobreMi.setText(user.getAboutMe());
 
+    }
+
+    private void showDialog(){
+        AlertDialog.Builder builder= new AlertDialog.Builder(ShowUserActivity.this);
+        LayoutInflater inflater=getLayoutInflater();
+        View view = inflater.inflate(R.layout.activity_dialog_redes_sociales,null);
+
+        builder.setView(view);
+        final AlertDialog dialog=builder.create();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        Button volver= view.findViewById(R.id.volverRRSS);
+        volver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getBaseContext(), "Volver", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 
 }

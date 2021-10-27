@@ -38,6 +38,15 @@ public class HomeFragment extends Fragment {
         return root;
     }
 
+
+    /*
+        En este método irá la funcionalidad de actualizar las búsquedas según las preferencias
+    */
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

@@ -1,6 +1,7 @@
 package com.example.unilovi;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.LayoutInflater;
@@ -35,6 +37,7 @@ public class ShowUserActivity extends AppCompatActivity {
     private TextView carrera;
     private TextView sobreMi;
     private ImageView imagenPerfil;
+    private SharedPreferences sharedPreferences;
 
     // Atributos auxiliares
     private ActivityShowUserBinding binding;
@@ -42,6 +45,8 @@ public class ShowUserActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        sharedPreferences = getSharedPreferences("SP", MODE_PRIVATE);
 
         // -- Código de configuración autogenerado por Android Studio al crear una ScrollActivity--
         binding = ActivityShowUserBinding.inflate(getLayoutInflater());
@@ -114,6 +119,24 @@ public class ShowUserActivity extends AppCompatActivity {
             }
         });
         dialog.show();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateDayNight();
+    }
+
+    /*
+        Método para cambiar el modo de modo claro a modo oscuro
+    */
+    public void updateDayNight() {
+        int theme = sharedPreferences.getInt("tema", 1);
+        if (theme == 0)
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        else
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
     }
 
 }

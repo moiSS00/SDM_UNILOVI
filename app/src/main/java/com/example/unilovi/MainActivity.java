@@ -1,7 +1,10 @@
 package com.example.unilovi;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
@@ -15,6 +18,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -32,15 +36,19 @@ public class MainActivity extends AppCompatActivity {
     private TextView email;
     private TextView nombre;
     private ImageView imagen;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        sharedPreferences = getSharedPreferences("SP", MODE_PRIVATE);
 
         setTheme(R.style.Theme_Unilovi_NoActionBar);
 
@@ -73,9 +81,6 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-
-
-
     }
 
     @Override
@@ -102,5 +107,24 @@ public class MainActivity extends AppCompatActivity {
             startActivity(settingsIntent);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        System.out.println("Se resume");
+        updateDayNight();
+    }
+
+    /*
+        Método para cambiar el modo de modo claro a modo oscuro
+    */
+    public void updateDayNight() {
+        int theme = sharedPreferences.getInt("tema", 1);
+        if (theme == 0)
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        else
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
     }
 }

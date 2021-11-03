@@ -1,7 +1,9 @@
 package com.example.unilovi;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -10,6 +12,7 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Switch;
 
 import com.example.unilovi.database.Database;
 
@@ -29,6 +32,8 @@ public class UserSettingsActivity extends AppCompatActivity {
     private RadioButton radioButtonMasc;
     private RadioButton radioButtonFem;
     private RadioButton radioButtonNoBinario;
+    private Switch switchTema;
+    private SharedPreferences sharedPreferences;
 
     // Atributos auxiliares
     private Database database = new Database();
@@ -38,6 +43,8 @@ public class UserSettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_settings);
 
+        sharedPreferences = getSharedPreferences("SP", MODE_PRIVATE);
+
         // Inicializar la base de datos
         database.init();
 
@@ -45,6 +52,7 @@ public class UserSettingsActivity extends AppCompatActivity {
         spinnerSettingsFacultades = (Spinner) findViewById(R.id.spinnerSettingsFacultades);
         spinnerSettingsCarreras = (Spinner) findViewById(R.id.spinnerSettingsCarreras);
         spinnerSettingsCiudades = (Spinner) findViewById(R.id.spinnerSettingsCiudades);
+        switchTema = (Switch) findViewById(R.id.switchTema);
 
         //Rellenamos con valores de la database
         rellenarSpinner(spinnerSettingsFacultades, database.getListaFacultades());
@@ -64,6 +72,27 @@ public class UserSettingsActivity extends AppCompatActivity {
             }
         });
 
+        switchTema.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                if (switchTema.isChecked())
+                    editor.putInt("tema", 0);
+                else
+                    editor.putInt("tema", 1);
+                editor.apply();
+                updateDayNight();
+
+            }
+        });
+
+        //Comprobamos si está puesto o no el tema oscuro para cambiar el switch
+        int tema = sharedPreferences.getInt("tema", 1);
+        if (tema == 0)
+            switchTema.setChecked(true);
+        else
+            switchTema.setChecked(false);
+
     }
 
     /**
@@ -76,5 +105,23 @@ public class UserSettingsActivity extends AppCompatActivity {
                 (this, android.R.layout.simple_spinner_item, list);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateDayNight();
+    }
+
+    /*
+        Método para cambiar el modo de modo claro a modo oscuro
+    */
+    public void updateDayNight() {
+        int theme = sharedPreferences.getInt("tema", 1);
+        if (theme == 0)
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        else
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
     }
 }

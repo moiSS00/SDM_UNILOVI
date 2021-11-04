@@ -20,7 +20,7 @@
     </style>
 
     <style name="SplashTheme" parent="Theme.Unilovi">
-        <item name="android:windowBackground">@drawable/splash_screem</item>
+        <item name="android:windowBackground">@drawable/splash_screen</item>
     </style>
 
     <style name="Theme.Unilovi.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

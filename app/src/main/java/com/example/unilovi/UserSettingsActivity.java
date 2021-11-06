@@ -1,5 +1,6 @@
 package com.example.unilovi;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
@@ -14,11 +15,16 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Switch;
 
-import com.example.unilovi.database.Database;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.Collection;
 import java.util.List;
 
 public class UserSettingsActivity extends AppCompatActivity {
@@ -36,7 +42,7 @@ public class UserSettingsActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
 
     // Atributos auxiliares
-    private Database database = new Database();
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +51,6 @@ public class UserSettingsActivity extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences("SP", MODE_PRIVATE);
 
-        // Inicializar la base de datos
-        database.init();
-
         //Referencias a componentes Settings
         spinnerSettingsFacultades = (Spinner) findViewById(R.id.spinnerSettingsFacultades);
         spinnerSettingsCarreras = (Spinner) findViewById(R.id.spinnerSettingsCarreras);
@@ -55,15 +58,58 @@ public class UserSettingsActivity extends AppCompatActivity {
         switchTema = (Switch) findViewById(R.id.switchTema);
 
         //Rellenamos con valores de la database
-        rellenarSpinner(spinnerSettingsFacultades, database.getListaFacultades());
-        rellenarSpinner(spinnerSettingsCarreras, database.getTablaCarreras().get("Sin definir"));
-        rellenarSpinner(spinnerSettingsCiudades, database.getListaCiudades());
+        db.collection("ciudades").document("ciudadesFormularioUsuario")
+            .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.exists()) {
+                    List<String> ciudades = new ArrayList<String>();
+                    ciudades.add("Sin definir");
+                    ciudades.addAll((Collection<? extends String>) documentSnapshot.getData().get("Ciudades")) ;
+                    rellenarSpinner(spinnerSettingsCiudades, ciudades);
+                }
+            }
+        });
+
+        db.collection("facultades")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            List<String> facultades = new ArrayList<String>();
+                            facultades.add("Sin definir");
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                facultades.add(document.getId());
+                            }
+                            rellenarSpinner(spinnerSettingsFacultades, facultades);
+                        }
+                    }
+                });
 
         // -- Para el spinner de facultades --
         spinnerSettingsFacultades.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                rellenarSpinner(spinnerSettingsCarreras, database.getTablaCarreras().get(spinnerSettingsFacultades.getItemAtPosition(i).toString()));
+                String facultad = spinnerSettingsFacultades.getItemAtPosition(i).toString();
+                db.collection("facultades").document(facultad)
+                        .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        List<String> carreras = new ArrayList<String>();
+                        if (documentSnapshot.exists()) {
+                            carreras.addAll((Collection<? extends String>) documentSnapshot.getData().get("carreras"));
+                            rellenarSpinner(spinnerSettingsCarreras, carreras);
+                            spinnerSettingsCarreras.setEnabled(true);
+                        }
+                        else {
+                            List<String> defaultList = new ArrayList<String>();
+                            defaultList.add("Sn definir");
+                            rellenarSpinner(spinnerSettingsCarreras, defaultList);
+                            spinnerSettingsCarreras.setEnabled(false);
+                        }
+                    }
+                });
             }
 
             @Override

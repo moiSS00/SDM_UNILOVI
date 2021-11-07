@@ -1,6 +1,6 @@
 package com.example.unilovi.ui.preferenciasBusqueda;
 
-import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,14 +14,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.unilovi.R;
-import com.example.unilovi.database.Database;
+import com.example.unilovi.database.Firebase;
 import com.example.unilovi.databinding.FragmentPreferenciasBinding;
+import com.example.unilovi.utils.callbacks.CallBackSpinnerCiudades;
+import com.example.unilovi.utils.callbacks.callBackSpinnerCarreras;
+import com.example.unilovi.utils.callbacks.callBackSpinnerFacultades;
+
 
 import java.util.List;
 
@@ -38,12 +39,9 @@ public class PreferenciasBusquedaFragment extends Fragment {
     private CheckBox checkMujer;
     private CheckBox checkNoBinario;
     private Button btnGuardarPreferencias;
-    private Spinner spinnerFacultades;
-    private Spinner spinnerCarreras;
-    private Spinner spinnerCiudades;
-
-    // Atributos auxiliares
-    private Database database = new Database();
+    private Spinner spinnerPreferencesFacultades;
+    private Spinner spinnerPreferencesCarreras;
+    private Spinner spinnerPreferencesCiudades;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -51,18 +49,14 @@ public class PreferenciasBusquedaFragment extends Fragment {
         binding = FragmentPreferenciasBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        // Inicializa el modelo de datos
-        database.init();
-
-
         // Obtenemos referencias a los componentes
         edadMaxima = (TextView) root.findViewById(R.id.edadMaxima);
         edadMinima = (TextView) root.findViewById(R.id.edadMinima);
         seekBarMaxima = (SeekBar) root.findViewById(R.id.seekBarEdadMaxima);
         seekBarMinima = (SeekBar) root.findViewById(R.id.seekBarEdadMinima);
-        spinnerFacultades = (Spinner) root.findViewById(R.id.spinnerFacultades);
-        spinnerCarreras = (Spinner) root.findViewById(R.id.spinnerCarreras);
-        spinnerCiudades = (Spinner) root.findViewById(R.id.spinnerCiudades);
+        spinnerPreferencesFacultades = (Spinner) root.findViewById(R.id.spinnerFacultades);
+        spinnerPreferencesCarreras = (Spinner) root.findViewById(R.id.spinnerCarreras);
+        spinnerPreferencesCiudades = (Spinner) root.findViewById(R.id.spinnerCiudades);
         checkHombre = (CheckBox) root.findViewById(R.id.checkHombre);
         checkMujer = (CheckBox) root.findViewById(R.id.checkMujer);
         checkNoBinario = (CheckBox) root.findViewById(R.id.checkNoBinario);
@@ -71,9 +65,12 @@ public class PreferenciasBusquedaFragment extends Fragment {
         // Asignamos valores por defecto
         edadMinima.setText("18");
         edadMaxima.setText("51");
-        rellenarSpinner(spinnerFacultades, database.getListaFacultades());
-        rellenarSpinner(spinnerCarreras, database.getTablaCarreras().get("Sin definir"));
-        rellenarSpinner(spinnerCiudades, database.getListaCiudades());
+
+        //Rellenamos con valores de la base de datos el spinner de ciudades
+        Firebase.getCiudades(new CallBackSpinnerCiudades(getContext(), spinnerPreferencesCiudades));
+
+        // Rellenamos con valores de la base de datos el spinner de facultades
+        Firebase.getFacultades(new callBackSpinnerFacultades(getContext(), spinnerPreferencesFacultades));
 
         // Asignamos listeners
 
@@ -126,11 +123,12 @@ public class PreferenciasBusquedaFragment extends Fragment {
             }
         });
 
-        // -- Para el spinner de facultades --
-        spinnerFacultades.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinnerPreferencesFacultades.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                rellenarSpinner(spinnerCarreras, database.getTablaCarreras().get(spinnerFacultades.getItemAtPosition(i).toString()));
+                // Obtenemos la facultad seleccionada
+                String facultad = spinnerPreferencesFacultades.getItemAtPosition(i).toString();
+                Firebase.getCarrerasByFacultad(facultad, new callBackSpinnerCarreras(getContext(), spinnerPreferencesCarreras));
             }
 
             @Override
@@ -147,14 +145,4 @@ public class PreferenciasBusquedaFragment extends Fragment {
         binding = null;
     }
 
-    /**
-     * Rellena un spinner dado con una lista de strings dada
-     * @param spinner Spinner concreto a rellenar
-     * @param list Lista de strings
-     */
-    private void rellenarSpinner(Spinner spinner, List<String> list) {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, list);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-    }
 }

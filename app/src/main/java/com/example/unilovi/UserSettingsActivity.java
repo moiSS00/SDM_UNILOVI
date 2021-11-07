@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -15,6 +16,12 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Switch;
 
+import com.example.unilovi.database.Firebase;
+import com.example.unilovi.utils.Util;
+import com.example.unilovi.utils.callbacks.CallBack;
+import com.example.unilovi.utils.callbacks.CallBackSpinnerCiudades;
+import com.example.unilovi.utils.callbacks.callBackSpinnerCarreras;
+import com.example.unilovi.utils.callbacks.callBackSpinnerFacultades;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -42,7 +49,8 @@ public class UserSettingsActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
 
     // Atributos auxiliares
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseFirestore db = FirebaseFirestore.getInstance(); // Base de datos
+    private Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,59 +65,19 @@ public class UserSettingsActivity extends AppCompatActivity {
         spinnerSettingsCiudades = (Spinner) findViewById(R.id.spinnerSettingsCiudades);
         switchTema = (Switch) findViewById(R.id.switchTema);
 
-        //Rellenamos con valores de la database
-        db.collection("ciudades").document("ciudadesFormularioUsuario")
-            .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if (documentSnapshot.exists()) {
-                    List<String> ciudades = new ArrayList<String>();
-                    ciudades.add("Sin definir");
-                    ciudades.addAll((Collection<? extends String>) documentSnapshot.getData().get("Ciudades")) ;
-                    rellenarSpinner(spinnerSettingsCiudades, ciudades);
-                }
-            }
-        });
+        //Rellenamos con valores de la base de datos el spinner de ciudades
+        Firebase.getCiudades(new CallBackSpinnerCiudades(context, spinnerSettingsCiudades));
 
-        db.collection("facultades")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            List<String> facultades = new ArrayList<String>();
-                            facultades.add("Sin definir");
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                facultades.add(document.getId());
-                            }
-                            rellenarSpinner(spinnerSettingsFacultades, facultades);
-                        }
-                    }
-                });
+        // Rellenamos con valores de la base de datos el spinner de facultades
+        Firebase.getFacultades(new callBackSpinnerFacultades(context, spinnerSettingsFacultades));
 
-        // -- Para el spinner de facultades --
+        //  Rellenamos con valores de la base de datos el spinner de carreras para una facultad
         spinnerSettingsFacultades.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                // Obtenemos la facultad seleccionada
                 String facultad = spinnerSettingsFacultades.getItemAtPosition(i).toString();
-                db.collection("facultades").document(facultad)
-                        .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        List<String> carreras = new ArrayList<String>();
-                        if (documentSnapshot.exists()) {
-                            carreras.addAll((Collection<? extends String>) documentSnapshot.getData().get("carreras"));
-                            rellenarSpinner(spinnerSettingsCarreras, carreras);
-                            spinnerSettingsCarreras.setEnabled(true);
-                        }
-                        else {
-                            List<String> defaultList = new ArrayList<String>();
-                            defaultList.add("Sn definir");
-                            rellenarSpinner(spinnerSettingsCarreras, defaultList);
-                            spinnerSettingsCarreras.setEnabled(false);
-                        }
-                    }
-                });
+                Firebase.getCarrerasByFacultad(facultad, new callBackSpinnerCarreras(context, spinnerSettingsCarreras));
             }
 
             @Override
@@ -141,18 +109,6 @@ public class UserSettingsActivity extends AppCompatActivity {
 
     }
 
-    /**
-     * Rellena un spinner dado con una lista de strings dada
-     * @param spinner Spinner concreto a rellenar
-     * @param list Lista de strings
-     */
-    private void rellenarSpinner(Spinner spinner, List<String> list) {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>
-                (this, android.R.layout.simple_spinner_item, list);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-    }
-
     @Override
     public void onResume() {
         super.onResume();
@@ -170,4 +126,5 @@ public class UserSettingsActivity extends AppCompatActivity {
             getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
     }
+
 }

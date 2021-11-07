@@ -38,7 +38,6 @@ public class PreferenciasBusquedaFragment extends Fragment {
     private CheckBox checkHombre;
     private CheckBox checkMujer;
     private CheckBox checkNoBinario;
-    private Button btnGuardarPreferencias;
     private Spinner spinnerPreferencesFacultades;
     private Spinner spinnerPreferencesCarreras;
     private Spinner spinnerPreferencesCiudades;
@@ -60,7 +59,6 @@ public class PreferenciasBusquedaFragment extends Fragment {
         checkHombre = (CheckBox) root.findViewById(R.id.checkHombre);
         checkMujer = (CheckBox) root.findViewById(R.id.checkMujer);
         checkNoBinario = (CheckBox) root.findViewById(R.id.checkNoBinario);
-        btnGuardarPreferencias = (Button) root.findViewById(R.id.btnGuardarPreferencias);
 
         // Asignamos valores por defecto
         edadMinima.setText("18");

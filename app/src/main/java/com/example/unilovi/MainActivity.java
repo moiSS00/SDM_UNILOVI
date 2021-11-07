@@ -99,6 +99,14 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             Intent settingsIntent = new Intent(MainActivity.this, UserSettingsActivity.class);
             startActivity(settingsIntent);
+        } else if (id == R.id.btnCerrarSesion) {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.remove("email");
+            editor.remove("password");
+            editor.apply();
+            Intent settingsIntent = new Intent(MainActivity.this, SignInActivity.class);
+            startActivity(settingsIntent);
+            finish();
         }
         return super.onOptionsItemSelected(item);
     }

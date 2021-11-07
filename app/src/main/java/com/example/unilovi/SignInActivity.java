@@ -3,12 +3,15 @@ package com.example.unilovi;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -21,20 +24,30 @@ public class SignInActivity extends AppCompatActivity {
     // Atribitos que contendrán una referencia a los componentes usados
     private Button signInButton;
     private Button goToSignUpButton;
+    private CheckBox mantenerSesion;
     private EditText editEmail;
     private EditText editPassword;
+
+    // SharedPreferences
+    private SharedPreferences sharedPreferences;
 
     // Atributos auxiliares
     private FirebaseAuth fAuth = FirebaseAuth.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        sharedPreferences = getSharedPreferences("SP", MODE_PRIVATE);
+
+        setTheme(R.style.Theme_Unilovi_NoActionBar);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
         // Obtenemos referencias a los componentes
         signInButton = (Button) findViewById(R.id.signInButton);
         goToSignUpButton = (Button) findViewById(R.id.goToSignUpButton);
+        mantenerSesion = (CheckBox) findViewById(R.id.checkMantenSesion);
         editEmail = (EditText) findViewById(R.id.emailSignInEdit);
         editPassword = (EditText) findViewById(R.id.passwordSignInEdit);
 
@@ -47,6 +60,12 @@ public class SignInActivity extends AppCompatActivity {
                 if (validacionEntrada()) { // Si las entradas son validas
                     String emailContent = editEmail.getText().toString();
                     String passwordContent = editPassword.getText().toString();
+                    if (mantenerSesion.isChecked()) {
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("email", emailContent);
+                        editor.putString("password", passwordContent);
+                        editor.apply();
+                    }
                     iniciarSesion(emailContent, passwordContent);
                 }
             }
@@ -89,6 +108,7 @@ public class SignInActivity extends AppCompatActivity {
     private void showHome() {
         Intent mainIntent = new Intent(SignInActivity.this, MainActivity.class);
         startActivity(mainIntent);
+        finish();
     }
 
     private void showSignUp() {

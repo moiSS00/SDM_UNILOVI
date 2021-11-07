@@ -7,6 +7,7 @@
     tools:context=".SignInActivity"
     android:background="#FFFFFF">
 
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="238dp"
@@ -16,10 +17,8 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.031"
+        app:layout_constraintVertical_bias="0.07"
         app:srcCompat="@drawable/icono_432" />
-
-
 
     <EditText
         android:id="@+id/emailSignInEdit"
@@ -61,15 +60,14 @@
         android:layout_width="357dp"
         android:layout_height="51dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="10dp"
         android:layout_marginEnd="32dp"
         android:text="Iniciar sesión"
         app:cornerRadius="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordSignInEdit"
-        app:layout_constraintVertical_bias="0.104" />
+        app:layout_constraintTop_toBottomOf="@+id/checkMantenSesion"
+        app:layout_constraintVertical_bias="0.163" />
 
     <Button
         android:id="@+id/goToSignUpButton"
@@ -84,6 +82,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signInButton"
         app:layout_constraintVertical_bias="0.1" />
+
+    <CheckBox
+        android:id="@+id/checkMantenSesion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:text="Mantener sesión iniciada"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordSignInEdit"
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

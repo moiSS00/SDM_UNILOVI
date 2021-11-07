@@ -42,12 +42,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
 
-        try {
-            Thread.sleep(1500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
         sharedPreferences = getSharedPreferences("SP", MODE_PRIVATE);
 
         setTheme(R.style.Theme_Unilovi_NoActionBar);
@@ -112,7 +106,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        System.out.println("Se resume");
         updateDayNight();
     }
 

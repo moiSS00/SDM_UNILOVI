@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -14,10 +15,15 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
+import com.example.unilovi.database.Firebase;
+import com.example.unilovi.utils.Util;
+import com.example.unilovi.utils.callbacks.CallBack;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+
+import okhttp3.Call;
 
 public class SignInActivity extends AppCompatActivity {
 
@@ -32,7 +38,7 @@ public class SignInActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
 
     // Atributos auxiliares
-    private FirebaseAuth fAuth = FirebaseAuth.getInstance();
+    private Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +72,7 @@ public class SignInActivity extends AppCompatActivity {
                         editor.putString("password", passwordContent);
                         editor.apply();
                     }
-                    iniciarSesion(emailContent, passwordContent);
+                    Firebase.iniciarSesion(emailContent, passwordContent, new CallBackSignIn());
                 }
             }
         });
@@ -84,31 +90,10 @@ public class SignInActivity extends AppCompatActivity {
         String emailContent = editEmail.getText().toString();
         String passwordContent = editPassword.getText().toString();
         if (emailContent.isEmpty() || passwordContent.isEmpty()) {
-            showAlert("Debe rellenar todos los campos para iniciar sesión");
+            Util.showAlert(context,"Debe rellenar todos los campos para iniciar sesión");
             return false;
         }
         return true;
-    }
-
-    private void iniciarSesion(String email, String password) {
-        fAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) { // Se inicia sesión correctamente
-                            showHome();
-                        } else { // Hubo algún fallo
-                            showAlert("Hubo algún fallo al iniciar sesión. " +
-                                    "Comprueba las credenciales introducidas");
-                        }
-                    }
-                });
-    }
-
-    private void showHome() {
-        Intent mainIntent = new Intent(SignInActivity.this, MainActivity.class);
-        startActivity(mainIntent);
-        finish();
     }
 
     private void showSignUp() {
@@ -116,12 +101,20 @@ public class SignInActivity extends AppCompatActivity {
         startActivity(mainIntent);
     }
 
-    private void showAlert(String message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Error");
-        builder.setMessage(message);
-        builder.setPositiveButton("Aceptar", null);
-        AlertDialog alert = builder.create();
-        alert.show();
+
+    private class CallBackSignIn implements CallBack {
+
+        @Override
+        public void methodToCallBack(Object object) {
+            if ((boolean) object) {
+                Intent mainIntent = new Intent(SignInActivity.this, MainActivity.class);
+                startActivity(mainIntent);
+                finish();
+            }
+            else {
+                Util.showAlert(context, "Hubo algún fallo al iniciar sesión. " +
+                        "Comprueba las credenciales introducidas");
+            }
+        }
     }
 }

@@ -30,7 +30,7 @@ public class Firebase {
     private static FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     // Modulo de autentificación
-    private FirebaseAuth fAuth = FirebaseAuth.getInstance();
+    private static FirebaseAuth fAuth = FirebaseAuth.getInstance();
 
     public static void getCiudades(CallBack callBack) {
         db.collection("ciudades").document("ciudadesFormularioUsuario")
@@ -84,6 +84,18 @@ public class Firebase {
         });
     }
 
-
+    public static void iniciarSesion(String email, String password, CallBack callBack) {
+        fAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) { // Se inicia sesión correctamente
+                            callBack.methodToCallBack(true);
+                        } else { // Hubo algún fallo
+                            callBack.methodToCallBack(false);
+                        }
+                    }
+                });
+    }
 
 }

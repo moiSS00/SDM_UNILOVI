@@ -4,6 +4,8 @@ import android.content.Context;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import androidx.appcompat.app.AlertDialog;
+
 import java.util.List;
 
 public class Util {
@@ -17,5 +19,14 @@ public class Util {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, list);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+    }
+
+    public static void showAlert(Context context, String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Error");
+        builder.setMessage(message);
+        builder.setPositiveButton("Aceptar", null);
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }

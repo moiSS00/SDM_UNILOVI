@@ -98,4 +98,7 @@ public class Firebase {
                 });
     }
 
+    public static FirebaseAuth getfAuth() {
+        return fAuth;
+    }
 }

@@ -30,20 +30,14 @@ public class SignInActivity extends AppCompatActivity {
     // Atribitos que contendrán una referencia a los componentes usados
     private Button signInButton;
     private Button goToSignUpButton;
-    private CheckBox mantenerSesion;
     private EditText editEmail;
     private EditText editPassword;
-
-    // SharedPreferences
-    private SharedPreferences sharedPreferences;
 
     // Atributos auxiliares
     private Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        sharedPreferences = getSharedPreferences("SP", MODE_PRIVATE);
 
         setTheme(R.style.Theme_Unilovi_NoActionBar);
 
@@ -53,7 +47,6 @@ public class SignInActivity extends AppCompatActivity {
         // Obtenemos referencias a los componentes
         signInButton = (Button) findViewById(R.id.signInButton);
         goToSignUpButton = (Button) findViewById(R.id.goToSignUpButton);
-        mantenerSesion = (CheckBox) findViewById(R.id.checkMantenSesion);
         editEmail = (EditText) findViewById(R.id.emailSignInEdit);
         editPassword = (EditText) findViewById(R.id.passwordSignInEdit);
 
@@ -66,12 +59,6 @@ public class SignInActivity extends AppCompatActivity {
                 if (validacionEntrada()) { // Si las entradas son validas
                     String emailContent = editEmail.getText().toString();
                     String passwordContent = editPassword.getText().toString();
-                    if (mantenerSesion.isChecked()) {
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("email", emailContent);
-                        editor.putString("password", passwordContent);
-                        editor.apply();
-                    }
                     Firebase.iniciarSesion(emailContent, passwordContent, new CallBackSignIn());
                 }
             }

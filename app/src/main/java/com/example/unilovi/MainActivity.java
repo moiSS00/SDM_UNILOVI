@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.example.unilovi.database.Firebase;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -27,6 +28,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.unilovi.databinding.ActivityMainBinding;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -100,10 +102,7 @@ public class MainActivity extends AppCompatActivity {
             Intent settingsIntent = new Intent(MainActivity.this, UserSettingsActivity.class);
             startActivity(settingsIntent);
         } else if (id == R.id.btnCerrarSesion) {
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.remove("email");
-            editor.remove("password");
-            editor.apply();
+            Firebase.getfAuth().signOut();
             Intent settingsIntent = new Intent(MainActivity.this, SignInActivity.class);
             startActivity(settingsIntent);
             finish();

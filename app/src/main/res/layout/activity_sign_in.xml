@@ -66,8 +66,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkMantenSesion"
-        app:layout_constraintVertical_bias="0.163" />
+        app:layout_constraintTop_toBottomOf="@+id/passwordSignInEdit"
+        app:layout_constraintVertical_bias="0.139" />
 
     <Button
         android:id="@+id/goToSignUpButton"
@@ -82,19 +82,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signInButton"
         app:layout_constraintVertical_bias="0.1" />
-
-    <CheckBox
-        android:id="@+id/checkMantenSesion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:text="Mantener sesión iniciada"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordSignInEdit"
-        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

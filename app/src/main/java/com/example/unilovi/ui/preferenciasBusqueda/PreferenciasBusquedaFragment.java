@@ -1,13 +1,10 @@
 package com.example.unilovi.ui.preferenciasBusqueda;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.SeekBar;
 import android.widget.Spinner;
@@ -24,7 +21,6 @@ import com.example.unilovi.utils.callbacks.callBackSpinnerCarreras;
 import com.example.unilovi.utils.callbacks.callBackSpinnerFacultades;
 
 
-import java.util.List;
 
 public class PreferenciasBusquedaFragment extends Fragment {
 

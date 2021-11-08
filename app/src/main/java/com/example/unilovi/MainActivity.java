@@ -1,21 +1,15 @@
 package com.example.unilovi;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.example.unilovi.database.Firebase;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
@@ -28,7 +22,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.unilovi.databinding.ActivityMainBinding;
-import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -102,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
             Intent settingsIntent = new Intent(MainActivity.this, UserSettingsActivity.class);
             startActivity(settingsIntent);
         } else if (id == R.id.btnCerrarSesion) {
-            Firebase.getfAuth().signOut();
+            Firebase.cerrarSesion();
             Intent settingsIntent = new Intent(MainActivity.this, SignInActivity.class);
             startActivity(settingsIntent);
             finish();

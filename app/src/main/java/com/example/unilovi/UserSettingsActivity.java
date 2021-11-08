@@ -1,6 +1,5 @@
 package com.example.unilovi;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
@@ -9,7 +8,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -17,22 +15,10 @@ import android.widget.Spinner;
 import android.widget.Switch;
 
 import com.example.unilovi.database.Firebase;
-import com.example.unilovi.utils.Util;
-import com.example.unilovi.utils.callbacks.CallBack;
 import com.example.unilovi.utils.callbacks.CallBackSpinnerCiudades;
 import com.example.unilovi.utils.callbacks.callBackSpinnerCarreras;
 import com.example.unilovi.utils.callbacks.callBackSpinnerFacultades;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 public class UserSettingsActivity extends AppCompatActivity {
 

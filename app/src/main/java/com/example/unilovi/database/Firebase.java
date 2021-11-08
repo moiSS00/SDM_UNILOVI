@@ -76,13 +76,14 @@ public class Firebase {
      * @param callBack CallBack a ejecutar, recibirá true si no hubo errores  o
      * false si hubo algún error.
      */
-    public static void registrarUsuario(String email, String password, CallBack callBack) {
+    public static void registrarUsuario(String email, String password, String nombre, String apellidos,
+                                        CallBack callBack) {
         fAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) { // El registro fue un exito
-                            createUser(email, callBack);
+                            createUser(email, nombre, apellidos, callBack);
 
                         } else { // Hubo algun error
                             callBack.methodToCallBack(false);
@@ -169,25 +170,25 @@ public class Firebase {
      * @param callBack CallBack a ejecutar, recibirá true si no hubo errores  o
      * false si hubo algún error.
      */
-    public static void createUser(String email, CallBack callBack) {
+    public static void createUser(String email, String nombre, String apellidos, CallBack callBack) {
 
         // Create a new user
         Map<String, Object> user = new HashMap<>();
-        user.put("email", email);
+        user.put("nombre", nombre);
+        user.put("apellidos", apellidos);
 
         // Añadimos al usuario
-        db.collection("users")
-                .add(user).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentReference> task) {
-                if (task.isSuccessful()) {
-                    callBack.methodToCallBack(true);
-                }
-                else {
-                    callBack.methodToCallBack(false);
-                }
-            }
-        });
+        db.collection("usuarios").document(email).set(user)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            callBack.methodToCallBack(true);
+                        } else {
+                            callBack.methodToCallBack(false);
+                        }
+                    }
+                });
     }
 
 

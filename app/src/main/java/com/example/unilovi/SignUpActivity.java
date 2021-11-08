@@ -19,6 +19,9 @@ public class SignUpActivity extends AppCompatActivity {
     // Atribitos que contendrán una referencia a los componentes usados
     private EditText editEmail;
     private EditText editPassword;
+    private EditText editRepetirPassword;
+    private EditText editNombre;
+    private EditText editApellidos;
     private Button signUpButton;
 
     // Atriutos auxiliares
@@ -32,6 +35,9 @@ public class SignUpActivity extends AppCompatActivity {
         // Obtenemos referencias a los componentes
         editEmail = (EditText) findViewById(R.id.emailSignUpEdit);
         editPassword = (EditText) findViewById(R.id.passwordSignUpEdit);
+        editRepetirPassword = (EditText) findViewById(R.id.repetirPasswordSignUpEdit);
+        editNombre = (EditText) findViewById(R.id.nombreSignUpEdit);
+        editApellidos = (EditText) findViewById(R.id.apellidosSignUpEdit);
         signUpButton = (Button) findViewById(R.id.signUpButton);
 
         // Asignamos listeners
@@ -43,7 +49,10 @@ public class SignUpActivity extends AppCompatActivity {
                 if (validacionEntrada()) {
                     String emailContent = editEmail.getText().toString();
                     String passwordContent = editPassword.getText().toString();
-                    Firebase.registrarUsuario(emailContent, passwordContent, new CallackSignUp());
+                    String nombreContent = editNombre.getText().toString();
+                    String apellidosContent = editApellidos.getText().toString();
+                    Firebase.registrarUsuario(emailContent, passwordContent,
+                            nombreContent, apellidosContent, new CallackSignUp());
                 }
             }
         });
@@ -53,10 +62,21 @@ public class SignUpActivity extends AppCompatActivity {
     private boolean validacionEntrada() {
         String emailContent = editEmail.getText().toString();
         String passwordContent = editPassword.getText().toString();
-        if (emailContent.isEmpty() || passwordContent.isEmpty()) {
+        String repetirPasswordContent = editRepetirPassword.getText().toString();
+        String nombreContent = editNombre.getText().toString();
+        String apellidosContent = editApellidos.getText().toString();
+
+        if (emailContent.isEmpty() || passwordContent.isEmpty() || repetirPasswordContent.isEmpty()
+                || nombreContent.isEmpty() || apellidosContent.isEmpty()) {
             Util.showAlert(context, "Debe rellenar todos los campos para iniciar sesión");
             return false;
         }
+
+        if (!passwordContent.equals(repetirPasswordContent)) {
+            Util.showAlert(context, "Las contraseñas no coinciden");
+            return false;
+        }
+
         return true;
     }
 

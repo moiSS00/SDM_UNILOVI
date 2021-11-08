@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/editEmail"
+        android:id="@+id/apellidosSignUpEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -36,13 +36,13 @@
         app:layout_constraintVertical_bias="0.952" />
 
     <EditText
-        android:id="@+id/editName"
+        android:id="@+id/nombreSignUpEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Nombre"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/editEmail"
+        app:layout_constraintBottom_toTopOf="@+id/apellidosSignUpEdit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.527"
         app:layout_constraintStart_toStartOf="parent"
@@ -56,8 +56,8 @@
         android:ems="10"
         android:hint="Contraseña"
 
-        android:inputType="textEmailAddress"
-        app:layout_constraintBottom_toTopOf="@+id/editPass"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toTopOf="@+id/repetirPasswordSignUpEdit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.527"
         app:layout_constraintStart_toStartOf="parent"
@@ -65,7 +65,7 @@
         app:layout_constraintVertical_bias="0.955" />
 
     <EditText
-        android:id="@+id/editPass"
+        android:id="@+id/repetirPasswordSignUpEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -86,7 +86,7 @@
         android:textColor="#303F9F"
         android:textSize="25sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/editName"
+        app:layout_constraintBottom_toTopOf="@+id/nombreSignUpEdit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.529"
         app:layout_constraintStart_toStartOf="parent"
@@ -106,7 +106,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.562"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editPass"
+        app:layout_constraintTop_toBottomOf="@+id/repetirPasswordSignUpEdit"
         app:layout_constraintVertical_bias="0.392" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

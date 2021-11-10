@@ -85,8 +85,9 @@ public class SignUpActivity extends AppCompatActivity {
         @Override
         public void methodToCallBack(Object object) {
             if ((boolean) object) {
-                Intent mainIntent = new Intent(SignUpActivity.this, MainActivity.class);
-                startActivity(mainIntent);
+                Intent postIntent = new Intent(SignUpActivity.this, PostSignUpActivity.class);
+                startActivity(postIntent);
+                finish();
             } else {
                 Util.showAlert(context, "Hubo un error al registrarse");
             }

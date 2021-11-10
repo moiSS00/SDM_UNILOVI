@@ -2,6 +2,7 @@ package com.example.unilovi;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.unilovi.database.Firebase;
+import com.example.unilovi.utils.Util;
+import com.example.unilovi.utils.callbacks.CallBack;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
@@ -22,6 +25,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.unilovi.databinding.ActivityMainBinding;
+import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView email;
     private TextView nombre;
     private ImageView imagen;
+    private ImageView imagenRandom;
     private SharedPreferences sharedPreferences;
 
     @Override
@@ -54,12 +59,14 @@ public class MainActivity extends AppCompatActivity {
         View headerView = navigationView.getHeaderView(0);
 
         imagen = headerView.findViewById(R.id.imageViewMenu);
+        imagenRandom = headerView.findViewById(R.id.imageRandom);
         nombre = headerView.findViewById(R.id.nombreMenuID);
         email = headerView.findViewById(R.id.emailText);
 
 
-        nombre.setText("Hola buenas tardes");
-        email.setText("prueba@gmail.com");
+        nombre.setText("Bienvenido " + Firebase.getUsuarioActual().getEmail());
+        email.setText(Firebase.getUsuarioActual().getEmail());
+        Firebase.downloadImage(Firebase.getUsuarioActual().getEmail(), new CallbackMainFoto());
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -119,5 +126,37 @@ public class MainActivity extends AppCompatActivity {
         else
             getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
+    }
+
+    public void cargarFotoPrincipal(String string) {
+        Picasso.get().load(string).into(imagen);
+    }
+
+    public void cargarFotoRandom(String string) {
+        Picasso.get().load(string).into(imagenRandom);
+    }
+
+    private class CallbackMainFoto implements CallBack {
+
+        @Override
+        public void methodToCallBack(Object object) {
+            if (object != null) {
+                cargarFotoPrincipal((String) object);
+            } else {
+                Util.showAlert(getApplicationContext(), "Hubo un error al cargar las fotos");
+            }
+        }
+    }
+
+    private class CallbackRandomFoto implements CallBack {
+
+        @Override
+        public void methodToCallBack(Object object) {
+            if (object != null) {
+                cargarFotoRandom((String) object);
+            } else {
+                Util.showAlert(getApplicationContext(), "Hubo un error al cargar las fotos");
+            }
+        }
     }
 }

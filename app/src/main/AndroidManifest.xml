@@ -4,6 +4,7 @@
     <!-- Permisos que necesita la aplicación -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -12,6 +13,10 @@
         android:roundIcon="@mipmap/ic_unilovi_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Unilovi">
+        <activity
+            android:name=".PostSignUpActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Unilovi.NoActionBar" />
         <activity
             android:name=".SplashActivity"
             android:exported="true"
@@ -43,8 +48,7 @@
             android:name=".SignInActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Unilovi.NoActionBar">
-        </activity>
+            android:theme="@style/Theme.Unilovi.NoActionBar" />
     </application>
 
 </manifest>

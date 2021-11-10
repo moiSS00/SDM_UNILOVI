@@ -1,10 +1,14 @@
 package com.example.unilovi.database;
 
 
+import android.net.Uri;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 
 import com.example.unilovi.utils.callbacks.CallBack;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -15,6 +19,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,6 +36,9 @@ public class Firebase {
 
     // Modulo de autentificación
     private static FirebaseAuth fAuth = FirebaseAuth.getInstance();
+
+    //Storage de fotos
+    private static StorageReference storage = FirebaseStorage.getInstance().getReference();
 
 
     // ---- Autenticación ---
@@ -189,6 +199,38 @@ public class Firebase {
                         }
                     }
                 });
+    }
+
+    /**
+     * Sube una foto al storage
+     * @param uri Uri donde está la imagen
+     */
+    public static void uploadImage(Uri uri) {
+        StorageReference filePath = storage.child("images").child(getUsuarioActual().getEmail());
+
+        filePath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                System.out.println("terrible");
+            }
+        });
+    }
+
+    /**
+     * Descarga la foto del storage
+     * @param email Email del usuario que descarga la foto
+     */
+    public static void downloadImage(String email, CallBack callBack) {
+        storage.child("images").child(email).getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if (task.isSuccessful()) {
+                    callBack.methodToCallBack(task.getResult().toString());
+                } else {
+                    callBack.methodToCallBack(task.getResult());
+                }
+            }
+        });
     }
 
 

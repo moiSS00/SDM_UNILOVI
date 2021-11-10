@@ -41,11 +41,15 @@
         <entry key="..\:/Users/pardi/AndroidStudioProjects/SDM_UNILOVI/app/src/main/res/drawable/side_nav_bar.xml" value="0.5703125" />
         <entry key="..\:/Users/pardi/AndroidStudioProjects/SDM_UNILOVI/app/src/main/res/drawable/splash_screem.xml" value="0.5661458333333333" />
         <entry key="..\:/Users/pardi/AndroidStudioProjects/SDM_UNILOVI/app/src/main/res/drawable/splash_screen.xml" value="0.5615384615384615" />
+        <entry key="..\:/Users/pardi/AndroidStudioProjects/SDM_UNILOVI/app/src/main/res/layout-w1240dp/content_scrolling.xml" value="0.35609103078982596" />
+        <entry key="..\:/Users/pardi/AndroidStudioProjects/SDM_UNILOVI/app/src/main/res/layout-w936dp/content_scrolling.xml" value="0.415625" />
         <entry key="..\:/Users/pardi/AndroidStudioProjects/SDM_UNILOVI/app/src/main/res/layout/activity_dialog_redes_sociales.xml" value="0.5479166666666667" />
         <entry key="..\:/Users/pardi/AndroidStudioProjects/SDM_UNILOVI/app/src/main/res/layout/activity_main.xml" value="0.5541666666666667" />
+        <entry key="..\:/Users/pardi/AndroidStudioProjects/SDM_UNILOVI/app/src/main/res/layout/activity_post_sign_up.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/pardi/AndroidStudioProjects/SDM_UNILOVI/app/src/main/res/layout/activity_search_preferences.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/pardi/AndroidStudioProjects/SDM_UNILOVI/app/src/main/res/layout/activity_show_user.xml" value="0.5479166666666667" />
         <entry key="..\:/Users/pardi/AndroidStudioProjects/SDM_UNILOVI/app/src/main/res/layout/activity_sign_in.xml" value="0.3307291666666667" />
+        <entry key="..\:/Users/pardi/AndroidStudioProjects/SDM_UNILOVI/app/src/main/res/layout/activity_sign_up.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/pardi/AndroidStudioProjects/SDM_UNILOVI/app/src/main/res/layout/activity_splash.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/pardi/AndroidStudioProjects/SDM_UNILOVI/app/src/main/res/layout/activity_three_button.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/pardi/AndroidStudioProjects/SDM_UNILOVI/app/src/main/res/layout/activity_user_settings.xml" value="0.5" />
@@ -58,9 +62,11 @@
         <entry key="..\:/Users/pardi/AndroidStudioProjects/SDM_UNILOVI/app/src/main/res/layout/fragment_preferencias.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/pardi/AndroidStudioProjects/SDM_UNILOVI/app/src/main/res/layout/fragment_slideshow.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/pardi/AndroidStudioProjects/SDM_UNILOVI/app/src/main/res/layout/fragment_solicitudes.xml" value="0.5479166666666667" />
+        <entry key="..\:/Users/pardi/AndroidStudioProjects/SDM_UNILOVI/app/src/main/res/layout/linea_data_usuario.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/pardi/AndroidStudioProjects/SDM_UNILOVI/app/src/main/res/layout/linea_recycler_view_usuario.xml" value="0.5479166666666667" />
         <entry key="..\:/Users/pardi/AndroidStudioProjects/SDM_UNILOVI/app/src/main/res/layout/nav_header_main.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/pardi/AndroidStudioProjects/SDM_UNILOVI/app/src/main/res/layout/settings_activity.xml" value="0.5541666666666667" />
+        <entry key="..\:/Users/pardi/AndroidStudioProjects/SDM_UNILOVI/app/src/main/res/layout/signup_form.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/pardi/AndroidStudioProjects/SDM_UNILOVI/app/src/main/res/menu/activity_main_drawer.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/pardi/AndroidStudioProjects/SDM_UNILOVI/app/src/main/res/menu/main.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/pardi/AndroidStudioProjects/SDM_UNILOVI/app/src/main/res/menu/menu_show_user.xml" value="0.5479166666666667" />

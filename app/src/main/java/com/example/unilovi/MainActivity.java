@@ -59,14 +59,9 @@ public class MainActivity extends AppCompatActivity {
         View headerView = navigationView.getHeaderView(0);
 
         imagen = headerView.findViewById(R.id.imageViewMenu);
-        imagenRandom = headerView.findViewById(R.id.imageRandom);
+        imagenRandom = findViewById(R.id.imageRandom);
         nombre = headerView.findViewById(R.id.nombreMenuID);
         email = headerView.findViewById(R.id.emailText);
-
-
-        nombre.setText("Bienvenido " + Firebase.getUsuarioActual().getEmail());
-        email.setText(Firebase.getUsuarioActual().getEmail());
-        Firebase.downloadImage(Firebase.getUsuarioActual().getEmail(), new CallbackMainFoto());
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -113,6 +108,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
+        nombre.setText("Bienvenido " + Firebase.getUsuarioActual().getEmail());
+        email.setText(Firebase.getUsuarioActual().getEmail());
+        Firebase.downloadImage(Firebase.getUsuarioActual().getEmail(), new CallbackMainFoto());
+        Firebase.downloadImage("uo271397@uniovi.es", new CallbackRandomFoto());
         updateDayNight();
     }
 

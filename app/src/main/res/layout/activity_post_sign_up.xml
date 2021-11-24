@@ -11,6 +11,7 @@
         android:id="@+id/imagenPostSignUp"
         android:layout_width="188dp"
         android:layout_height="189dp"
+        android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"

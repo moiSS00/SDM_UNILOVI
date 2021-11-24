@@ -2,7 +2,6 @@ package com.example.unilovi;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,7 +11,7 @@ import android.widget.TextView;
 
 import com.example.unilovi.database.Firebase;
 import com.example.unilovi.utils.Util;
-import com.example.unilovi.utils.callbacks.CallBack;
+import com.example.unilovi.utils.CallBack;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;

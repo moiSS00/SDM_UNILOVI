@@ -2,11 +2,10 @@ package com.example.unilovi.database;
 
 
 import android.net.Uri;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.example.unilovi.utils.callbacks.CallBack;
+import com.example.unilovi.utils.CallBack;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -14,7 +13,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -67,16 +65,17 @@ public class Firebase {
      */
     public static void iniciarSesion(String email, String password, CallBack callBack) {
         fAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) { // Se inicia sesión correctamente
-                            callBack.methodToCallBack(true);
-                        } else { // Hubo algún fallo
-                            callBack.methodToCallBack(false);
-                        }
-                    }
-                });
+                .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+            @Override
+            public void onSuccess(AuthResult authResult) {
+                callBack.methodToCallBack(true);
+            }})
+                .addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                callBack.methodToCallBack(false);
+            }
+        });
     }
 
     /**
@@ -86,20 +85,19 @@ public class Firebase {
      * @param callBack CallBack a ejecutar, recibirá true si no hubo errores  o
      * false si hubo algún error.
      */
-    public static void registrarUsuario(String email, String password, String nombre, String apellidos,
-                                        CallBack callBack) {
+    public static void registrarUsuario(String email, String password, CallBack callBack) {
         fAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) { // El registro fue un exito
-                            createUser(email, nombre, apellidos, callBack);
-
-                        } else { // Hubo algun error
-                            callBack.methodToCallBack(false);
-                        }
-                    }
-                });
+                .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+            @Override
+            public void onSuccess(AuthResult authResult) {
+                callBack.methodToCallBack(true);
+            }})
+                .addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                callBack.methodToCallBack(false);
+            }
+        });
     }
 
 
@@ -111,16 +109,21 @@ public class Firebase {
      * null si hubo algún error.
      */
     public static void getCiudades(CallBack callBack) {
-        db.collection("ciudades").document("ciudadesFormularioUsuario")
-                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        db.collection("ciudades").document("ciudadesFormularioUsuario").get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if (documentSnapshot.exists()) { // Si se encontró el documento que contiene a las ciudades
                     callBack.methodToCallBack(documentSnapshot.getData().get("Ciudades"));
                 }
                 else {
-                    callBack.methodToCallBack(null);
+                    callBack.methodToCallBack(new ArrayList<String>());
                 }
+            }})
+                .addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                callBack.methodToCallBack(new ArrayList<String>());
             }
         });
     }
@@ -131,8 +134,7 @@ public class Firebase {
      * null si hubo algún error.
      */
     public static void getFacultades(CallBack callBack) {
-        db.collection("facultades")
-                .get()
+        db.collection("facultades").get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -145,10 +147,15 @@ public class Firebase {
                             callBack.methodToCallBack(facultades);
                         }
                         else {
-                            callBack.methodToCallBack(null);
+                            callBack.methodToCallBack(new ArrayList<String>());
                         }
-                    }
-                });
+                    }})
+                .addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                callBack.methodToCallBack(new ArrayList<String>());
+            }
+        });
     }
 
     /**
@@ -159,16 +166,21 @@ public class Firebase {
      */
     public static void getCarrerasByFacultad(String facultad, CallBack callBack) {
         // Buscamos el documento para esa facultad
-        db.collection("facultades").document(facultad)
-                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        db.collection("facultades").document(facultad).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if (documentSnapshot.exists()) { // Si existe la facultad
                     callBack.methodToCallBack(documentSnapshot.getData().get("carreras"));
                 }
                 else { // Si no existe la facultad mostramos valor por defecto
-                    callBack.methodToCallBack(null);
+                    callBack.methodToCallBack(new ArrayList<String>());
                 }
+            }})
+                .addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                callBack.methodToCallBack(new ArrayList<String>());
             }
         });
     }
@@ -189,16 +201,17 @@ public class Firebase {
 
         // Añadimos al usuario
         db.collection("usuarios").document(email).set(user)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            callBack.methodToCallBack(true);
-                        } else {
-                            callBack.methodToCallBack(false);
-                        }
-                    }
-                });
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                callBack.methodToCallBack(true);
+            }})
+                .addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                callBack.methodToCallBack(false);
+            }
+        });
     }
 
     /**

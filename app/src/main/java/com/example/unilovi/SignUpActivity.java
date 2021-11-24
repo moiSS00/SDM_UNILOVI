@@ -8,11 +8,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 
-import com.example.unilovi.database.Firebase;
 import com.example.unilovi.utils.Util;
-import com.example.unilovi.utils.callbacks.CallBack;
+import com.example.unilovi.utils.CallBack;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 

@@ -16,10 +16,10 @@ import androidx.fragment.app.Fragment;
 import com.example.unilovi.R;
 import com.example.unilovi.database.Firebase;
 import com.example.unilovi.databinding.FragmentPreferenciasBinding;
-import com.example.unilovi.utils.callbacks.CallBackSpinnerCiudades;
-import com.example.unilovi.utils.callbacks.callBackSpinnerCarreras;
-import com.example.unilovi.utils.callbacks.callBackSpinnerFacultades;
+import com.example.unilovi.utils.Util;
+import com.example.unilovi.utils.CallBack;
 
+import java.util.List;
 
 
 public class PreferenciasBusquedaFragment extends Fragment {
@@ -61,10 +61,22 @@ public class PreferenciasBusquedaFragment extends Fragment {
         edadMaxima.setText("51");
 
         //Rellenamos con valores de la base de datos el spinner de ciudades
-        Firebase.getCiudades(new CallBackSpinnerCiudades(getContext(), spinnerPreferencesCiudades));
+        Firebase.getCiudades(new CallBack() {
+            @Override
+            public void methodToCallBack(Object object) {
+                Util.rellenarSpinner(getContext(),
+                        spinnerPreferencesCiudades, (List<String>) object);
+            }
+        });
 
         // Rellenamos con valores de la base de datos el spinner de facultades
-        Firebase.getFacultades(new callBackSpinnerFacultades(getContext(), spinnerPreferencesFacultades));
+        Firebase.getFacultades(new CallBack() {
+            @Override
+            public void methodToCallBack(Object object) {
+                Util.rellenarSpinner(getContext(), spinnerPreferencesFacultades,
+                        (List<String>) object);
+            }
+        });
 
         // Asignamos listeners
 
@@ -122,7 +134,13 @@ public class PreferenciasBusquedaFragment extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 // Obtenemos la facultad seleccionada
                 String facultad = spinnerPreferencesFacultades.getItemAtPosition(i).toString();
-                Firebase.getCarrerasByFacultad(facultad, new callBackSpinnerCarreras(getContext(), spinnerPreferencesCarreras));
+                Firebase.getCarrerasByFacultad(facultad, new CallBack() {
+                    @Override
+                    public void methodToCallBack(Object object) {
+                        Util.rellenarSpinner(getContext(),
+                                spinnerPreferencesCarreras, (List<String>) object);
+                    }
+                });
             }
 
             @Override

@@ -15,10 +15,11 @@ import android.widget.Spinner;
 import android.widget.Switch;
 
 import com.example.unilovi.database.Firebase;
-import com.example.unilovi.utils.callbacks.CallBackSpinnerCiudades;
-import com.example.unilovi.utils.callbacks.callBackSpinnerCarreras;
-import com.example.unilovi.utils.callbacks.callBackSpinnerFacultades;
+import com.example.unilovi.utils.Util;
+import com.example.unilovi.utils.CallBack;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.List;
 
 public class UserSettingsActivity extends AppCompatActivity {
 
@@ -52,10 +53,22 @@ public class UserSettingsActivity extends AppCompatActivity {
         switchTema = (Switch) findViewById(R.id.switchTema);
 
         //Rellenamos con valores de la base de datos el spinner de ciudades
-        Firebase.getCiudades(new CallBackSpinnerCiudades(context, spinnerSettingsCiudades));
+        Firebase.getCiudades(new CallBack() {
+            @Override
+            public void methodToCallBack(Object object) {
+                Util.rellenarSpinner(getApplicationContext(),
+                        spinnerSettingsCiudades, (List<String>) object);
+            }
+        });
 
         // Rellenamos con valores de la base de datos el spinner de facultades
-        Firebase.getFacultades(new callBackSpinnerFacultades(context, spinnerSettingsFacultades));
+        Firebase.getFacultades(new CallBack() {
+            @Override
+            public void methodToCallBack(Object object) {
+                Util.rellenarSpinner(getApplicationContext(),
+                        spinnerSettingsFacultades, (List<String>) object);
+            }
+        });
 
         //  Rellenamos con valores de la base de datos el spinner de carreras para una facultad
         spinnerSettingsFacultades.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -63,7 +76,13 @@ public class UserSettingsActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 // Obtenemos la facultad seleccionada
                 String facultad = spinnerSettingsFacultades.getItemAtPosition(i).toString();
-                Firebase.getCarrerasByFacultad(facultad, new callBackSpinnerCarreras(context, spinnerSettingsCarreras));
+                Firebase.getCarrerasByFacultad(facultad, new CallBack() {
+                    @Override
+                    public void methodToCallBack(Object object) {
+                        Util.rellenarSpinner(getApplicationContext(),
+                                spinnerSettingsCarreras, (List<String>) object);
+                    }
+                });
             }
 
             @Override
@@ -112,5 +131,7 @@ public class UserSettingsActivity extends AppCompatActivity {
             getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
     }
+
+    // Tareas asíncronas
 
 }

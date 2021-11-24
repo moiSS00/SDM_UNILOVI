@@ -1,4 +1,4 @@
-package com.example.unilovi.utils.callbacks;
+package com.example.unilovi.utils;
 
 public interface CallBack {
     void methodToCallBack(Object object);

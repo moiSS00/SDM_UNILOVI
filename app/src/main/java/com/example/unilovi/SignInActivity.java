@@ -1,29 +1,17 @@
 package com.example.unilovi;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.example.unilovi.database.Firebase;
 import com.example.unilovi.utils.Util;
-import com.example.unilovi.utils.callbacks.CallBack;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-
-import okhttp3.Call;
+import com.example.unilovi.utils.CallBack;
 
 public class SignInActivity extends AppCompatActivity {
 

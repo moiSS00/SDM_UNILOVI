@@ -13,15 +13,20 @@ import android.widget.EditText;
 import com.example.unilovi.database.Firebase;
 import com.example.unilovi.utils.Util;
 import com.example.unilovi.utils.callbacks.CallBack;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 public class SignUpActivity extends AppCompatActivity {
 
     // Atribitos que contendrán una referencia a los componentes usados
-    private EditText editEmail;
-    private EditText editPassword;
-    private EditText editRepetirPassword;
-    private EditText editNombre;
-    private EditText editApellidos;
+    private TextInputLayout correo_error;
+    private TextInputLayout pass_error;
+    private TextInputLayout repeatPass_error;
+
+    private TextInputEditText correo;
+    private TextInputEditText pass;
+    private TextInputEditText repeatPass;
+
     private Button signUpButton;
 
     // Atriutos auxiliares
@@ -32,12 +37,16 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        // Obtenemos referencias a los componentes
-        editEmail = (EditText) findViewById(R.id.emailSignUpEdit);
-        editPassword = (EditText) findViewById(R.id.passwordSignUpEdit);
-        editRepetirPassword = (EditText) findViewById(R.id.repetirPasswordSignUpEdit);
-        editNombre = (EditText) findViewById(R.id.nombreSignUpEdit);
-        editApellidos = (EditText) findViewById(R.id.apellidosSignUpEdit);
+        //CAMPOS PARA MARCAR EL ERROR EN ROJO
+         correo_error = (TextInputLayout) findViewById(R.id.filledTextFieldCorreo);
+         pass_error = (TextInputLayout) findViewById(R.id.filledTextFieldPass);
+         repeatPass_error = (TextInputLayout) findViewById(R.id.filledTextFieldRepeatPass);
+
+         //INPUTS QUE INTRODUCE EL USUARIO
+         correo = (TextInputEditText) findViewById(R.id.correo);
+         pass = (TextInputEditText) findViewById(R.id.pass);
+         repeatPass = (TextInputEditText) findViewById(R.id.repeatPass);
+
         signUpButton = (Button) findViewById(R.id.signUpButton);
 
         // Asignamos listeners
@@ -46,38 +55,51 @@ public class SignUpActivity extends AppCompatActivity {
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (validacionEntrada()) {
-                    String emailContent = editEmail.getText().toString();
-                    String passwordContent = editPassword.getText().toString();
-                    String nombreContent = editNombre.getText().toString();
-                    String apellidosContent = editApellidos.getText().toString();
-                    Firebase.registrarUsuario(emailContent, passwordContent,
-                            nombreContent, apellidosContent, new CallackSignUp());
+
+                //VALIDACIONES
+                boolean flag=true;
+                if(correo.getText().toString().isEmpty()) {
+                    correo_error.setError("Necesita introducirse el correo");
+                    flag=false;
+                }
+                else {
+                    correo_error.setErrorEnabled(false);
+                }
+                if(pass.getText().toString().isEmpty()) {
+                    pass_error.setError("Necesita introducirse la contraseña");
+                    flag=false;
+                }
+                else
+                    pass_error.setErrorEnabled(false);
+
+                if(flag && !pass.getText().toString().equals(repeatPass.getText().toString())) {
+                    repeatPass_error.setError("La contraseña no coincide");
+                    flag=false;
+                }
+                else
+                    repeatPass_error.setErrorEnabled(false);
+
+                if(flag) {
+                    /**
+                     * 1- Comprobar a la hora de enviar el correo que no tiene espacios en blanco
+                     * String correo=correo.getText().toString().trim();
+                     * 2- Comprobar tambien que la cadena del correo no está formada por espacios en blanco
+                     * if(correo.length()>0)
+                     *    Entonces envia el correo
+                     * 3- Añadir el sufijo de uniovi.es
+                     */
+                    String emailContent = correo.getText().toString().trim();
+                    String passwordContent = pass.getText().toString();
+
+                    //REHACER CONSTRUCTOR
+                  /*
+                        Firebase.registrarUsuario(emailContent, passwordContent, new CallackSignUp());
+
+                  */
                 }
             }
         });
 
-    }
-
-    private boolean validacionEntrada() {
-        String emailContent = editEmail.getText().toString();
-        String passwordContent = editPassword.getText().toString();
-        String repetirPasswordContent = editRepetirPassword.getText().toString();
-        String nombreContent = editNombre.getText().toString();
-        String apellidosContent = editApellidos.getText().toString();
-
-        if (emailContent.isEmpty() || passwordContent.isEmpty() || repetirPasswordContent.isEmpty()
-                || nombreContent.isEmpty() || apellidosContent.isEmpty()) {
-            Util.showAlert(context, "Debe rellenar todos los campos para iniciar sesión");
-            return false;
-        }
-
-        if (!passwordContent.equals(repetirPasswordContent)) {
-            Util.showAlert(context, "Las contraseñas no coinciden");
-            return false;
-        }
-
-        return true;
     }
 
     private class CallackSignUp implements CallBack {

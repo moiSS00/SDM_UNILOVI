@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         View headerView = navigationView.getHeaderView(0);
 
         imagen = headerView.findViewById(R.id.imageViewMenu);
-        imagenRandom = findViewById(R.id.imageRandom);
+        imagenRandom = findViewById(R.id.imagenPretendiente);
         nombre = headerView.findViewById(R.id.nombreMenuID);
         email = headerView.findViewById(R.id.emailText);
 

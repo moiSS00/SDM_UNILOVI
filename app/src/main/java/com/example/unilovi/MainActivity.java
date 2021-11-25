@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView email;
     private TextView nombre;
     private ImageView imagen;
-    private ImageView imagenRandom;
     private SharedPreferences sharedPreferences;
 
     @Override
@@ -58,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
         View headerView = navigationView.getHeaderView(0);
 
         imagen = headerView.findViewById(R.id.imageViewMenu);
-        imagenRandom = findViewById(R.id.imagenPretendiente);
         nombre = headerView.findViewById(R.id.nombreMenuID);
         email = headerView.findViewById(R.id.emailText);
 
@@ -110,8 +108,17 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         nombre.setText("Bienvenido " + Firebase.getUsuarioActual().getEmail());
         email.setText(Firebase.getUsuarioActual().getEmail());
-        Firebase.downloadImage(Firebase.getUsuarioActual().getEmail(), new CallbackMainFoto());
-        Firebase.downloadImage("uo271397@uniovi.es", new CallbackRandomFoto());
+        Firebase.downloadImage(Firebase.getUsuarioActual().getEmail(), new CallBack() {
+            @Override
+            public void methodToCallBack(Object object) {
+                if (object != null) {
+                    Picasso.get().load((String) object).into(imagen);
+
+                } else {
+                    Util.showAlert(getApplicationContext(), "Hubo un error al cargar las fotos");
+                }
+            }
+        });
         updateDayNight();
     }
 
@@ -127,35 +134,4 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void cargarFotoPrincipal(String string) {
-        Picasso.get().load(string).into(imagen);
-    }
-
-    public void cargarFotoRandom(String string) {
-        Picasso.get().load(string).into(imagenRandom);
-    }
-
-    private class CallbackMainFoto implements CallBack {
-
-        @Override
-        public void methodToCallBack(Object object) {
-            if (object != null) {
-                cargarFotoPrincipal((String) object);
-            } else {
-                Util.showAlert(getApplicationContext(), "Hubo un error al cargar las fotos");
-            }
-        }
-    }
-
-    private class CallbackRandomFoto implements CallBack {
-
-        @Override
-        public void methodToCallBack(Object object) {
-            if (object != null) {
-                cargarFotoRandom((String) object);
-            } else {
-                Util.showAlert(getApplicationContext(), "Hubo un error al cargar las fotos");
-            }
-        }
-    }
 }

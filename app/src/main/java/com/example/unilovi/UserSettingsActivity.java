@@ -3,6 +3,7 @@ package com.example.unilovi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -106,11 +107,6 @@ public class UserSettingsActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
 
-        // Entramos en modo carga
-        disableView();
-
-        // Rellenamos valores
-
         //Rellenamos con valores de la base de datos el spinner de ciudades
         Firebase.getCiudades(new CallBack() {
             @Override
@@ -135,28 +131,6 @@ public class UserSettingsActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    /**
-     * Pone la vista en modo carga
-     */
-    private void disableView() {
-        // Activamos la barra de carga
-        findViewById(R.id.progressBarUserSettings).setVisibility(View.VISIBLE);
-
-        // Desactivamos los demás componentes
-        findViewById(R.id.txtGeneroUserSettings).setVisibility(View.INVISIBLE);
-        findViewById(R.id.txtFacultadCarreraUserSettings).setVisibility(View.INVISIBLE);
-        findViewById(R.id.spinnerUserSettingsFacultades).setVisibility(View.INVISIBLE);
-        findViewById(R.id.spinnerUserSettingsCarreras).setVisibility(View.INVISIBLE);
-        findViewById(R.id.txtCiudadUserSettings).setVisibility(View.INVISIBLE);
-        findViewById(R.id.spinnerUserSettingsFacultades).setVisibility(View.INVISIBLE);
-        findViewById(R.id.spinnerUserSettingsCiudades).setVisibility(View.INVISIBLE);
-        findViewById(R.id.txtGeneroUserSettings).setVisibility(View.INVISIBLE);
-        findViewById(R.id.radioGroupGeneroUserSettings).setVisibility(View.INVISIBLE);
-        findViewById(R.id.switchTemaUserSettings).setVisibility(View.INVISIBLE);
-        findViewById(R.id.btnCancelarUserSettings).setVisibility(View.INVISIBLE);
-        findViewById(R.id.btnGuardarUserSettings).setVisibility(View.INVISIBLE);
     }
 
     /**

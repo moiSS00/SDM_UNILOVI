@@ -117,13 +117,13 @@ public class Firebase {
                     callBack.methodToCallBack(documentSnapshot.getData().get("Ciudades"));
                 }
                 else {
-                    callBack.methodToCallBack(new ArrayList<String>());
+                    callBack.methodToCallBack(null);
                 }
             }})
                 .addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                callBack.methodToCallBack(new ArrayList<String>());
+                callBack.methodToCallBack(null);
             }
         });
     }
@@ -147,13 +147,13 @@ public class Firebase {
                             callBack.methodToCallBack(facultades);
                         }
                         else {
-                            callBack.methodToCallBack(new ArrayList<String>());
+                            callBack.methodToCallBack(null);
                         }
                     }})
                 .addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                callBack.methodToCallBack(new ArrayList<String>());
+                callBack.methodToCallBack(null);
             }
         });
     }
@@ -174,13 +174,13 @@ public class Firebase {
                     callBack.methodToCallBack(documentSnapshot.getData().get("carreras"));
                 }
                 else { // Si no existe la facultad mostramos valor por defecto
-                    callBack.methodToCallBack(new ArrayList<String>());
+                    callBack.methodToCallBack(null);
                 }
             }})
                 .addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                callBack.methodToCallBack(new ArrayList<String>());
+                callBack.methodToCallBack(null);
             }
         });
     }

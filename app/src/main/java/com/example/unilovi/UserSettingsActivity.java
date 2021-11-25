@@ -3,12 +3,12 @@ package com.example.unilovi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -17,7 +17,6 @@ import android.widget.Switch;
 import com.example.unilovi.database.Firebase;
 import com.example.unilovi.utils.Util;
 import com.example.unilovi.utils.CallBack;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
@@ -33,42 +32,39 @@ public class UserSettingsActivity extends AppCompatActivity {
     private RadioButton radioButtonFem;
     private RadioButton radioButtonNoBinario;
     private Switch switchTema;
-    private SharedPreferences sharedPreferences;
+    private ProgressBar progressBar;
 
     // Atributos auxiliares
-    private FirebaseFirestore db = FirebaseFirestore.getInstance(); // Base de datos
-    private Context context = this;
+    private SharedPreferences sharedPreferences;
+    private List<String> listaCiudades;
+    private List<String> listaFacultades;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_settings);
 
+        //Referencias a componentes Settings
+        spinnerSettingsFacultades = (Spinner) findViewById(R.id.spinnerUserSettingsFacultades);
+        spinnerSettingsCarreras = (Spinner) findViewById(R.id.spinnerUserSettingsCarreras);
+        spinnerSettingsCiudades = (Spinner) findViewById(R.id.spinnerUserSettingsCiudades);
+        btnCancelarAjustes = (Button) findViewById(R.id.btnCancelarUserSettings);
+        btnGuardarAjustes = (Button) findViewById(R.id.btnGuardarUserSettings);
+        radioGroupSettings = (RadioGroup) findViewById(R.id.radioGroupGeneroUserSettings);
+        switchTema = (Switch) findViewById(R.id.switchTemaUserSettings);
+        progressBar = (ProgressBar) findViewById(R.id.progressBarUserSettings);
+
         sharedPreferences = getSharedPreferences("SP", MODE_PRIVATE);
 
-        //Referencias a componentes Settings
-        spinnerSettingsFacultades = (Spinner) findViewById(R.id.spinnerSettingsFacultades);
-        spinnerSettingsCarreras = (Spinner) findViewById(R.id.spinnerSettingsCarreras);
-        spinnerSettingsCiudades = (Spinner) findViewById(R.id.spinnerSettingsCiudades);
-        switchTema = (Switch) findViewById(R.id.switchTema);
+        //Comprobamos si está puesto o no el tema oscuro para cambiar el switch
+        int tema = sharedPreferences.getInt("tema", 1);
+        if (tema == 0)
+            switchTema.setChecked(true);
+        else
+            switchTema.setChecked(false);
 
-        //Rellenamos con valores de la base de datos el spinner de ciudades
-        Firebase.getCiudades(new CallBack() {
-            @Override
-            public void methodToCallBack(Object object) {
-                Util.rellenarSpinner(getApplicationContext(),
-                        spinnerSettingsCiudades, (List<String>) object);
-            }
-        });
 
-        // Rellenamos con valores de la base de datos el spinner de facultades
-        Firebase.getFacultades(new CallBack() {
-            @Override
-            public void methodToCallBack(Object object) {
-                Util.rellenarSpinner(getApplicationContext(),
-                        spinnerSettingsFacultades, (List<String>) object);
-            }
-        });
+        // Asignamos listeners
 
         //  Rellenamos con valores de la base de datos el spinner de carreras para una facultad
         spinnerSettingsFacultades.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -104,20 +100,85 @@ public class UserSettingsActivity extends AppCompatActivity {
 
             }
         });
-
-        //Comprobamos si está puesto o no el tema oscuro para cambiar el switch
-        int tema = sharedPreferences.getInt("tema", 1);
-        if (tema == 0)
-            switchTema.setChecked(true);
-        else
-            switchTema.setChecked(false);
-
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        updateDayNight();
+
+        // Entramos en modo carga
+        disableView();
+
+        // Rellenamos valores
+
+        //Rellenamos con valores de la base de datos el spinner de ciudades
+        Firebase.getCiudades(new CallBack() {
+            @Override
+            public void methodToCallBack(Object object) {
+                if (object != null) {
+                    listaCiudades = (List<String>) object;
+                    // Rellenamos con valores de la base de datos el spinner de facultades
+                    Firebase.getFacultades(new CallBack() {
+                        @Override
+                        public void methodToCallBack(Object object) {
+                            if (object != null) {
+                                listaFacultades = (List<String>) object;
+                                Util.rellenarSpinner(getApplicationContext(),
+                                        spinnerSettingsFacultades, (List<String>) object);
+                                Util.rellenarSpinner(getApplicationContext(),
+                                        spinnerSettingsCiudades, (List<String>) object);
+                                updateDayNight();
+                                enableView();
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    /**
+     * Pone la vista en modo carga
+     */
+    private void disableView() {
+        // Activamos la barra de carga
+        findViewById(R.id.progressBarUserSettings).setVisibility(View.VISIBLE);
+
+        // Desactivamos los demás componentes
+        findViewById(R.id.txtGeneroUserSettings).setVisibility(View.INVISIBLE);
+        findViewById(R.id.txtFacultadCarreraUserSettings).setVisibility(View.INVISIBLE);
+        findViewById(R.id.spinnerUserSettingsFacultades).setVisibility(View.INVISIBLE);
+        findViewById(R.id.spinnerUserSettingsCarreras).setVisibility(View.INVISIBLE);
+        findViewById(R.id.txtCiudadUserSettings).setVisibility(View.INVISIBLE);
+        findViewById(R.id.spinnerUserSettingsFacultades).setVisibility(View.INVISIBLE);
+        findViewById(R.id.spinnerUserSettingsCiudades).setVisibility(View.INVISIBLE);
+        findViewById(R.id.txtGeneroUserSettings).setVisibility(View.INVISIBLE);
+        findViewById(R.id.radioGroupGeneroUserSettings).setVisibility(View.INVISIBLE);
+        findViewById(R.id.switchTemaUserSettings).setVisibility(View.INVISIBLE);
+        findViewById(R.id.btnCancelarUserSettings).setVisibility(View.INVISIBLE);
+        findViewById(R.id.btnGuardarUserSettings).setVisibility(View.INVISIBLE);
+    }
+
+    /**
+     * Pone la vista en modo normal
+     */
+    private void enableView() {
+        // Desactivamos la barra de carga
+        findViewById(R.id.progressBarUserSettings).setVisibility(View.INVISIBLE);
+
+        // Activamos los demás componentes
+        findViewById(R.id.txtGeneroUserSettings).setVisibility(View.VISIBLE);
+        findViewById(R.id.txtFacultadCarreraUserSettings).setVisibility(View.VISIBLE);
+        findViewById(R.id.spinnerUserSettingsFacultades).setVisibility(View.VISIBLE);
+        findViewById(R.id.spinnerUserSettingsCarreras).setVisibility(View.VISIBLE);
+        findViewById(R.id.txtCiudadUserSettings).setVisibility(View.VISIBLE);
+        findViewById(R.id.spinnerUserSettingsFacultades).setVisibility(View.VISIBLE);
+        findViewById(R.id.spinnerUserSettingsCiudades).setVisibility(View.VISIBLE);
+        findViewById(R.id.txtGeneroUserSettings).setVisibility(View.VISIBLE);
+        findViewById(R.id.radioGroupGeneroUserSettings).setVisibility(View.VISIBLE);
+        findViewById(R.id.switchTemaUserSettings).setVisibility(View.VISIBLE);
+        findViewById(R.id.btnCancelarUserSettings).setVisibility(View.VISIBLE);
+        findViewById(R.id.btnGuardarUserSettings).setVisibility(View.VISIBLE);
     }
 
     /*
@@ -131,7 +192,5 @@ public class UserSettingsActivity extends AppCompatActivity {
             getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
     }
-
-    // Tareas asíncronas
 
 }

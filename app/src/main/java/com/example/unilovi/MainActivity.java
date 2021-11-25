@@ -101,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(settingsIntent);
             finish();
         }
+
         return super.onOptionsItemSelected(item);
     }
 

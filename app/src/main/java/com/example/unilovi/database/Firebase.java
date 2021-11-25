@@ -192,7 +192,7 @@ public class Firebase {
      * @param callBack CallBack a ejecutar, recibirá true si no hubo errores  o
      * false si hubo algún error.
      */
-    public static void createUser(String email, String nombre, String apellidos, CallBack callBack) {
+    public static void createUser(String email, String nombre, String apellidos, Uri foto, CallBack callBack) {
 
         // Create a new user
         Map<String, Object> user = new HashMap<>();
@@ -204,6 +204,7 @@ public class Firebase {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
+                uploadImage(foto);
                 callBack.methodToCallBack(true);
             }})
                 .addOnFailureListener(new OnFailureListener() {
@@ -221,12 +222,7 @@ public class Firebase {
     public static void uploadImage(Uri uri) {
         StorageReference filePath = storage.child("images").child(getUsuarioActual().getEmail());
 
-        filePath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                System.out.println("terrible");
-            }
-        });
+        filePath.putFile(uri);
     }
 
     /**

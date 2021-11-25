@@ -8,18 +8,27 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.unilovi.database.Firebase;
+import com.example.unilovi.utils.CallBack;
+import com.google.android.material.textfield.TextInputEditText;
 import com.squareup.picasso.Picasso;
 
 public class PostSignUpActivity extends AppCompatActivity {
 
     private ImageView imagen;
+    private Uri dataImagen;
     private Button btnSubirFoto;
+    private Button btnSiguiente;
+
+    private TextInputEditText textNombre;
+    private TextInputEditText textApellido;
 
     private static final int GALLERY_INTENT = 1;
 
@@ -30,6 +39,9 @@ public class PostSignUpActivity extends AppCompatActivity {
 
         imagen = (ImageView) findViewById(R.id.imagenPostSignUp);
         btnSubirFoto = (Button) findViewById(R.id.btnSubirFoto);
+        btnSiguiente = (Button) findViewById(R.id.btnSeguirRegistro);
+        textNombre = (TextInputEditText) findViewById(R.id.editTextTextPersonName);
+        textApellido = (TextInputEditText) findViewById(R.id.editTextTextPersonSurname);
 
         btnSubirFoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,6 +49,26 @@ public class PostSignUpActivity extends AppCompatActivity {
                 openCargarFotoActivityForResult();
             }
         });
+
+        btnSiguiente.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String apellido = textApellido.getText().toString();
+                String nombre = textNombre.getText().toString();
+                if (dataImagen != null && !nombre.isEmpty() && !apellido.isEmpty()) {
+                    Firebase.createUser(Firebase.getUsuarioActual().getEmail(), textNombre.getText().toString(), textApellido.getText().toString(), dataImagen, new CallBack() {
+                        @Override
+                        public void methodToCallBack(Object object) {
+                            Toast.makeText(getApplicationContext(), "Usuario registrado", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+                    Toast.makeText(getApplicationContext(), "No se ha podido registrar al usuario", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
     }
 
     public void openCargarFotoActivityForResult() {
@@ -53,8 +85,8 @@ public class PostSignUpActivity extends AppCompatActivity {
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent intent = result.getData();
                         if (intent != null) {
+                            dataImagen = intent.getData();
                             Picasso.get().load(intent.getData()).into(imagen);
-                            Firebase.uploadImage(intent.getData());
                         }
                     }
                 }

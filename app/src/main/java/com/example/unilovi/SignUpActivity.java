@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.unilovi.database.Firebase;
 import com.example.unilovi.utils.Util;
 import com.example.unilovi.utils.CallBack;
 import com.google.android.material.textfield.TextInputEditText;
@@ -86,36 +87,30 @@ public class SignUpActivity extends AppCompatActivity {
                      *    Entonces envia el correo
                      * 3- Añadir el sufijo de uniovi.es
                      */
-                    String emailContent = correo.getText().toString().trim();
+                    String emailContent = correo.getText().toString().trim() + "@uniovi.es";
                     String passwordContent = pass.getText().toString();
 
                     //REHACER CONSTRUCTOR
-                  /*
-                        Firebase.registrarUsuario(emailContent, passwordContent, new CallackSignUp());
 
-                  */
+                    Firebase.registrarUsuario(emailContent, passwordContent, new CallBack() {
+                        @Override
+                        public void methodToCallBack(Object object) {
+                            if ((boolean) object) {
+                                Firebase.getUsuarioActual().sendEmailVerification();
+                                Intent postIntent = new Intent(SignUpActivity.this, PostSignUpActivity.class);
+                                startActivity(postIntent);
+                                finish();
+                            } else {
+                                Util.showAlert(context, "Hubo un error al registrarse");
+                            }
+                        }
+                    });
+
+
                 }
             }
         });
 
     }
-
-    private class CallackSignUp implements CallBack {
-
-        @Override
-        public void methodToCallBack(Object object) {
-            if ((boolean) object) {
-                Intent postIntent = new Intent(SignUpActivity.this, PostSignUpActivity.class);
-                startActivity(postIntent);
-                finish();
-            } else {
-                Util.showAlert(context, "Hubo un error al registrarse");
-            }
-        }
-
-
-    }
-
-
 
 }

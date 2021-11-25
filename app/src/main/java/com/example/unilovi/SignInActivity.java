@@ -47,7 +47,20 @@ public class SignInActivity extends AppCompatActivity {
                 if (validacionEntrada()) { // Si las entradas son validas
                     String emailContent = editEmail.getText().toString();
                     String passwordContent = editPassword.getText().toString();
-                    Firebase.iniciarSesion(emailContent, passwordContent, new CallBackSignIn());
+                    Firebase.iniciarSesion(emailContent, passwordContent, new CallBack() {
+                        @Override
+                        public void methodToCallBack(Object object) {
+                            if ((boolean) object) {
+                                Intent mainIntent = new Intent(SignInActivity.this, MainActivity.class);
+                                startActivity(mainIntent);
+                                finish();
+                            }
+                            else {
+                                Util.showAlert(context, "Hubo algún fallo al iniciar sesión. " +
+                                        "Comprueba las credenciales introducidas");
+                            }
+                        }
+                    });
                 }
             }
         });
@@ -74,22 +87,5 @@ public class SignInActivity extends AppCompatActivity {
     private void showSignUp() {
         Intent mainIntent = new Intent(SignInActivity.this, SignUpActivity.class);
         startActivity(mainIntent);
-    }
-
-
-    private class CallBackSignIn implements CallBack {
-
-        @Override
-        public void methodToCallBack(Object object) {
-            if ((boolean) object) {
-                Intent mainIntent = new Intent(SignInActivity.this, MainActivity.class);
-                startActivity(mainIntent);
-                finish();
-            }
-            else {
-                Util.showAlert(context, "Hubo algún fallo al iniciar sesión. " +
-                        "Comprueba las credenciales introducidas");
-            }
-        }
     }
 }

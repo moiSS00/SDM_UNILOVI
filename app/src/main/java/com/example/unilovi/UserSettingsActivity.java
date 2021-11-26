@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Layout;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -26,14 +27,11 @@ public class UserSettingsActivity extends AppCompatActivity {
     private Spinner spinnerSettingsFacultades;
     private Spinner spinnerSettingsCarreras;
     private Spinner spinnerSettingsCiudades;
-    private Button btnGuardarAjustes;
-    private Button btnCancelarAjustes;
     private RadioGroup radioGroupSettings;
     private RadioButton radioButtonMasc;
     private RadioButton radioButtonFem;
     private RadioButton radioButtonNoBinario;
     private Switch switchTema;
-    private ProgressBar progressBar;
 
     // Atributos auxiliares
     private SharedPreferences sharedPreferences;
@@ -49,11 +47,8 @@ public class UserSettingsActivity extends AppCompatActivity {
         spinnerSettingsFacultades = (Spinner) findViewById(R.id.spinnerUserSettingsFacultades);
         spinnerSettingsCarreras = (Spinner) findViewById(R.id.spinnerUserSettingsCarreras);
         spinnerSettingsCiudades = (Spinner) findViewById(R.id.spinnerUserSettingsCiudades);
-        btnCancelarAjustes = (Button) findViewById(R.id.btnCancelarUserSettings);
-        btnGuardarAjustes = (Button) findViewById(R.id.btnGuardarUserSettings);
         radioGroupSettings = (RadioGroup) findViewById(R.id.radioGroupGeneroUserSettings);
         switchTema = (Switch) findViewById(R.id.switchTemaUserSettings);
-        progressBar = (ProgressBar) findViewById(R.id.progressBarUserSettings);
 
         sharedPreferences = getSharedPreferences("SP", MODE_PRIVATE);
 
@@ -124,35 +119,13 @@ public class UserSettingsActivity extends AppCompatActivity {
                                 Util.rellenarSpinner(getApplicationContext(),
                                         spinnerSettingsCiudades, (List<String>) object);
                                 updateDayNight();
-                                enableView();
+                                findViewById(R.id.layoutLoad).setVisibility(View.GONE);
                             }
                         }
                     });
                 }
             }
         });
-    }
-
-    /**
-     * Pone la vista en modo normal
-     */
-    private void enableView() {
-        // Desactivamos la barra de carga
-        findViewById(R.id.progressBarUserSettings).setVisibility(View.INVISIBLE);
-
-        // Activamos los demás componentes
-        findViewById(R.id.txtGeneroUserSettings).setVisibility(View.VISIBLE);
-        findViewById(R.id.txtFacultadCarreraUserSettings).setVisibility(View.VISIBLE);
-        findViewById(R.id.spinnerUserSettingsFacultades).setVisibility(View.VISIBLE);
-        findViewById(R.id.spinnerUserSettingsCarreras).setVisibility(View.VISIBLE);
-        findViewById(R.id.txtCiudadUserSettings).setVisibility(View.VISIBLE);
-        findViewById(R.id.spinnerUserSettingsFacultades).setVisibility(View.VISIBLE);
-        findViewById(R.id.spinnerUserSettingsCiudades).setVisibility(View.VISIBLE);
-        findViewById(R.id.txtGeneroUserSettings).setVisibility(View.VISIBLE);
-        findViewById(R.id.radioGroupGeneroUserSettings).setVisibility(View.VISIBLE);
-        findViewById(R.id.switchTemaUserSettings).setVisibility(View.VISIBLE);
-        findViewById(R.id.btnCancelarUserSettings).setVisibility(View.VISIBLE);
-        findViewById(R.id.btnGuardarUserSettings).setVisibility(View.VISIBLE);
     }
 
     /*

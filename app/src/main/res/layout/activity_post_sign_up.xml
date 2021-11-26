@@ -31,31 +31,49 @@
         app:layout_constraintTop_toBottomOf="@+id/imagenPostSignUp"
         app:layout_constraintVertical_bias="0.047" />
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/editTextTextPersonName"
-        android:layout_width="262dp"
-        android:layout_height="40dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSubirFoto"
-        app:layout_constraintVertical_bias="0.074" />
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/editTextTextPersonSurname"
-        android:layout_width="262dp"
-        android:layout_height="40dp"
-        android:ems="10"
-        android:inputType="textPersonName"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/filledTextFieldNombre"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="320dp"
+        android:layout_height="45dp"
+        android:hint="Nombre"
+        app:errorEnabled="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnSubirFoto"
-        app:layout_constraintVertical_bias="0.209" />
+        app:layout_constraintVertical_bias="0.031">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextTextPersonName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/filledTextFieldApellidos"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="320dp"
+        android:layout_height="45dp"
+        android:hint="Apellidos"
+        app:errorEnabled="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/filledTextFieldNombre"
+        app:layout_constraintVertical_bias="0.055">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextTextPersonSurname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/textView10"
@@ -64,10 +82,10 @@
         android:text="Fecha de nacimiento:"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.266"
+        app:layout_constraintHorizontal_bias="0.165"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonSurname"
-        app:layout_constraintVertical_bias="0.069" />
+        app:layout_constraintTop_toBottomOf="@+id/filledTextFieldApellidos"
+        app:layout_constraintVertical_bias="0.058" />
 
     <Button
         android:id="@+id/btnSeguirRegistro"

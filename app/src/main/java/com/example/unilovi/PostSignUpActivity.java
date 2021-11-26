@@ -22,15 +22,22 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.squareup.picasso.Picasso;
 
 public class PostSignUpActivity extends AppCompatActivity {
 
+    //Componentes básicos de android studio
     private ImageView imagen;
     private Uri dataImagen;
     private Button btnSubirFoto;
     private Button btnSiguiente;
 
+    //Layouts de errores
+    private TextInputLayout name_error;
+    private TextInputLayout surnanme_error;
+
+    //Campos de texto
     private TextInputEditText textNombre;
     private TextInputEditText textApellido;
 

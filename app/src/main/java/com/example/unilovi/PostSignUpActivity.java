@@ -54,6 +54,8 @@ public class PostSignUpActivity extends AppCompatActivity {
 
     //Spinners de fechas
     AutoCompleteTextView editTextFilledExposedDropdownYears;
+    AutoCompleteTextView editTextFilledExposedDropdownMonths;
+    AutoCompleteTextView editTextFilledExposedDropdownDays;
 
     private static final int GALLERY_INTENT = 1;
 
@@ -68,6 +70,8 @@ public class PostSignUpActivity extends AppCompatActivity {
         textNombre = (TextInputEditText) findViewById(R.id.editTextTextPersonName);
         textApellido = (TextInputEditText) findViewById(R.id.editTextTextPersonSurname);
         editTextFilledExposedDropdownYears = (AutoCompleteTextView) findViewById(R.id.outlined_exposed_dropdown_years);
+        editTextFilledExposedDropdownMonths = (AutoCompleteTextView) findViewById(R.id.outlined_exposed_dropdown_months);
+        editTextFilledExposedDropdownDays = (AutoCompleteTextView) findViewById(R.id.outlined_exposed_dropdown_days);
 
         btnSubirFoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,25 +124,116 @@ public class PostSignUpActivity extends AppCompatActivity {
             }
         }
 
-        //Cogemos el calendario y rellenamos el array de años según el año actual
+        //Cogemos el calendario y rellenamos el array de años según el año actual y el array de meses
         GregorianCalendar calendar = new GregorianCalendar();
 
-        Integer[] years = new Integer[32];
+        Integer[] years = new Integer[33];
+        Integer[] months = new Integer[12];
+        Integer[] days = new Integer[31];
+
 
         int j = 0;
         for (int i = calendar.get(Calendar.YEAR) - 18; i > calendar.get(Calendar.YEAR) - 51; i--) {
+            //Aquí rellenamos el array de months aprovechando el bucle
+            if (j < 12)
+                months[j] = j+1;
+            //Aquí rellenamos el array de days aprovechando el bucle (por defecto 31 días)
+            if (j < 31)
+                days[j] = j+1;
+
             years[j] = i;
             j++;
         }
 
-        //Rellenamos el spinner de años
-        ArrayAdapter<Integer> adapter =
+        //Creamos los adapter de años, meses y días
+        ArrayAdapter<Integer> adapterYears =
                 new ArrayAdapter<Integer>(
                         this,
                         R.layout.dropdown_menu_popup_item,
                         R.id.prueba,
                         years);
-        editTextFilledExposedDropdownYears.setAdapter(adapter);
+
+        ArrayAdapter<Integer> adapterMonths =
+                new ArrayAdapter<Integer>(
+                        this,
+                        R.layout.dropdown_menu_popup_item,
+                        R.id.prueba,
+                        months);
+        ArrayAdapter<Integer> adapterDays =
+                new ArrayAdapter<Integer>(
+                        this,
+                        R.layout.dropdown_menu_popup_item,
+                        R.id.prueba,
+                        days);
+
+        //Añadimos los adapters
+        editTextFilledExposedDropdownYears.setAdapter(adapterYears);
+        editTextFilledExposedDropdownMonths.setAdapter(adapterMonths);
+        editTextFilledExposedDropdownDays.setAdapter(adapterDays);
+
+        //Añadimos OnItemClickListener para años bisiestos y cambio de número de días según el mes
+        editTextFilledExposedDropdownYears.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                //Solo entra aquí si hay algún mes seleccionado, el mes es el 2 y el año seleccionado es bisiesto
+                if (!editTextFilledExposedDropdownMonths.getText().toString().isEmpty() && Integer.parseInt(editTextFilledExposedDropdownMonths.getText().toString()) == 2 && calendar.isLeapYear(Integer.parseInt(editTextFilledExposedDropdownYears.getText().toString()))) {
+                    Integer[] days = new Integer[29];
+
+                    for (int j = 0; j < 29; j++) {
+                        days[j] = j + 1;
+                    }
+
+                    ArrayAdapter<Integer> adapterDays =
+                            new ArrayAdapter<Integer>(
+                                    PostSignUpActivity.this,
+                                    R.layout.dropdown_menu_popup_item,
+                                    R.id.prueba,
+                                    days);
+                    editTextFilledExposedDropdownDays.setAdapter(adapterDays);
+                }
+
+                //Entra aquí cuando tenemos el mes 2 seleccionado y cambiamos a un año no bisiesto
+                if (!editTextFilledExposedDropdownMonths.getText().toString().isEmpty() && Integer.parseInt(editTextFilledExposedDropdownMonths.getText().toString()) == 2 && !calendar.isLeapYear(Integer.parseInt(editTextFilledExposedDropdownYears.getText().toString()))) {
+                    Integer[] days = new Integer[28];
+
+                    for (int j = 0; j < 28; j++) {
+                        days[j] = j + 1;
+                    }
+
+                    ArrayAdapter<Integer> adapterDays =
+                            new ArrayAdapter<Integer>(
+                                    PostSignUpActivity.this,
+                                    R.layout.dropdown_menu_popup_item,
+                                    R.id.prueba,
+                                    days);
+                    editTextFilledExposedDropdownDays.setAdapter(adapterDays);
+                }
+                editTextFilledExposedDropdownDays.setText("");
+            }
+        });
+
+        editTextFilledExposedDropdownMonths.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                int dias = tablaDias.get(Integer.parseInt(editTextFilledExposedDropdownMonths.getText().toString()));
+                if (dias == 28 && !editTextFilledExposedDropdownYears.getText().toString().isEmpty() && calendar.isLeapYear(Integer.parseInt(editTextFilledExposedDropdownYears.getText().toString())))
+                    dias++;
+                Integer[] days = new Integer[dias];
+
+                for (int j = 0; j < dias; j++) {
+                    days[j] = j + 1;
+                }
+
+                ArrayAdapter<Integer> adapterDays =
+                        new ArrayAdapter<Integer>(
+                                PostSignUpActivity.this,
+                                R.layout.dropdown_menu_popup_item,
+                                R.id.prueba,
+                                days);
+                editTextFilledExposedDropdownDays.setAdapter(adapterDays);
+                editTextFilledExposedDropdownDays.setText("");
+            }
+        });
     }
 
     public void openCargarFotoActivityForResult() {

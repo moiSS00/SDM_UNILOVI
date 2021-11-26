@@ -36,8 +36,8 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/filledTextFieldNombre"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="320dp"
-        android:layout_height="60dp"
+        android:layout_width="361dp"
+        android:layout_height="59dp"
         android:hint="Nombre"
         app:errorEnabled="true"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -58,8 +58,8 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/filledTextFieldApellidos"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="320dp"
-        android:layout_height="60dp"
+        android:layout_width="361dp"
+        android:layout_height="59dp"
         android:hint="Apellidos"
         app:errorEnabled="true"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -85,13 +85,54 @@
         android:hint="Año"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.158"
+        app:layout_constraintHorizontal_bias="0.088"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/filledTextFieldApellidos"
         app:layout_constraintVertical_bias="0.035">
 
         <AutoCompleteTextView
             android:id="@+id/outlined_exposed_dropdown_years"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/filledTextFieldMonth"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="104dp"
+        android:layout_height="57dp"
+        android:hint="Mes"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.09"
+        app:layout_constraintStart_toEndOf="@+id/filledTextFieldYear"
+        app:layout_constraintTop_toBottomOf="@+id/filledTextFieldApellidos"
+        app:layout_constraintVertical_bias="0.035">
+
+        <AutoCompleteTextView
+            android:id="@+id/outlined_exposed_dropdown_months"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/filledTextFieldDay"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="98dp"
+        android:layout_height="57dp"
+        android:layout_marginBottom="176dp"
+        android:hint="Día"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.418"
+        app:layout_constraintStart_toEndOf="@+id/filledTextFieldMonth"
+        app:layout_constraintTop_toBottomOf="@+id/filledTextFieldApellidos"
+        app:layout_constraintVertical_bias="0.094">
+
+        <AutoCompleteTextView
+            android:id="@+id/outlined_exposed_dropdown_days"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="none" />

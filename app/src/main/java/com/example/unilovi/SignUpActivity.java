@@ -90,21 +90,21 @@ public class SignUpActivity extends AppCompatActivity {
                     String emailContent = correo.getText().toString().trim() + "@uniovi.es";
                     String passwordContent = pass.getText().toString();
 
-                    //REHACER CONSTRUCTOR
+                    Intent postIntent = new Intent(SignUpActivity.this, PostSignUpActivity.class);
+                                                    startActivity(postIntent);
+                                                    finish();
 
-                    Firebase.registrarUsuario(emailContent, passwordContent, new CallBack() {
-                        @Override
-                        public void methodToCallBack(Object object) {
-                            if ((boolean) object) {
-                                Firebase.getUsuarioActual().sendEmailVerification();
-                                Intent postIntent = new Intent(SignUpActivity.this, PostSignUpActivity.class);
-                                startActivity(postIntent);
-                                finish();
-                            } else {
-                                Util.showAlert(context, "Hubo un error al registrarse");
-                            }
-                        }
-                    });
+//                    Firebase.registrarUsuario(emailContent, passwordContent, new CallBack() {
+//                        @Override
+//                        public void methodToCallBack(Object object) {
+//                            if ((boolean) object) {
+//                                Firebase.getUsuarioActual().sendEmailVerification();
+//
+//                            } else {
+//                                Util.showAlert(context, "Hubo un error al registrarse");
+//                            }
+//                        }
+//                    });
 
 
                 }

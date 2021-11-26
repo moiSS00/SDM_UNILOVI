@@ -78,70 +78,30 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/filledTextFieldYear"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:layout_width="127dp"
-        android:layout_height="57dp"
-        android:hint="Año"
+        android:id="@+id/filledTextFieldFecha"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="361dp"
+        android:layout_height="59dp"
+        android:hint="Fecha de nacimiento"
+        app:errorEnabled="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.088"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/filledTextFieldApellidos"
-        app:layout_constraintVertical_bias="0.035">
+        app:layout_constraintVertical_bias="0.046">
 
-        <AutoCompleteTextView
-            android:id="@+id/outlined_exposed_dropdown_years"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextTextPersonFecha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="none" />
-    </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/filledTextFieldMonth"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:layout_width="104dp"
-        android:layout_height="57dp"
-        android:hint="Mes"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.09"
-        app:layout_constraintStart_toEndOf="@+id/filledTextFieldYear"
-        app:layout_constraintTop_toBottomOf="@+id/filledTextFieldApellidos"
-        app:layout_constraintVertical_bias="0.035">
-
-        <AutoCompleteTextView
-            android:id="@+id/outlined_exposed_dropdown_months"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="none" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/filledTextFieldDay"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:layout_width="98dp"
-        android:layout_height="57dp"
-        android:layout_marginBottom="176dp"
-        android:hint="Día"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.418"
-        app:layout_constraintStart_toEndOf="@+id/filledTextFieldMonth"
-        app:layout_constraintTop_toBottomOf="@+id/filledTextFieldApellidos"
-        app:layout_constraintVertical_bias="0.094">
-
-        <AutoCompleteTextView
-            android:id="@+id/outlined_exposed_dropdown_days"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="none" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <RadioGroup
         android:id="@+id/radioGroupGeneroSignUp"
         android:layout_width="290dp"
-        android:layout_height="30dp"
+        android:layout_height="48dp"
         android:orientation="horizontal"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -179,8 +139,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.989" />
+        app:layout_constraintTop_toBottomOf="@+id/filledTextFieldCarrera"
+        app:layout_constraintVertical_bias="0.571" />
 
     <TextView
         android:id="@+id/textView3"
@@ -191,7 +151,45 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.066"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/filledTextFieldYear"
-        app:layout_constraintVertical_bias="0.039" />
+        app:layout_constraintTop_toBottomOf="@+id/filledTextFieldFecha"
+        app:layout_constraintVertical_bias="0.036" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/filledTextFieldFacultad"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="361dp"
+        android:layout_height="57dp"
+        android:hint="Facultad"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroupGeneroSignUp"
+        app:layout_constraintVertical_bias="0.122">
+
+        <AutoCompleteTextView
+            android:id="@+id/outlined_exposed_dropdown_facultades"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/filledTextFieldCarrera"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="361dp"
+        android:layout_height="57dp"
+        android:hint="Carrera"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/filledTextFieldFacultad"
+        app:layout_constraintVertical_bias="0.0">
+
+        <AutoCompleteTextView
+            android:id="@+id/outlined_exposed_dropdown_carreras"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,6 +12,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -89,6 +90,8 @@ public class PostSignUpActivity extends AppCompatActivity {
         });
 
         iniciarSpinners();
+
+        textFecha.setInputType(InputType.TYPE_NULL);
 
         textFecha.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override

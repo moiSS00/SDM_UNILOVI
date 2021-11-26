@@ -138,6 +138,39 @@
             android:inputType="none" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <RadioGroup
+        android:id="@+id/radioGroupGeneroSignUp"
+        android:layout_width="290dp"
+        android:layout_height="30dp"
+        android:orientation="horizontal"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintVertical_bias="0.038">
+
+        <RadioButton
+            android:id="@+id/radioMasculinoSignUp"
+            android:layout_width="108dp"
+            android:layout_height="match_parent"
+            android:text="Masculino" />
+
+        <RadioButton
+            android:id="@+id/radioFemeninoSignUp"
+            android:layout_width="109dp"
+            android:layout_height="match_parent"
+            android:text="Femenino" />
+
+        <RadioButton
+            android:id="@+id/radioOtroSignUp"
+            android:layout_width="73dp"
+            android:layout_height="match_parent"
+            android:text="Otro" />
+
+    </RadioGroup>
+
     <Button
         android:id="@+id/btnSeguirRegistro"
         android:layout_width="129dp"
@@ -147,6 +180,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.963" />
+        app:layout_constraintVertical_bias="0.989" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sexo:"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.066"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/filledTextFieldYear"
+        app:layout_constraintVertical_bias="0.039" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

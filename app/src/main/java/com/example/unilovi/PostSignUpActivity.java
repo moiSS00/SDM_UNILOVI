@@ -190,6 +190,7 @@ public class PostSignUpActivity extends AppCompatActivity {
                                     R.id.prueba,
                                     days);
                     editTextFilledExposedDropdownDays.setAdapter(adapterDays);
+                    editTextFilledExposedDropdownDays.setText("");
                 }
 
                 //Entra aquí cuando tenemos el mes 2 seleccionado y cambiamos a un año no bisiesto
@@ -207,8 +208,8 @@ public class PostSignUpActivity extends AppCompatActivity {
                                     R.id.prueba,
                                     days);
                     editTextFilledExposedDropdownDays.setAdapter(adapterDays);
+                    editTextFilledExposedDropdownDays.setText("");
                 }
-                editTextFilledExposedDropdownDays.setText("");
             }
         });
 
@@ -234,6 +235,13 @@ public class PostSignUpActivity extends AppCompatActivity {
                 editTextFilledExposedDropdownDays.setText("");
             }
         });
+
+
+
+
+
+
+        // FALTA INICIAR LOS SPINNERS DE FACULTADES Y CARRERAS, SE INICIA DESDE FIREBASE
     }
 
     public void openCargarFotoActivityForResult() {

@@ -9,11 +9,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -24,6 +26,7 @@ import android.widget.Toast;
 
 import com.example.unilovi.database.Firebase;
 import com.example.unilovi.utils.CallBack;
+import com.example.unilovi.utils.Util;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -91,11 +94,18 @@ public class PostSignUpActivity extends AppCompatActivity {
 
         iniciarSpinners();
 
+        // Desactivamos el teclado para el text de la fecha
         textFecha.setInputType(InputType.TYPE_NULL);
 
         textFecha.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onFocusChange(View view, boolean hasFocus) {
+            public void onFocusChange(View v, boolean hasFocus) {
+                // Si el teclado está activado por haber entrado a otro text, lo desactivamos para no tener problemas
+                InputMethodManager imm = (InputMethodManager)v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+
                 if (hasFocus) {
                     GregorianCalendar calendar = new GregorianCalendar();
 
@@ -105,9 +115,20 @@ public class PostSignUpActivity extends AppCompatActivity {
                     calendar.add(Calendar.YEAR, -32);
                     Date fechaMinima = calendar.getTime();
 
-                    int day = calendar.get(Calendar.DAY_OF_MONTH);
-                    int month = calendar.get(Calendar.MONTH);
-                    int year = calendar.get(Calendar.YEAR);
+                    int day;
+                    int month;
+                    int year;
+
+                    if (!textFecha.getText().toString().isEmpty()) {
+                        String[] texto = textFecha.getText().toString().split("/");
+                        year = Integer.parseInt(texto[0]);
+                        month = Integer.parseInt(texto[1]);
+                        day = Integer.parseInt(texto[2]);
+                    } else {
+                        day = calendar.get(Calendar.DAY_OF_MONTH);
+                        month = calendar.get(Calendar.MONTH);
+                        year = calendar.get(Calendar.YEAR);
+                    }
 
 
                     dialogDatePicker = new DatePickerDialog(PostSignUpActivity.this, new DatePickerDialog.OnDateSetListener() {
@@ -116,7 +137,7 @@ public class PostSignUpActivity extends AppCompatActivity {
                             String fecha = year + "/" + month + "/" + day;
                             textFecha.setText(fecha);
                         }
-                    }, day, month, year);
+                    }, year, month, day);
                     dialogDatePicker.getDatePicker().setMinDate(fechaMinima.getTime());
                     dialogDatePicker.getDatePicker().setMaxDate(fechaMaxima.getTime());
                     dialogDatePicker.show();
@@ -149,7 +170,6 @@ public class PostSignUpActivity extends AppCompatActivity {
     }
 
     private void iniciarSpinners() {
-        // FALTA INICIAR LOS SPINNERS DE FACULTADES Y CARRERAS, SE INICIA DESDE FIREBASE
         Firebase.getFacultades(new CallBack() {
             @Override
             public void methodToCallBack(Object object) {
@@ -160,6 +180,26 @@ public class PostSignUpActivity extends AppCompatActivity {
                                 R.id.prueba,
                                 (List<String>) object);
                 editTextFilledExposedDropdownFacultades.setAdapter(adapterFacultades);
+            }
+        });
+
+        editTextFilledExposedDropdownFacultades.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String facultad = editTextFilledExposedDropdownFacultades.getText().toString();
+                Firebase.getCarrerasByFacultad(facultad, new CallBack() {
+                    @Override
+                    public void methodToCallBack(Object object) {
+                        ArrayAdapter<String> adapterCarreras =
+                                new ArrayAdapter<String>(
+                                        PostSignUpActivity.this,
+                                        R.layout.dropdown_menu_popup_item,
+                                        R.id.prueba,
+                                        (List<String>) object);
+                        editTextFilledExposedDropdownCarreras.setAdapter(adapterCarreras);
+                    }
+                });
+                editTextFilledExposedDropdownCarreras.setText("");
             }
         });
     }

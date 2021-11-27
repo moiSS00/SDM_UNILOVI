@@ -10,12 +10,13 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.unilovi.database.Firebase;
+import com.example.unilovi.model.User;
 import com.example.unilovi.utils.Util;
 import com.example.unilovi.utils.CallBack;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-public class SignUpActivity extends AppCompatActivity {
+public class SignUpActivity1 extends AppCompatActivity {
 
     // Atribitos que contendrán una referencia a los componentes usados
     private TextInputLayout correo_error;
@@ -29,6 +30,7 @@ public class SignUpActivity extends AppCompatActivity {
     private Button signUpButton;
 
     // Atriutos auxiliares
+    public static final String USUARIO_REGISTRADO = "usuario_registrado";
     private Context context = this;
 
     @Override
@@ -37,14 +39,14 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
 
         //CAMPOS PARA MARCAR EL ERROR EN ROJO
-         correo_error = (TextInputLayout) findViewById(R.id.filledTextFieldCorreo);
-         pass_error = (TextInputLayout) findViewById(R.id.filledTextFieldPass);
-         repeatPass_error = (TextInputLayout) findViewById(R.id.filledTextFieldRepeatPass);
+        correo_error = (TextInputLayout) findViewById(R.id.filledTextFieldCorreo);
+        pass_error = (TextInputLayout) findViewById(R.id.filledTextFieldPass);
+        repeatPass_error = (TextInputLayout) findViewById(R.id.filledTextFieldRepeatPass);
 
-         //INPUTS QUE INTRODUCE EL USUARIO
-         correo = (TextInputEditText) findViewById(R.id.correo);
-         pass = (TextInputEditText) findViewById(R.id.pass);
-         repeatPass = (TextInputEditText) findViewById(R.id.repeatPass);
+        //INPUTS QUE INTRODUCE EL USUARIO
+        correo = (TextInputEditText) findViewById(R.id.correo);
+        pass = (TextInputEditText) findViewById(R.id.pass);
+        repeatPass = (TextInputEditText) findViewById(R.id.repeatPass);
 
         signUpButton = (Button) findViewById(R.id.signUpButton);
 
@@ -55,23 +57,28 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                // Recogemos datos
+                String email = correo.getText().toString().trim();
+                String password = pass.getText().toString();
+                String repeatPassword = repeatPass.getText().toString();
+
                 //VALIDACIONES
                 boolean flag=true;
-                if(correo.getText().toString().isEmpty()) {
+                if(email.isEmpty()) {
                     correo_error.setError("Necesita introducirse el correo");
                     flag=false;
                 }
                 else {
                     correo_error.setErrorEnabled(false);
                 }
-                if(pass.getText().toString().isEmpty()) {
+                if(password.isEmpty()) {
                     pass_error.setError("Necesita introducirse la contraseña");
                     flag=false;
                 }
                 else
                     pass_error.setErrorEnabled(false);
 
-                if(flag && !pass.getText().toString().equals(repeatPass.getText().toString())) {
+                if(flag && !password.equals(repeatPassword)) {
                     repeatPass_error.setError("La contraseña no coincide");
                     flag=false;
                 }
@@ -87,27 +94,35 @@ public class SignUpActivity extends AppCompatActivity {
                      *    Entonces envia el correo
                      * 3- Añadir el sufijo de uniovi.es
                      */
-                    String emailContent = correo.getText().toString().trim() + "@uniovi.es";
-                    String passwordContent = pass.getText().toString();
 
-                    //Esto hay que borrarlo luego al descomentar
-                    Intent postIntent = new Intent(SignUpActivity.this, PostSignUpActivity.class);
-                    startActivity(postIntent);
-                    finish();
+                    String emailAux = email + "@uniovi.es";
 
-//                    Firebase.registrarUsuario(emailContent, passwordContent, new CallBack() {
-//                        @Override
-//                        public void methodToCallBack(Object object) {
-//                            if ((boolean) object) {
-//                                Firebase.getUsuarioActual().sendEmailVerification();
-//                                Intent postIntent = new Intent(SignUpActivity.this, PostSignUpActivity.class);
-//                                startActivity(postIntent);
-//                                finish();
-//                            } else {
-//                                Util.showAlert(context, "Hubo un error al registrarse");
-//                            }
-//                        }
-//                    });
+                    // Registramos al usuario
+                    Firebase.registrarUsuario(emailAux, password, new CallBack() {
+                        @Override
+                        public void methodToCallBack(Object object) {
+                            if ((boolean) object) { // Si hubo éxito
+
+                                //Mandamos email de verificación
+                                Firebase.getUsuarioActual().sendEmailVerification();
+
+                                // Se pasara a la siguiente pantalla de registro
+                                Intent postIntent = new Intent(SignUpActivity1.this, SignUpActivity2.class);
+
+                                // Se crea un usuario y se le va asignando la información del registro
+                                User user = new User();
+                                user.setEmail(emailAux);
+                                postIntent.putExtra(USUARIO_REGISTRADO, user);
+
+                                // Comenzamos siguiente parte del registro
+                                startActivity(postIntent);
+                                finish();
+
+                            } else {
+                                Util.showAlert(context, "Hubo un error al registrarse");
+                            }
+                        }
+                    });
                 }
             }
         });

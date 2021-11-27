@@ -94,10 +94,10 @@ public class ShowUserActivity extends AppCompatActivity {
         // Picasso.get().load("https://i.postimg.cc/vBx065cX/default-user-image.png").into(imagenPerfil);
 
         // Actualizar componentes con valores de la película específica
-        toolBarLayout.setTitle(user.getName() + ", " + user.getAge());
-        facultad.setText(user.getSchool());
-        carrera.setText(user.getCareer());
-        sobreMi.setText(user.getAboutMe());
+        // toolBarLayout.setTitle(user.getNombre() + ", " + user.getAge());
+        // facultad.setText(user.getSchool());
+        // carrera.setText(user.getCareer());
+        // sobreMi.setText(user.getAboutMe());
 
     }
 

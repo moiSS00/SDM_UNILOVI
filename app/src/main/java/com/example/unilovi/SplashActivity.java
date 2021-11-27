@@ -18,7 +18,7 @@ public class SplashActivity extends AppCompatActivity {
 
         FirebaseUser user = Firebase.getUsuarioActual();
 
-        if (user != null)
+        if (user != null && user.isEmailVerified())
             showHome();
         else {
             try {

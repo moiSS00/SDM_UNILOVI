@@ -79,8 +79,8 @@ public class ListaUsuariosAdapter extends RecyclerView.Adapter<ListaUsuariosAdap
         }
 
         public void bindUser(final User usuario, final OnItemClickListener listener) {
-            nombre.setText(usuario.getName());
-            facultad.setText(usuario.getSchool());
+            nombre.setText(usuario.getNombre());
+            // facultad.setText(usuario.get());
             Picasso.get().load("https://i.postimg.cc/vBx065cX/default-user-image.png").into(imagen);
             itemView.setOnClickListener((v) -> {
                 listener.onItemClick(usuario);

@@ -5,6 +5,7 @@ import android.net.Uri;
 
 import androidx.annotation.NonNull;
 
+import com.example.unilovi.model.User;
 import com.example.unilovi.utils.CallBack;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -185,26 +186,30 @@ public class Firebase {
         });
     }
 
-
     /**
      * Crea un usuario en la base de datos (NO EN EL SERVICIO DE AUTENTIFICACIÓN)
-     * @param email Email del usuario a crear
+     * @param user Usuario a crear
      * @param callBack CallBack a ejecutar, recibirá true si no hubo errores  o
      * false si hubo algún error.
      */
-    public static void createUser(String email, String nombre, String apellidos, Uri foto, CallBack callBack) {
+    public static void createUser(User user, CallBack callBack) {
 
         // Create a new user
-        Map<String, Object> user = new HashMap<>();
-        user.put("nombre", nombre);
-        user.put("apellidos", apellidos);
+        Map<String, Object> userParams = new HashMap<>();
+        userParams.put("nombre", user.getNombre());
+        userParams.put("apellidos", user.getApellidos());
+        userParams.put("fechaNacimiento", user.getFechaNacimiento());
+        userParams.put("sexo", user.getSexo());
+        userParams.put("facultad", user.getFacultad());
+        userParams.put("carrera", user.getCarrera());
+
 
         // Añadimos al usuario
-        db.collection("usuarios").document(email).set(user)
+        db.collection("usuarios").document(user.getEmail()).set(userParams)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                uploadImage(foto);
+                uploadImage(Uri.parse(user.getUriFoto()));
                 callBack.methodToCallBack(true);
             }})
                 .addOnFailureListener(new OnFailureListener() {
@@ -236,7 +241,7 @@ public class Firebase {
                 if (task.isSuccessful()) {
                     callBack.methodToCallBack(task.getResult().toString());
                 } else {
-                    callBack.methodToCallBack(task.getResult());
+                    callBack.methodToCallBack(null);
                 }
             }
         });

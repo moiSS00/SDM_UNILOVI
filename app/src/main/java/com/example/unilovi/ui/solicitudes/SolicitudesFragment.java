@@ -50,19 +50,6 @@ public class SolicitudesFragment extends Fragment {
         // Inicializa el modelo de datos
         listaMatches = new ArrayList<User>();
         listaSolicitudes = new ArrayList<User>();
-        listaMatches.add(new User("Moises00", "moi@email.com",20,
-                "Escuela de ingeniería informática", "Ingeniería informática",
-                "https://ibb.co/NLZcc1h", null, User.OTRO, "Piedras Blancas", "Descripción de prueba"));
-        listaMatches.add(new User("Dani32", "dan@email.com",21,
-                "Facultad 2", "Física",
-                "https://ibb.co/R0dY94V", null, User.MASCULINO, "Piedras Negras", "Descripción de prueba"));
-        listaSolicitudes.add(new User("Ruben_xx", "r0en@email.com",23,
-                "Facultad 3", "Matemáticas",
-                "https://ibb.co/NxQXygY", null, User.MASCULINO, "Piedras Azules", "Descripción de prueba"));
-        listaSolicitudes.add(new User("PradLove", "lovep@email.com",22,
-                "Facultad 4", "Biología",
-                "enlaceErroneo", null, User.FEMENINO, "Piedras Rojas", "Descripción de prueba con varias " +
-                "lineas para probar si hay scrol prueba de scroll"));
 
         // Obtenemos referencias a los componentes
         listaMatchesView = (RecyclerView) root.findViewById(R.id.matchesRecyclerView);
@@ -112,7 +99,7 @@ public class SolicitudesFragment extends Fragment {
      * @param usuario Usuario al que se ha dado click
      */
     public void clickonItem(User usuario) {
-        Log.i("Click adpater", "Item clicked " + usuario.getName());
+        Log.i("Click adpater", "Item clicked " + usuario.getNombre());
         // Paso al modo de apertura
         Intent intent = new Intent(getContext(), ShowUserActivity.class);
         intent.putExtra(USUARIO_SELECCIONADO, usuario);

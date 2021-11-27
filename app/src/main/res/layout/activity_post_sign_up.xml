@@ -5,7 +5,7 @@
     android:id="@+id/imagenUsario"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PostSignUpActivity">
+    tools:context=".SignUpActivity2">
 
     <ImageView
         android:id="@+id/imagenPostSignUp"
@@ -22,7 +22,7 @@
 
 
     <Button
-        android:id="@+id/btnSubirFoto"
+        android:id="@+id/btnSubirFotoRegistro2"
         android:layout_width="189dp"
         android:layout_height="37dp"
         android:text="Subir una foto"
@@ -44,11 +44,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSubirFoto"
+        app:layout_constraintTop_toBottomOf="@+id/btnSubirFotoRegistro2"
         app:layout_constraintVertical_bias="0.022">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextTextPersonName"
+            android:id="@+id/editTextNombreRegistro2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName" />
@@ -70,7 +70,7 @@
         app:layout_constraintVertical_bias="0.032">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextTextPersonSurname"
+            android:id="@+id/editTextApellidosRegistro2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName" />
@@ -91,14 +91,14 @@
         app:layout_constraintVertical_bias="0.046">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextTextPersonFecha"
+            android:id="@+id/editFechaRegistro2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <RadioGroup
-        android:id="@+id/radioGroupGeneroSignUp"
+        android:id="@+id/rdgSexoRegistro2"
         android:layout_width="290dp"
         android:layout_height="48dp"
         android:orientation="horizontal"
@@ -111,19 +111,19 @@
         app:layout_constraintVertical_bias="0.038">
 
         <RadioButton
-            android:id="@+id/radioMasculinoSignUp"
+            android:id="@+id/rdMasculinoRegistro2"
             android:layout_width="108dp"
             android:layout_height="match_parent"
             android:text="Masculino" />
 
         <RadioButton
-            android:id="@+id/radioFemeninoSignUp"
+            android:id="@+id/rdFemeninoRegistro2"
             android:layout_width="109dp"
             android:layout_height="match_parent"
             android:text="Femenino" />
 
         <RadioButton
-            android:id="@+id/radioOtroSignUp"
+            android:id="@+id/rdOtroRegistro2"
             android:layout_width="73dp"
             android:layout_height="match_parent"
             android:text="Otro" />
@@ -131,7 +131,7 @@
     </RadioGroup>
 
     <Button
-        android:id="@+id/btnSeguirRegistro"
+        android:id="@+id/btnSiguienteRegisto2"
         android:layout_width="129dp"
         android:layout_height="40dp"
         android:text="Siguiente"
@@ -162,11 +162,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroupGeneroSignUp"
+        app:layout_constraintTop_toBottomOf="@+id/rdgSexoRegistro2"
         app:layout_constraintVertical_bias="0.122">
 
         <AutoCompleteTextView
-            android:id="@+id/outlined_exposed_dropdown_facultades"
+            android:id="@+id/cbxFacultadRegistro2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="none" />
@@ -185,7 +185,7 @@
         app:layout_constraintVertical_bias="0.0">
 
         <AutoCompleteTextView
-            android:id="@+id/outlined_exposed_dropdown_carreras"
+            android:id="@+id/cbxCarreraRegistro2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="none" />

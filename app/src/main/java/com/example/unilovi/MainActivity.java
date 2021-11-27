@@ -1,5 +1,6 @@
 package com.example.unilovi;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -35,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView nombre;
     private ImageView imagen;
     private SharedPreferences sharedPreferences;
+
+    // Atributos auxiliares
+    private Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
                     Picasso.get().load((String) object).into(imagen);
 
                 } else {
-                    Util.showAlert(getApplicationContext(), "Hubo un error al cargar las fotos");
+                    Util.showAlert(context, "Hubo un error al cargar las fotos");
                 }
             }
         });

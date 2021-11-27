@@ -4,7 +4,6 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -22,14 +21,14 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.unilovi.database.Firebase;
+import com.example.unilovi.model.User;
 import com.example.unilovi.utils.CallBack;
-import com.example.unilovi.utils.Util;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.squareup.picasso.Picasso;
@@ -40,11 +39,12 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 
-public class PostSignUpActivity extends AppCompatActivity {
+public class SignUpActivity2 extends AppCompatActivity {
 
     //Componentes básicos de android studio
     private ImageView imagen;
     private Uri dataImagen;
+    private RadioGroup rdgSexo;
     private Button btnSubirFoto;
     private Button btnSiguiente;
 
@@ -55,7 +55,7 @@ public class PostSignUpActivity extends AppCompatActivity {
 
     //Campos de texto
     private TextInputEditText textNombre;
-    private TextInputEditText textApellido;
+    private TextInputEditText textApellidos;
     private TextInputEditText textFecha;
 
     DatePickerDialog dialogDatePicker;
@@ -68,22 +68,31 @@ public class PostSignUpActivity extends AppCompatActivity {
     AutoCompleteTextView editTextFilledExposedDropdownFacultades;
     AutoCompleteTextView editTextFilledExposedDropdownCarreras;
 
+    // Atributos auxiliares
     private static final int GALLERY_INTENT = 1;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_sign_up);
 
+        // Recogemos componentes
         imagen = (ImageView) findViewById(R.id.imagenPostSignUp);
-        btnSubirFoto = (Button) findViewById(R.id.btnSubirFoto);
-        btnSiguiente = (Button) findViewById(R.id.btnSeguirRegistro);
-        textNombre = (TextInputEditText) findViewById(R.id.editTextTextPersonName);
-        textApellido = (TextInputEditText) findViewById(R.id.editTextTextPersonSurname);
-        textFecha = (TextInputEditText) findViewById(R.id.editTextTextPersonFecha);
+        btnSubirFoto = (Button) findViewById(R.id.btnSubirFotoRegistro2);
+        textNombre = (TextInputEditText) findViewById(R.id.editTextNombreRegistro2);
+        textApellidos = (TextInputEditText) findViewById(R.id.editTextApellidosRegistro2);
+        textFecha = (TextInputEditText) findViewById(R.id.editFechaRegistro2);
+        rdgSexo = (RadioGroup) findViewById(R.id.rdgSexoRegistro2);
+        editTextFilledExposedDropdownFacultades = (AutoCompleteTextView) findViewById(R.id.cbxFacultadRegistro2);
+        editTextFilledExposedDropdownCarreras = (AutoCompleteTextView) findViewById(R.id.cbxCarreraRegistro2);
+
+        btnSiguiente = (Button) findViewById(R.id.btnSiguienteRegisto2);
         date_error = (TextInputLayout) findViewById(R.id.filledTextFieldFecha);
-        editTextFilledExposedDropdownFacultades = (AutoCompleteTextView) findViewById(R.id.outlined_exposed_dropdown_facultades);
-        editTextFilledExposedDropdownCarreras = (AutoCompleteTextView) findViewById(R.id.outlined_exposed_dropdown_carreras);
+
+
+        // Recogemos la informacion del usuario que se esta registrando
+        user = getIntent().getParcelableExtra(SignUpActivity1.USUARIO_REGISTRADO);
 
         btnSubirFoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,7 +140,7 @@ public class PostSignUpActivity extends AppCompatActivity {
                     }
 
 
-                    dialogDatePicker = new DatePickerDialog(PostSignUpActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    dialogDatePicker = new DatePickerDialog(SignUpActivity2.this, new DatePickerDialog.OnDateSetListener() {
                         @Override
                         public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                             String fecha = year + "/" + month + "/" + day;
@@ -153,8 +162,34 @@ public class PostSignUpActivity extends AppCompatActivity {
                 Firebase.getUsuarioActual().reload().addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        if (dataImagen != null && !textNombre.getText().toString().isEmpty() && !textApellido.getText().toString().isEmpty() && Firebase.getUsuarioActual().isEmailVerified()) {
-                            Firebase.createUser(Firebase.getUsuarioActual().getEmail(), textNombre.getText().toString(), textApellido.getText().toString(), dataImagen, new CallBack() {
+
+                        // Recogemos inputs
+                        String nombre = textNombre.getText().toString();
+                        String apellidos = textApellidos.getText().toString();
+                        String fecha = textFecha.getText().toString();
+                        String facultad = editTextFilledExposedDropdownFacultades
+                                .getText().toString();
+                        String carrera = editTextFilledExposedDropdownCarreras
+                                .getText().toString();
+
+                        // Para obtener el radio boton del radioGroup seleccionado
+                        int selectedId = rdgSexo.getCheckedRadioButtonId();
+                        RadioButton rdSeleccionado = (RadioButton) findViewById(selectedId);
+                        String sexo = rdSeleccionado.getText().toString();
+
+                        if (dataImagen != null && !nombre.isEmpty() && !apellidos.isEmpty()
+                                && Firebase.getUsuarioActual().isEmailVerified()) {
+
+                            // Añadimos informacion de registro
+                            user.setNombre(nombre);
+                            user.setApellidos(apellidos);
+                            user.setUriFoto(dataImagen.toString());
+                            user.setFechaNacimiento(fecha);
+                            user.setFacultad(facultad);
+                            user.setCarrera(carrera);
+                            user.setSexo(sexo);
+
+                            Firebase.createUser(user, new CallBack() {
                                 @Override
                                 public void methodToCallBack(Object object) {
                                     Toast.makeText(getApplicationContext(), "Usuario registrado", Toast.LENGTH_SHORT).show();
@@ -175,7 +210,7 @@ public class PostSignUpActivity extends AppCompatActivity {
             public void methodToCallBack(Object object) {
                 ArrayAdapter<String> adapterFacultades =
                         new ArrayAdapter<String>(
-                                PostSignUpActivity.this,
+                                SignUpActivity2.this,
                                 R.layout.dropdown_menu_popup_item,
                                 R.id.prueba,
                                 (List<String>) object);
@@ -192,7 +227,7 @@ public class PostSignUpActivity extends AppCompatActivity {
                     public void methodToCallBack(Object object) {
                         ArrayAdapter<String> adapterCarreras =
                                 new ArrayAdapter<String>(
-                                        PostSignUpActivity.this,
+                                        SignUpActivity2.this,
                                         R.layout.dropdown_menu_popup_item,
                                         R.id.prueba,
                                         (List<String>) object);

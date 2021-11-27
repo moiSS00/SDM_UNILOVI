@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Unilovi">
         <activity
-            android:name=".PostSignUpActivity"
+            android:name=".SignUpActivity2"
             android:exported="true"
             android:theme="@style/Theme.Unilovi.NoActionBar" />
         <activity
@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SignUpActivity"
+            android:name=".SignUpActivity1"
             android:exported="true" />
         <activity
             android:name=".MainActivity"

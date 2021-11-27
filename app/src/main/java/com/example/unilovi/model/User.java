@@ -7,65 +7,35 @@ import android.os.Parcelable;
 public class User implements Parcelable {
 
     // Géneros posibles
-    public static final String MASCULINO = "M";
-    public static final String FEMENINO = "F";
-    public static final String OTRO = "O";
+    // public static final String MASCULINO = "M";
+    // public static final String FEMENINO = "F";
+    // public static final String OTRO = "O";
 
-    private String name;
     private String email;
-    private int age;
-    private String school;
-    private String career;
-    private String photo;
-    private Preferences preferences;
+    private String nombre;
+    private String apellidos;
+    private String uriFoto;
+    private String fechaNacimiento;
     private String sexo;
-    private String city;
-    private String aboutMe;
+    private String facultad;
+    private String carrera;
 
-    public User(String name, String email, int age, String school, String career, String photo,
-                Preferences preferences, String sexo, String city, String aboutMe) {
-        this.name = name;
-        this.email = email;
-        this.age = age;
-        this.school = school;
-        this.career = career;
-        this.photo = photo;
-        this.preferences = preferences;
-        this.sexo = sexo;
-        this.city = city;
-        this.aboutMe = aboutMe;
+    // private int age;
+    // private Preferences preferences;
+    // private String city;
+    // private String aboutMe;
+
+    public User() {
+
     }
 
-    public String getCity() {
-        return city;
+
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getSexo() {
-        return sexo;
-    }
-
-    public void setSexo(String sexo) {
-        this.sexo = sexo;
-    }
-
-    public Preferences getPreferences() {
-        return preferences;
-    }
-
-    public void setPreferences(Preferences preferences) {
-        this.preferences = preferences;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getEmail() {
@@ -76,73 +46,66 @@ public class User implements Parcelable {
         this.email = email;
     }
 
-    public int getAge() {
-        return age;
+
+    public String getApellidos() {
+        return apellidos;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
     }
 
-    public String getSchool() {
-        return school;
+    public String getUriFoto() {
+        return uriFoto;
     }
 
-    public void setSchool(String school) {
-        this.school = school;
+    public void setUriFoto(String uriFoto) {
+        this.uriFoto = uriFoto;
     }
 
-    public String getCareer() {
-        return career;
+    public String getFechaNacimiento() {
+        return fechaNacimiento;
     }
 
-    public void setCareer(String career) {
-        this.career = career;
+    public void setFechaNacimiento(String fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
     }
 
-    public String getPhoto() {
-        return photo;
+    public String getSexo() {
+        return sexo;
     }
 
-    public void setPhoto(String photo) {
-        this.photo = photo;
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
     }
 
-    public String getAboutMe() {
-        return aboutMe;
+    public String getFacultad() {
+        return facultad;
     }
 
-    public void setAboutMe(String aboutMe) {
-        this.aboutMe = aboutMe;
+    public void setFacultad(String facultad) {
+        this.facultad = facultad;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", age=" + age +
-                ", school='" + school + '\'' +
-                ", career='" + career + '\'' +
-                ", photo='" + photo + '\'' +
-                ", sexo='" + sexo + '\'' +
-                ", city='" + city + '\'' +
-                '}';
+    public String getCarrera() {
+        return carrera;
     }
 
-// --- Métodos para que categoría sea parceable ---
+    public void setCarrera(String carrera) {
+        this.carrera = carrera;
+    }
+
+    // --- Métodos para que categoría sea parceable ---
 
     protected User(Parcel in) {
-        name = in.readString();
         email = in.readString();
-        age = in.readInt();
-        school = in.readString();
-        career = in.readString();
-        photo = in.readString();
-        preferences = in.readParcelable(Preferences.class.getClassLoader());
+        nombre = in.readString();
+        apellidos = in.readString();
+        uriFoto = in.readString();
+        fechaNacimiento = in.readString();
         sexo = in.readString();
-        city = in.readString();
-        aboutMe = in.readString();
+        facultad = in.readString();
+        carrera = in.readString();
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -164,15 +127,13 @@ public class User implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(name);
         parcel.writeString(email);
-        parcel.writeInt(age);
-        parcel.writeString(school);
-        parcel.writeString(career);
-        parcel.writeString(photo);
-        parcel.writeParcelable(preferences, i);
+        parcel.writeString(nombre);
+        parcel.writeString(apellidos);
+        parcel.writeString(uriFoto);
+        parcel.writeString(fechaNacimiento);
         parcel.writeString(sexo);
-        parcel.writeString(city);
-        parcel.writeString(aboutMe);
+        parcel.writeString(facultad);
+        parcel.writeString(carrera);
     }
 }

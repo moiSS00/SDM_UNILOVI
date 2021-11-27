@@ -8,35 +8,32 @@ import java.util.List;
 
 public class Preferences implements Parcelable {
 
-    public ArrayList<String> sexo;
-    public String facultad;
-    public String ciudad;
-    public int edadMinima;
-    public int edadMaxima;
+    private int edadMinima;
+    private int edadMaxima;
+    private ArrayList<String> sexos;
+    private String facultad;
+    private String carrera;
 
-    public Preferences(ArrayList<String> sexo, String facultad, String ciudad, int edadMinima, int edadMaxima) {
-        this.sexo = sexo;
-        this.facultad = facultad;
-        this.ciudad = ciudad;
-        this.edadMinima = edadMinima;
-        this.edadMaxima = edadMaxima;
+
+    public Preferences() {
+
     }
 
     protected Preferences(Parcel in) {
-        sexo = in.readArrayList(ArrayList.class.getClassLoader());
-        facultad = in.readString();
-        ciudad = in.readString();
         edadMinima = in.readInt();
         edadMaxima = in.readInt();
+        sexos = in.readArrayList(ArrayList.class.getClassLoader());
+        facultad = in.readString();
+        carrera = in.readString();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeList(sexo);
-        dest.writeString(facultad);
-        dest.writeString(ciudad);
         dest.writeInt(edadMinima);
         dest.writeInt(edadMaxima);
+        dest.writeList(sexos);
+        dest.writeString(facultad);
+        dest.writeString(carrera);
     }
 
     @Override
@@ -56,30 +53,6 @@ public class Preferences implements Parcelable {
         }
     };
 
-    public ArrayList<String> getSexo() {
-        return sexo;
-    }
-
-    public void setSexo(ArrayList<String> sexo) {
-        this.sexo = sexo;
-    }
-
-    public String getFacultad() {
-        return facultad;
-    }
-
-    public void setFacultad(String facultad) {
-        this.facultad = facultad;
-    }
-
-    public String getCiudad() {
-        return ciudad;
-    }
-
-    public void setCiudad(String ciudad) {
-        this.ciudad = ciudad;
-    }
-
     public int getEdadMinima() {
         return edadMinima;
     }
@@ -94,5 +67,29 @@ public class Preferences implements Parcelable {
 
     public void setEdadMaxima(int edadMaxima) {
         this.edadMaxima = edadMaxima;
+    }
+
+    public ArrayList<String> getSexos() {
+        return sexos;
+    }
+
+    public void setSexos(ArrayList<String> sexos) {
+        this.sexos = sexos;
+    }
+
+    public String getFacultad() {
+        return facultad;
+    }
+
+    public void setFacultad(String facultad) {
+        this.facultad = facultad;
+    }
+
+    public String getCarrera() {
+        return carrera;
+    }
+
+    public void setCarrera(String carrera) {
+        this.carrera = carrera;
     }
 }

@@ -67,7 +67,6 @@ public class SignUpActivity2 extends AppCompatActivity {
     private HashMap<Integer,Integer> tablaDias = new HashMap<>();
 
     //Spinners
-    private AutoCompleteTextView editTextFilledExposedDropdownCiudades;
     private AutoCompleteTextView editTextFilledExposedDropdownFacultades;
     private AutoCompleteTextView editTextFilledExposedDropdownCarreras;
 
@@ -85,7 +84,6 @@ public class SignUpActivity2 extends AppCompatActivity {
         btnSubirFoto = (Button) findViewById(R.id.btnSubirFotoRegistro2);
         textFecha = (TextInputEditText) findViewById(R.id.editFechaRegistro2);
         rdgSexo = (RadioGroup) findViewById(R.id.rdgSexoRegistro2);
-        editTextFilledExposedDropdownCiudades = (AutoCompleteTextView) findViewById(R.id.cbxCiudadRegistro2);
         editTextFilledExposedDropdownFacultades = (AutoCompleteTextView) findViewById(R.id.cbxFacultadRegistro2);
         editTextFilledExposedDropdownCarreras = (AutoCompleteTextView) findViewById(R.id.cbxCarreraRegistro2);
 
@@ -173,8 +171,6 @@ public class SignUpActivity2 extends AppCompatActivity {
                     public void onSuccess(Void unused) {
 
                         // Recogemos inputs
-                        String ciudad = editTextFilledExposedDropdownCiudades
-                                .getText().toString();
                         String fecha = textFecha.getText().toString();
                         String facultad = editTextFilledExposedDropdownFacultades
                                 .getText().toString();
@@ -214,23 +210,19 @@ public class SignUpActivity2 extends AppCompatActivity {
                         }
 
                         if (flag) {
+                            // Se pasara a la siguiente pantalla de registro
+                            Intent postIntent = new Intent(SignUpActivity2.this, SignUpActivity3.class);
 
-                            // Añadimos informacion de registro
-                            // user.setNombre(nombre);
-                            // user.setApellidos(apellidos);
+                            // Se le va asignando la información del registro
                             user.setUriFoto(dataImagen.toString());
                             user.setFechaNacimiento(fecha);
-                            user.setCiudad(ciudad);
                             user.setFacultad(facultad);
                             user.setCarrera(carrera);
                             user.setSexo(sexo);
 
-                            Firebase.createUser(user, new CallBack() {
-                                @Override
-                                public void methodToCallBack(Object object) {
-                                    Toast.makeText(getApplicationContext(), "Usuario registrado", Toast.LENGTH_SHORT).show();
-                                }
-                            });
+                            // Comenzamos siguiente parte del registro
+                            startActivity(postIntent);
+                            finish();
                         }
                     }
                 });
@@ -239,19 +231,6 @@ public class SignUpActivity2 extends AppCompatActivity {
     }
 
     private void iniciarSpinners() {
-
-        Firebase.getCiudades(new CallBack() {
-            @Override
-            public void methodToCallBack(Object object) {
-                ArrayAdapter<String> adapterCiudades =
-                        new ArrayAdapter<String>(
-                                SignUpActivity2.this,
-                                R.layout.dropdown_menu_popup_item,
-                                R.id.prueba,
-                                (List<String>) object);
-                editTextFilledExposedDropdownCiudades.setAdapter(adapterCiudades);
-            }
-        });
 
         Firebase.getFacultades(new CallBack() {
             @Override

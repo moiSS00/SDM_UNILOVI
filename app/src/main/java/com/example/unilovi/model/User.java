@@ -6,7 +6,7 @@ import android.os.Parcelable;
 
 public class User implements Parcelable {
 
-    // Géneros posibles
+    // Géneros posibles (se usan para las preferencias de búsqueda)
     // public static final String MASCULINO = "M";
     // public static final String FEMENINO = "F";
     // public static final String OTRO = "O";
@@ -46,7 +46,6 @@ public class User implements Parcelable {
         this.email = email;
     }
 
-
     public String getApellidos() {
         return apellidos;
     }
@@ -76,7 +75,7 @@ public class User implements Parcelable {
     }
 
     public void setSexo(String sexo) {
-        this.sexo = sexo;
+        this.sexo = sexo.substring(0, 1);
     }
 
     public String getFacultad() {

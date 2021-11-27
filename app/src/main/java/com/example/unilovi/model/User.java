@@ -19,6 +19,7 @@ public class User implements Parcelable {
     private String sexo;
     private String facultad;
     private String carrera;
+    private String ciudad;
 
     // private int age;
     // private Preferences preferences;
@@ -95,6 +96,14 @@ public class User implements Parcelable {
         this.carrera = carrera;
     }
 
+    public String getCiudad() {
+        return ciudad;
+    }
+
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
+    }
+
     // --- Métodos para que categoría sea parceable ---
 
     protected User(Parcel in) {
@@ -106,6 +115,7 @@ public class User implements Parcelable {
         sexo = in.readString();
         facultad = in.readString();
         carrera = in.readString();
+        ciudad = in.readString();
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -135,5 +145,6 @@ public class User implements Parcelable {
         parcel.writeString(sexo);
         parcel.writeString(facultad);
         parcel.writeString(carrera);
+        parcel.writeString(ciudad);
     }
 }

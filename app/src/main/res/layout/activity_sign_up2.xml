@@ -23,8 +23,8 @@
 
     <Button
         android:id="@+id/btnSubirFotoRegistro2"
-        android:layout_width="189dp"
-        android:layout_height="37dp"
+        android:layout_width="256dp"
+        android:layout_height="48dp"
         android:text="Subir una foto"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -33,49 +33,6 @@
         app:layout_constraintTop_toBottomOf="@+id/imagenPostSignUp"
         app:layout_constraintVertical_bias="0.024" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/filledTextFieldNombre"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="361dp"
-        android:layout_height="59dp"
-        android:hint="Nombre"
-        app:errorEnabled="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSubirFotoRegistro2"
-        app:layout_constraintVertical_bias="0.022">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextNombreRegistro2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/filledTextFieldApellidos"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="361dp"
-        android:layout_height="59dp"
-        android:hint="Apellidos"
-        app:errorEnabled="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/filledTextFieldNombre"
-        app:layout_constraintVertical_bias="0.032">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextApellidosRegistro2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName" />
-
-    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/filledTextFieldFecha"
@@ -87,7 +44,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/filledTextFieldApellidos"
+        app:layout_constraintTop_toBottomOf="@+id/btnSubirFotoRegistro2"
         app:layout_constraintVertical_bias="0.046">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -132,8 +89,8 @@
 
     <Button
         android:id="@+id/btnSiguienteRegisto2"
-        android:layout_width="129dp"
-        android:layout_height="40dp"
+        android:layout_width="161dp"
+        android:layout_height="49dp"
         android:text="Siguiente"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -154,16 +111,35 @@
         app:layout_constraintVertical_bias="0.036" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/filledTextFieldFacultad"
+        android:id="@+id/filledTextFieldCiudad"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="361dp"
         android:layout_height="57dp"
-        android:hint="Facultad"
+        android:hint="Ciudad"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rdgSexoRegistro2"
         app:layout_constraintVertical_bias="0.122">
+
+        <AutoCompleteTextView
+            android:id="@+id/cbxCiudadRegistro2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/filledTextFieldFacultad"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="361dp"
+        android:layout_height="57dp"
+        android:hint="Carrera"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/filledTextFieldCiudad"
+        app:layout_constraintVertical_bias="0.0">
 
         <AutoCompleteTextView
             android:id="@+id/cbxFacultadRegistro2"

@@ -202,7 +202,7 @@ public class Firebase {
         userParams.put("sexo", user.getSexo());
         userParams.put("facultad", user.getFacultad());
         userParams.put("carrera", user.getCarrera());
-
+        userParams.put("ciudad", user.getCiudad());
 
         // Añadimos al usuario
         db.collection("usuarios").document(user.getEmail()).set(userParams)

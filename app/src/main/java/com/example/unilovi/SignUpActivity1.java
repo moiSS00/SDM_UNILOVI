@@ -23,9 +23,11 @@ public class SignUpActivity1 extends AppCompatActivity {
     private TextInputLayout pass_error;
     private TextInputLayout repeatPass_error;
 
-    private TextInputEditText correo;
-    private TextInputEditText pass;
-    private TextInputEditText repeatPass;
+    private TextInputEditText email;
+    private TextInputEditText password;
+    private TextInputEditText repeatPassword;
+    private TextInputEditText nombre;
+    private TextInputEditText apellidos;
 
     private Button signUpButton;
 
@@ -36,7 +38,7 @@ public class SignUpActivity1 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up);
+        setContentView(R.layout.activity_sign_up1);
 
         //CAMPOS PARA MARCAR EL ERROR EN ROJO
         correo_error = (TextInputLayout) findViewById(R.id.filledTextFieldCorreo);
@@ -44,11 +46,14 @@ public class SignUpActivity1 extends AppCompatActivity {
         repeatPass_error = (TextInputLayout) findViewById(R.id.filledTextFieldRepeatPass);
 
         //INPUTS QUE INTRODUCE EL USUARIO
-        correo = (TextInputEditText) findViewById(R.id.correo);
-        pass = (TextInputEditText) findViewById(R.id.pass);
-        repeatPass = (TextInputEditText) findViewById(R.id.repeatPass);
+        email = (TextInputEditText) findViewById(R.id.editCorreoRegistro1);
+        password = (TextInputEditText) findViewById(R.id.editPasswordRegistro1);
+        repeatPassword = (TextInputEditText) findViewById(R.id.editRepeatPasswordRegistro1);
+        nombre = (TextInputEditText) findViewById(R.id.editNombreRegistro1);
+        apellidos = (TextInputEditText) findViewById(R.id.editApellidosRegistro1);
 
-        signUpButton = (Button) findViewById(R.id.signUpButton);
+
+        signUpButton = (Button) findViewById(R.id.btnSiguienteRegistro1);
 
         // Asignamos listeners
 
@@ -58,27 +63,29 @@ public class SignUpActivity1 extends AppCompatActivity {
             public void onClick(View view) {
 
                 // Recogemos datos
-                String email = correo.getText().toString().trim();
-                String password = pass.getText().toString();
-                String repeatPassword = repeatPass.getText().toString();
+                String emailContent = email.getText().toString().trim();
+                String passwordContent = password.getText().toString();
+                String repeatPasswordContent = repeatPassword.getText().toString();
+                String nombreContent = nombre.getText().toString();
+                String apellidosContent = apellidos.getText().toString();
 
                 //VALIDACIONES
                 boolean flag=true;
-                if(email.isEmpty()) {
+                if(emailContent.isEmpty()) {
                     correo_error.setError("Necesita introducirse el correo");
                     flag=false;
                 }
                 else {
                     correo_error.setErrorEnabled(false);
                 }
-                if(password.isEmpty()) {
+                if(passwordContent.isEmpty()) {
                     pass_error.setError("Necesita introducirse la contraseña");
                     flag=false;
                 }
                 else
                     pass_error.setErrorEnabled(false);
 
-                if(flag && !password.equals(repeatPassword)) {
+                if(flag && !passwordContent.equals(repeatPasswordContent)) {
                     repeatPass_error.setError("La contraseña no coincide");
                     flag=false;
                 }
@@ -95,10 +102,10 @@ public class SignUpActivity1 extends AppCompatActivity {
                      * 3- Añadir el sufijo de uniovi.es
                      */
 
-                    String emailAux = email + "@uniovi.es";
+                    String emailAux = emailContent + "@uniovi.es";
 
                     // Registramos al usuario
-                    Firebase.registrarUsuario(emailAux, password, new CallBack() {
+                    Firebase.registrarUsuario(emailAux, passwordContent, new CallBack() {
                         @Override
                         public void methodToCallBack(Object object) {
                             if ((boolean) object) { // Si hubo éxito
@@ -111,6 +118,8 @@ public class SignUpActivity1 extends AppCompatActivity {
 
                                 // Se crea un usuario y se le va asignando la información del registro
                                 User user = new User();
+                                user.setNombre(nombreContent);
+                                user.setApellidos(apellidosContent);
                                 user.setEmail(emailAux);
                                 postIntent.putExtra(USUARIO_REGISTRADO, user);
 

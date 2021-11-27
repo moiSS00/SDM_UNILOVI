@@ -65,8 +65,9 @@ public class SignUpActivity2 extends AppCompatActivity {
     private HashMap<Integer,Integer> tablaDias = new HashMap<>();
 
     //Spinners
-    AutoCompleteTextView editTextFilledExposedDropdownFacultades;
-    AutoCompleteTextView editTextFilledExposedDropdownCarreras;
+    private AutoCompleteTextView editTextFilledExposedDropdownCiudades;
+    private AutoCompleteTextView editTextFilledExposedDropdownFacultades;
+    private AutoCompleteTextView editTextFilledExposedDropdownCarreras;
 
     // Atributos auxiliares
     private static final int GALLERY_INTENT = 1;
@@ -75,15 +76,14 @@ public class SignUpActivity2 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_post_sign_up);
+        setContentView(R.layout.activity_sign_up2);
 
         // Recogemos componentes
         imagen = (ImageView) findViewById(R.id.imagenPostSignUp);
         btnSubirFoto = (Button) findViewById(R.id.btnSubirFotoRegistro2);
-        textNombre = (TextInputEditText) findViewById(R.id.editTextNombreRegistro2);
-        textApellidos = (TextInputEditText) findViewById(R.id.editTextApellidosRegistro2);
         textFecha = (TextInputEditText) findViewById(R.id.editFechaRegistro2);
         rdgSexo = (RadioGroup) findViewById(R.id.rdgSexoRegistro2);
+        editTextFilledExposedDropdownCiudades = (AutoCompleteTextView) findViewById(R.id.cbxCiudadRegistro2);
         editTextFilledExposedDropdownFacultades = (AutoCompleteTextView) findViewById(R.id.cbxFacultadRegistro2);
         editTextFilledExposedDropdownCarreras = (AutoCompleteTextView) findViewById(R.id.cbxCarreraRegistro2);
 
@@ -164,8 +164,8 @@ public class SignUpActivity2 extends AppCompatActivity {
                     public void onSuccess(Void unused) {
 
                         // Recogemos inputs
-                        String nombre = textNombre.getText().toString();
-                        String apellidos = textApellidos.getText().toString();
+                        String ciudad = editTextFilledExposedDropdownCiudades
+                                .getText().toString();
                         String fecha = textFecha.getText().toString();
                         String facultad = editTextFilledExposedDropdownFacultades
                                 .getText().toString();
@@ -177,14 +177,15 @@ public class SignUpActivity2 extends AppCompatActivity {
                         RadioButton rdSeleccionado = (RadioButton) findViewById(selectedId);
                         String sexo = rdSeleccionado.getText().toString();
 
-                        if (dataImagen != null && !nombre.isEmpty() && !apellidos.isEmpty()
+                        if (dataImagen != null
                                 && Firebase.getUsuarioActual().isEmailVerified()) {
 
                             // Añadimos informacion de registro
-                            user.setNombre(nombre);
-                            user.setApellidos(apellidos);
+                            // user.setNombre(nombre);
+                            // user.setApellidos(apellidos);
                             user.setUriFoto(dataImagen.toString());
                             user.setFechaNacimiento(fecha);
+                            user.setCiudad(ciudad);
                             user.setFacultad(facultad);
                             user.setCarrera(carrera);
                             user.setSexo(sexo);
@@ -205,6 +206,20 @@ public class SignUpActivity2 extends AppCompatActivity {
     }
 
     private void iniciarSpinners() {
+
+        Firebase.getCiudades(new CallBack() {
+            @Override
+            public void methodToCallBack(Object object) {
+                ArrayAdapter<String> adapterCiudades =
+                        new ArrayAdapter<String>(
+                                SignUpActivity2.this,
+                                R.layout.dropdown_menu_popup_item,
+                                R.id.prueba,
+                                (List<String>) object);
+                editTextFilledExposedDropdownCiudades.setAdapter(adapterCiudades);
+            }
+        });
+
         Firebase.getFacultades(new CallBack() {
             @Override
             public void methodToCallBack(Object object) {

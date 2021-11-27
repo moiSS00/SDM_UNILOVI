@@ -52,6 +52,8 @@ public class SignUpActivity2 extends AppCompatActivity {
     private TextInputLayout name_error;
     private TextInputLayout surnanme_error;
     private TextInputLayout date_error;
+    private TextInputLayout facultad_error;
+    private TextInputLayout carrera_error;
 
     //Campos de texto
     private TextInputEditText textNombre;
@@ -88,7 +90,11 @@ public class SignUpActivity2 extends AppCompatActivity {
         editTextFilledExposedDropdownCarreras = (AutoCompleteTextView) findViewById(R.id.cbxCarreraRegistro2);
 
         btnSiguiente = (Button) findViewById(R.id.btnSiguienteRegisto2);
+        name_error = (TextInputLayout) findViewById(R.id.filledTextFieldNombre);
+        surnanme_error = (TextInputLayout) findViewById(R.id.filledTextFieldApellidos);
         date_error = (TextInputLayout) findViewById(R.id.filledTextFieldFecha);
+        facultad_error = (TextInputLayout) findViewById(R.id.filledTextFieldFacultad);
+        carrera_error = (TextInputLayout) findViewById(R.id.filledTextFieldCarrera);
 
 
         // Recogemos la informacion del usuario que se esta registrando
@@ -134,6 +140,9 @@ public class SignUpActivity2 extends AppCompatActivity {
                         month = Integer.parseInt(texto[1]);
                         day = Integer.parseInt(texto[2]);
                     } else {
+                        //Volvemos a añadir 32 años para que el año que cojamos como inicial sea el más cercano posible para registrarse
+                        calendar.add(Calendar.YEAR, 32);
+
                         day = calendar.get(Calendar.DAY_OF_MONTH);
                         month = calendar.get(Calendar.MONTH);
                         year = calendar.get(Calendar.YEAR);
@@ -177,8 +186,34 @@ public class SignUpActivity2 extends AppCompatActivity {
                         RadioButton rdSeleccionado = (RadioButton) findViewById(selectedId);
                         String sexo = rdSeleccionado.getText().toString();
 
-                        if (dataImagen != null
-                                && Firebase.getUsuarioActual().isEmailVerified()) {
+                        boolean flag = true;
+
+                        if (dataImagen == null) {
+                            Toast.makeText(getApplicationContext(), "Debes introducir una foto", Toast.LENGTH_SHORT).show();
+                            flag = false;
+                        }
+
+                        if (fecha.isEmpty()) {
+                            date_error.setError("Debes introducir tu fecha de nacimiento");
+                            flag = false;
+                        }
+
+                        if (sexo.isEmpty()) {
+                            Toast.makeText(getApplicationContext(), "Debes seleccionar un sexo", Toast.LENGTH_SHORT).show();
+                            flag = false;
+                        }
+
+                        if (facultad.isEmpty()) {
+                            facultad_error.setError("Debes introducir tu fecha facultad");
+                            flag = false;
+                        }
+
+                        if (carrera.isEmpty()) {
+                            carrera_error.setError("Debes introducir tu carrera");
+                            flag = false;
+                        }
+
+                        if (flag) {
 
                             // Añadimos informacion de registro
                             // user.setNombre(nombre);
@@ -196,8 +231,6 @@ public class SignUpActivity2 extends AppCompatActivity {
                                     Toast.makeText(getApplicationContext(), "Usuario registrado", Toast.LENGTH_SHORT).show();
                                 }
                             });
-                        } else {
-                            Toast.makeText(getApplicationContext(), "No se ha podido registrar al usuario", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

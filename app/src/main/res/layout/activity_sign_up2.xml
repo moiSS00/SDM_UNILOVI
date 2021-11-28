@@ -7,36 +7,22 @@
     android:layout_height="match_parent"
     tools:context=".SignUpActivity2">
 
-    <TextView
-        android:id="@+id/textView1Registro2"
-        style="@android:style/TextAppearance.DeviceDefault.Large"
-        android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:text="Crea una cuenta nueva"
-        android:textAlignment="center"
-        android:textColor="@color/colorPrimary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.003" />
-
 
     <TextView
         android:id="@+id/textView2Registro2"
         style="@android:style/TextAppearance.DeviceDefault.Large"
         android:layout_width="match_parent"
         android:layout_height="35dp"
-        android:layout_marginTop="4dp"
         android:text="Información básica"
         android:textAlignment="center"
         android:textColor="@color/colorPrimary"
         android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView1Registro2" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
         android:id="@+id/imagenPostSignUp"
@@ -45,23 +31,22 @@
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.116"
+        app:layout_constraintTop_toBottomOf="@+id/textView2Registro2"
+        app:layout_constraintVertical_bias="0.0"
         tools:srcCompat="@drawable/default_user_image" />
 
     <Button
         android:id="@+id/btnSubirFotoRegistro2"
         android:layout_width="253dp"
-        android:layout_height="51dp"
+        android:layout_height="43dp"
         android:text="Subir una foto"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imagenPostSignUp"
-        app:layout_constraintVertical_bias="0.024" />
+        app:layout_constraintVertical_bias="0.015" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/filledTextFieldNombre"
@@ -118,7 +103,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/filledTextFieldApellidos"
-        app:layout_constraintVertical_bias="0.046">
+        app:layout_constraintVertical_bias="0.031">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editFechaRegistro2"
@@ -162,8 +147,8 @@
 
     <Button
         android:id="@+id/btnSiguienteRegisto2"
-        android:layout_width="157dp"
-        android:layout_height="69dp"
+        android:layout_width="151dp"
+        android:layout_height="38dp"
         android:text="Siguiente"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -181,7 +166,7 @@
         app:layout_constraintHorizontal_bias="0.066"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/filledTextFieldFecha"
-        app:layout_constraintVertical_bias="0.036" />
+        app:layout_constraintVertical_bias="0.03" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/filledTextFieldFacultad"
@@ -193,7 +178,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rdgSexoRegistro2"
-        app:layout_constraintVertical_bias="0.122">
+        app:layout_constraintVertical_bias="0.0">
 
         <AutoCompleteTextView
             android:id="@+id/cbxFacultadRegistro2"

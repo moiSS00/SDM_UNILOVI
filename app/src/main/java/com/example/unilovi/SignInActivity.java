@@ -1,7 +1,12 @@
 package com.example.unilovi;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -107,6 +112,23 @@ public class SignInActivity extends AppCompatActivity {
         }
     }
 
+    ActivityResultLauncher<Intent> iniciarRegistroActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Intent intent = result.getData();
+                        if (intent != null) {
+                            User user = intent.getParcelableExtra(USUARIO_REGISTRADO1);
+                            editEmail.setText(user.getEmail());
+                            editPassword.setText(user.getPassword());
+                        }
+                    }
+                }
+            }
+    );
+
     private boolean validacionEntrada() {
         String emailContent = editEmail.getText().toString();
         String passwordContent = editPassword.getText().toString();
@@ -118,7 +140,7 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void showSignUp() {
-        Intent mainIntent = new Intent(SignInActivity.this, SignUpActivity1.class);
-        startActivity(mainIntent);
+        Intent intent = new Intent(SignInActivity.this, SignUpActivity1.class);
+        iniciarRegistroActivityResultLauncher.launch(intent);
     }
 }

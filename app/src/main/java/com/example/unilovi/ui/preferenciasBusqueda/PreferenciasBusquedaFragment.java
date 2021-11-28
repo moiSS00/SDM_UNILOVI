@@ -58,7 +58,7 @@ public class PreferenciasBusquedaFragment extends Fragment {
 
         // Asignamos valores por defecto
         edadMinima.setText("18");
-        edadMaxima.setText("51");
+        edadMaxima.setText("50");
 
         //Rellenamos con valores de la base de datos el spinner de ciudades
         Firebase.getCiudades(new CallBack() {

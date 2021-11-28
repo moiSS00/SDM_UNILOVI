@@ -24,7 +24,7 @@
         android:id="@+id/seekBarEdadMinimaRegistro4"
         android:layout_width="213dp"
         android:layout_height="40dp"
-        android:max="32"
+        android:max="31"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -48,7 +48,7 @@
         android:id="@+id/seekBarEdadMaximaRegistro4"
         android:layout_width="213dp"
         android:layout_height="40dp"
-        android:max="32"
+        android:max="31"
         android:progress="100"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -70,7 +70,7 @@
         app:layout_constraintVertical_bias="0.084" />
 
     <TextView
-        android:id="@+id/edadMinima"
+        android:id="@+id/edadMinimaRegistro4"
         android:layout_width="56dp"
         android:layout_height="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -81,7 +81,7 @@
         app:layout_constraintVertical_bias="0.324" />
 
     <TextView
-        android:id="@+id/edadMaxima"
+        android:id="@+id/edadMaximaRegistro4"
         android:layout_width="56dp"
         android:layout_height="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -127,39 +127,6 @@
         app:layout_constraintTop_toBottomOf="@+id/preferenciasBusquedaText"
         app:layout_constraintVertical_bias="0.062" />
 
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="125dp"
-        android:layout_height="20dp"
-        android:text="Facultad y carrera:"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.16"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/seekBarEdadMaximaRegistro4"
-        app:layout_constraintVertical_bias="0.086" />
-
-    <Spinner
-        android:id="@+id/spinnerFacultadesRegistro4"
-        android:layout_width="320dp"
-        android:layout_height="37dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9"
-        app:layout_constraintVertical_bias="0.071" />
-
-    <Spinner
-        android:id="@+id/spinnerCarrerasRegistro4"
-        android:layout_width="320dp"
-        android:layout_height="37dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerFacultadesRegistro4"
-        app:layout_constraintVertical_bias="0.072" />
-
     <CheckBox
         android:id="@+id/checkOtroRegistro4"
         android:layout_width="wrap_content"
@@ -172,15 +139,54 @@
         app:layout_constraintTop_toBottomOf="@+id/preferenciasBusquedaText"
         app:layout_constraintVertical_bias="0.062" />
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/filledTextFieldFacultadRegistro4"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="361dp"
+        android:layout_height="57dp"
+        android:hint="Facultad"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/seekBarEdadMaximaRegistro4"
+        app:layout_constraintVertical_bias="0.096">
+
+        <AutoCompleteTextView
+            android:id="@+id/cbxFacultadRegistro4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/filledTextFieldCarreraRegistro4"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="361dp"
+        android:layout_height="57dp"
+        android:hint="Carrera"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/filledTextFieldFacultadRegistro4"
+        app:layout_constraintVertical_bias="0.065">
+
+        <AutoCompleteTextView
+            android:id="@+id/cbxCarreraRegistro4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none" />
+    </com.google.android.material.textfield.TextInputLayout>
+
     <Button
         android:id="@+id/btnSiguienteRegistro4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="100dp"
         android:text="Button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/filledTextFieldCarreraRegistro4"
+        app:layout_constraintVertical_bias="0.315" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

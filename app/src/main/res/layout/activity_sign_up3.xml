@@ -8,7 +8,7 @@
 
 
     <EditText
-        android:id="@+id/editDescripcionRegistro3"
+        android:id="@+id/editSobreMiRegistro3"
         android:layout_width="365dp"
         android:layout_height="129dp"
         android:ems="10"
@@ -24,7 +24,7 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="@string/sobreMi"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.065"
@@ -36,12 +36,12 @@
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="Forma de contacto"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.065"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editDescripcionRegistro3"
+        app:layout_constraintTop_toBottomOf="@+id/editSobreMiRegistro3"
         app:layout_constraintVertical_bias="0.196" />
 
     <EditText

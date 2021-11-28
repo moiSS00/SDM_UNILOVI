@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.unilovi.database.Firebase;
+import com.example.unilovi.utils.CallBack;
 import com.google.firebase.auth.FirebaseUser;
 
 public class SplashActivity extends AppCompatActivity {
@@ -19,7 +20,17 @@ public class SplashActivity extends AppCompatActivity {
         FirebaseUser user = Firebase.getUsuarioActual();
 
         if (user != null && user.isEmailVerified())
-            showHome();
+            Firebase.existUser(new CallBack() {
+                @Override
+                public void methodToCallBack(Object object) {
+                    if ((Boolean) object) {
+                        showHome();
+                    }
+                    else {
+                        showLogin();
+                    }
+                }
+            });
         else {
             try {
                 Thread.sleep(500);

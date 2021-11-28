@@ -110,20 +110,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        nombre.setText("Bienvenido " + Firebase.getUsuarioActual().getEmail());
-        email.setText(Firebase.getUsuarioActual().getEmail());
-        Firebase.downloadImage(Firebase.getUsuarioActual().getEmail(), new CallBack() {
-            @Override
-            public void methodToCallBack(Object object) {
-                if (object != null) {
-                    Picasso.get().load((String) object).into(imagen);
+        if (Firebase.getUsuarioActual() != null) {
+            nombre.setText("Bienvenido " + Firebase.getUsuarioActual().getEmail());
+            email.setText(Firebase.getUsuarioActual().getEmail());
+            Firebase.downloadImage(Firebase.getUsuarioActual().getEmail(), new CallBack() {
+                @Override
+                public void methodToCallBack(Object object) {
+                    if (object != null) {
+                        Picasso.get().load((String) object).into(imagen);
 
-                } else {
-                    Util.showAlert(context, "Hubo un error al cargar las fotos");
+                    }
                 }
-            }
-        });
-        updateDayNight();
+            });
+            updateDayNight();
+        }
     }
 
     /*

@@ -80,6 +80,30 @@ public class Firebase {
     }
 
     /**
+     * Comprueba si es la primera vez que inicia sesion
+     * @param callBack
+     */
+    public static void existUser(CallBack callBack) {
+        db.collection("usuarios").document(getUsuarioActual().getEmail()).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            callBack.methodToCallBack(true);
+                        }
+                        else {
+                            callBack.methodToCallBack(false);
+                        }
+                    }})
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        callBack.methodToCallBack(false);
+                    }
+                });
+    }
+
+    /**
      * Registra un usuario en la base de datos
      * @param email Email del usuario a registrar
      * @param password Contraseña del usuario
@@ -202,6 +226,8 @@ public class Firebase {
         userParams.put("sexo", user.getSexo());
         userParams.put("facultad", user.getFacultad());
         userParams.put("carrera", user.getCarrera());
+        userParams.put("sobreMi", user.getSobreMi());
+        userParams.put("contacto", user.getFormaContacto());
 
         // Añadimos al usuario
         db.collection("usuarios").document(user.getEmail()).set(userParams)

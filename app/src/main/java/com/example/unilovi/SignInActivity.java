@@ -5,11 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.unilovi.database.Firebase;
+import com.example.unilovi.model.User;
 import com.example.unilovi.utils.Util;
 import com.example.unilovi.utils.CallBack;
 
@@ -22,6 +24,7 @@ public class SignInActivity extends AppCompatActivity {
     private EditText editPassword;
 
     // Atributos auxiliares
+    public static final String USUARIO_REGISTRADO1 = "usuario_registrado1";
     private Context context = this;
 
     @Override
@@ -47,13 +50,35 @@ public class SignInActivity extends AppCompatActivity {
                 if (validacionEntrada()) { // Si las entradas son validas
                     String emailContent = editEmail.getText().toString();
                     String passwordContent = editPassword.getText().toString();
+
                     Firebase.iniciarSesion(emailContent, passwordContent, new CallBack() {
                         @Override
                         public void methodToCallBack(Object object) {
-                            if ((boolean) object) {
-                                Intent mainIntent = new Intent(SignInActivity.this, MainActivity.class);
-                                startActivity(mainIntent);
-                                finish();
+                            if ((boolean) object && Firebase.getUsuarioActual().isEmailVerified()) {
+                                // Comprobamos si es la primera vez
+                                Firebase.existUser(new CallBack() {
+                                    @Override
+                                    public void methodToCallBack(Object object) {
+                                        if ((Boolean) object) { // No es la primera vez
+                                            Intent mainIntent = new Intent(SignInActivity.this, MainActivity.class);
+                                            startActivity(mainIntent);
+                                            finish();
+                                        }
+                                        else { // Es la primera vez
+
+                                            // Se pasara a la siguiente pantalla de registro
+                                            Intent postIntent = new Intent(SignInActivity.this, SignUpActivity2.class);
+
+                                            User user = new User();
+                                            user.setEmail(emailContent);
+                                            user.setPassword(passwordContent);
+                                            postIntent.putExtra(USUARIO_REGISTRADO1, user);
+
+                                            // Comenzamos siguiente parte del registro
+                                            startActivity(postIntent);
+                                        }
+                                    }
+                                });
                             }
                             else {
                                 Util.showAlert(context, "Hubo algún fallo al iniciar sesión. " +
@@ -72,6 +97,14 @@ public class SignInActivity extends AppCompatActivity {
                showSignUp();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (Firebase.getUsuarioActual() != null) {
+            Firebase.cerrarSesion();
+        }
     }
 
     private boolean validacionEntrada() {

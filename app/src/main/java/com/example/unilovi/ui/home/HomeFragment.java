@@ -52,8 +52,6 @@ public class HomeFragment extends Fragment {
             public void methodToCallBack(Object object) {
                 if (object != null) {
                     Picasso.get().load((String) object).into(imagenRandom);
-                } else {
-                    Util.showAlert(getContext(), "Hubo un error al cargar las fotos");
                 }
             }
         });

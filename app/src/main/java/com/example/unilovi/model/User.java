@@ -12,6 +12,7 @@ public class User implements Parcelable {
     // public static final String OTRO = "O";
 
     private String email;
+    private String password;
     private String nombre;
     private String apellidos;
     private String uriFoto;
@@ -20,9 +21,10 @@ public class User implements Parcelable {
     private String facultad;
     private String carrera;
     private Preferences preferences;
+    private String sobreMi;
+    private String formaContacto;
 
     // private int age;
-    // private String aboutMe;
 
     public User() {
 
@@ -43,6 +45,14 @@ public class User implements Parcelable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getApellidos() {
@@ -101,10 +111,27 @@ public class User implements Parcelable {
         this.preferences = preferences;
     }
 
+    public String getSobreMi() {
+        return sobreMi;
+    }
+
+    public void setSobreMi(String sobreMi) {
+        this.sobreMi = sobreMi;
+    }
+
+    public String getFormaContacto() {
+        return formaContacto;
+    }
+
+    public void setFormaContacto(String formaContacto) {
+        this.formaContacto = formaContacto;
+    }
+
     // --- Métodos para que categoría sea parceable ---
 
     protected User(Parcel in) {
         email = in.readString();
+        password = in.readString();
         nombre = in.readString();
         apellidos = in.readString();
         uriFoto = in.readString();
@@ -113,6 +140,8 @@ public class User implements Parcelable {
         facultad = in.readString();
         carrera = in.readString();
         preferences = in.readParcelable(Preferences.class.getClassLoader());
+        sobreMi = in.readString();
+        formaContacto = in.readString();
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -135,6 +164,7 @@ public class User implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(email);
+        parcel.writeString(password);
         parcel.writeString(nombre);
         parcel.writeString(apellidos);
         parcel.writeString(uriFoto);
@@ -143,5 +173,7 @@ public class User implements Parcelable {
         parcel.writeString(facultad);
         parcel.writeString(carrera);
         parcel.writeParcelable(preferences, i);
+        parcel.writeString(sobreMi);
+        parcel.writeString(formaContacto);
     }
 }

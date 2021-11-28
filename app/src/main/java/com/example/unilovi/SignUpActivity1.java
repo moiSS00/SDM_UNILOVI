@@ -26,13 +26,10 @@ public class SignUpActivity1 extends AppCompatActivity {
     private TextInputEditText email;
     private TextInputEditText password;
     private TextInputEditText repeatPassword;
-    private TextInputEditText nombre;
-    private TextInputEditText apellidos;
 
     private Button signUpButton;
 
     // Atriutos auxiliares
-    public static final String USUARIO_REGISTRADO = "usuario_registrado";
     private Context context = this;
 
     @Override
@@ -49,8 +46,6 @@ public class SignUpActivity1 extends AppCompatActivity {
         email = (TextInputEditText) findViewById(R.id.editCorreoRegistro1);
         password = (TextInputEditText) findViewById(R.id.editPasswordRegistro1);
         repeatPassword = (TextInputEditText) findViewById(R.id.editRepeatPasswordRegistro1);
-        nombre = (TextInputEditText) findViewById(R.id.editNombreRegistro1);
-        apellidos = (TextInputEditText) findViewById(R.id.editApellidosRegistro1);
 
 
         signUpButton = (Button) findViewById(R.id.btnSiguienteRegistro1);
@@ -66,8 +61,6 @@ public class SignUpActivity1 extends AppCompatActivity {
                 String emailContent = email.getText().toString().trim();
                 String passwordContent = password.getText().toString();
                 String repeatPasswordContent = repeatPassword.getText().toString();
-                String nombreContent = nombre.getText().toString();
-                String apellidosContent = apellidos.getText().toString();
 
                 //VALIDACIONES
                 boolean flag=true;
@@ -109,25 +102,24 @@ public class SignUpActivity1 extends AppCompatActivity {
                         @Override
                         public void methodToCallBack(Object object) {
                             if ((boolean) object) { // Si hubo éxito
-
                                 //Mandamos email de verificación
                                 Firebase.getUsuarioActual().sendEmailVerification();
 
                                 // Se pasara a la siguiente pantalla de registro
-                                Intent postIntent = new Intent(SignUpActivity1.this, SignUpActivity2.class);
+                                Intent postIntent = new Intent(SignUpActivity1.this, SignInActivity.class);
 
-                                // Se crea un usuario y se le va asignando la información del registro
+                                // Pasamos el usuario
                                 User user = new User();
-                                user.setNombre(nombreContent);
-                                user.setApellidos(apellidosContent);
-                                user.setEmail(emailAux);
-                                postIntent.putExtra(USUARIO_REGISTRADO, user);
+                                user.setEmail(emailContent);
+                                user.setPassword(passwordContent);
+
+                                postIntent.putExtra(SignInActivity.USUARIO_REGISTRADO1, user);
 
                                 // Comenzamos siguiente parte del registro
                                 startActivity(postIntent);
                                 finish();
-
                             } else {
+                                // HAY QUE HACER CONTROL DE EXCEPCIONES
                                 Util.showAlert(context, "Hubo un error al registrarse");
                             }
                         }

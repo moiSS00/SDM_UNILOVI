@@ -33,6 +33,9 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.squareup.picasso.Picasso;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -72,6 +75,7 @@ public class SignUpActivity2 extends AppCompatActivity {
 
     // Atributos auxiliares
     private static final int GALLERY_INTENT = 1;
+    public static final String USUARIO_REGISTRADO2 = "usuario_registrado2";
     private User user;
 
     @Override
@@ -83,6 +87,8 @@ public class SignUpActivity2 extends AppCompatActivity {
         imagen = (ImageView) findViewById(R.id.imagenPostSignUp);
         btnSubirFoto = (Button) findViewById(R.id.btnSubirFotoRegistro2);
         textFecha = (TextInputEditText) findViewById(R.id.editFechaRegistro2);
+        textNombre = (TextInputEditText) findViewById(R.id.editTextNombreRegistro2);
+        textApellidos = (TextInputEditText) findViewById(R.id.editTextApellidosRegistro2);
         rdgSexo = (RadioGroup) findViewById(R.id.rdgSexoRegistro2);
         editTextFilledExposedDropdownFacultades = (AutoCompleteTextView) findViewById(R.id.cbxFacultadRegistro2);
         editTextFilledExposedDropdownCarreras = (AutoCompleteTextView) findViewById(R.id.cbxCarreraRegistro2);
@@ -94,9 +100,8 @@ public class SignUpActivity2 extends AppCompatActivity {
         facultad_error = (TextInputLayout) findViewById(R.id.filledTextFieldFacultad);
         carrera_error = (TextInputLayout) findViewById(R.id.filledTextFieldCarrera);
 
-
-        // Recogemos la informacion del usuario que se esta registrando
-        user = getIntent().getParcelableExtra(SignUpActivity1.USUARIO_REGISTRADO);
+        // Obtenemos el usuario
+        user = getIntent().getParcelableExtra(SignInActivity.USUARIO_REGISTRADO1);
 
         btnSubirFoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,6 +176,8 @@ public class SignUpActivity2 extends AppCompatActivity {
                     public void onSuccess(Void unused) {
 
                         // Recogemos inputs
+                        String nombre = textNombre.getText().toString();
+                        String apellidos = textApellidos.getText().toString();
                         String fecha = textFecha.getText().toString();
                         String facultad = editTextFilledExposedDropdownFacultades
                                 .getText().toString();
@@ -214,15 +221,18 @@ public class SignUpActivity2 extends AppCompatActivity {
                             Intent postIntent = new Intent(SignUpActivity2.this, SignUpActivity3.class);
 
                             // Se le va asignando la información del registro
+                            user.setNombre(nombre);
+                            user.setApellidos(apellidos);
                             user.setUriFoto(dataImagen.toString());
                             user.setFechaNacimiento(fecha);
                             user.setFacultad(facultad);
                             user.setCarrera(carrera);
                             user.setSexo(sexo);
 
+                            postIntent.putExtra(USUARIO_REGISTRADO2, user);
+
                             // Comenzamos siguiente parte del registro
                             startActivity(postIntent);
-                            finish();
                         }
                     }
                 });

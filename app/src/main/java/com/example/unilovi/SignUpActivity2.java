@@ -187,9 +187,13 @@ public class SignUpActivity2 extends AppCompatActivity {
                         // Para obtener el radio boton del radioGroup seleccionado
                         int selectedId = rdgSexo.getCheckedRadioButtonId();
                         RadioButton rdSeleccionado = (RadioButton) findViewById(selectedId);
-                        String sexo = rdSeleccionado.getText().toString();
 
                         boolean flag = true;
+
+                        if (rdSeleccionado == null) {
+                            Toast.makeText(getApplicationContext(), "Debes seleccionar un sexo", Toast.LENGTH_SHORT).show();
+                            flag = false;
+                        }
 
                         if (dataImagen == null) {
                             Toast.makeText(getApplicationContext(), "Debes introducir una foto", Toast.LENGTH_SHORT).show();
@@ -198,11 +202,6 @@ public class SignUpActivity2 extends AppCompatActivity {
 
                         if (fecha.isEmpty()) {
                             date_error.setError("Debes introducir tu fecha de nacimiento");
-                            flag = false;
-                        }
-
-                        if (sexo.isEmpty()) {
-                            Toast.makeText(getApplicationContext(), "Debes seleccionar un sexo", Toast.LENGTH_SHORT).show();
                             flag = false;
                         }
 
@@ -217,6 +216,7 @@ public class SignUpActivity2 extends AppCompatActivity {
                         }
 
                         if (flag) {
+
                             // Se pasara a la siguiente pantalla de registro
                             Intent postIntent = new Intent(SignUpActivity2.this, SignUpActivity3.class);
 
@@ -227,6 +227,9 @@ public class SignUpActivity2 extends AppCompatActivity {
                             user.setFechaNacimiento(fecha);
                             user.setFacultad(facultad);
                             user.setCarrera(carrera);
+
+
+                            String sexo = rdSeleccionado.getText().toString();
                             user.setSexo(sexo);
 
                             postIntent.putExtra(USUARIO_REGISTRADO2, user);

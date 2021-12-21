@@ -1,25 +1,31 @@
 package com.example.unilovi.ui.preferenciasBusqueda;
 
 import android.os.Bundle;
+import android.telecom.Call;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.unilovi.R;
+import com.example.unilovi.SignUpActivity4;
 import com.example.unilovi.database.Firebase;
 import com.example.unilovi.databinding.FragmentPreferenciasBinding;
 import com.example.unilovi.utils.Util;
 import com.example.unilovi.utils.CallBack;
 
 import java.util.List;
+import java.util.Map;
 
 
 public class PreferenciasBusquedaFragment extends Fragment {
@@ -34,9 +40,8 @@ public class PreferenciasBusquedaFragment extends Fragment {
     private CheckBox checkHombre;
     private CheckBox checkMujer;
     private CheckBox checkNoBinario;
-    private Spinner spinnerPreferencesFacultades;
-    private Spinner spinnerPreferencesCarreras;
-    private Spinner spinnerPreferencesCiudades;
+    private AutoCompleteTextView editTextFilledExposedDropdownFacultades;
+    private AutoCompleteTextView editTextFilledExposedDropdownCarreras;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -49,9 +54,8 @@ public class PreferenciasBusquedaFragment extends Fragment {
         edadMinima = (TextView) root.findViewById(R.id.edadMinima);
         seekBarMaxima = (SeekBar) root.findViewById(R.id.seekBarEdadMaxima);
         seekBarMinima = (SeekBar) root.findViewById(R.id.seekBarEdadMinima);
-        spinnerPreferencesFacultades = (Spinner) root.findViewById(R.id.spinnerFacultades);
-        spinnerPreferencesCarreras = (Spinner) root.findViewById(R.id.spinnerCarreras);
-        spinnerPreferencesCiudades = (Spinner) root.findViewById(R.id.spinnerCiudades);
+        editTextFilledExposedDropdownFacultades = (AutoCompleteTextView) root.findViewById(R.id.cbxFacultadPreferencias);
+        editTextFilledExposedDropdownCarreras = (AutoCompleteTextView) root.findViewById(R.id.cbxCarreraPreferencias);
         checkHombre = (CheckBox) root.findViewById(R.id.checkHombre);
         checkMujer = (CheckBox) root.findViewById(R.id.checkMujer);
         checkNoBinario = (CheckBox) root.findViewById(R.id.checkNoBinario);
@@ -60,23 +64,7 @@ public class PreferenciasBusquedaFragment extends Fragment {
         edadMinima.setText("18");
         edadMaxima.setText("50");
 
-        //Rellenamos con valores de la base de datos el spinner de ciudades
-        Firebase.getCiudades(new CallBack() {
-            @Override
-            public void methodToCallBack(Object object) {
-                Util.rellenarSpinner(getContext(),
-                        spinnerPreferencesCiudades, (List<String>) object);
-            }
-        });
-
-        // Rellenamos con valores de la base de datos el spinner de facultades
-        Firebase.getFacultades(new CallBack() {
-            @Override
-            public void methodToCallBack(Object object) {
-                Util.rellenarSpinner(getContext(), spinnerPreferencesFacultades,
-                        (List<String>) object);
-            }
-        });
+        iniciarSpinners();
 
         // Asignamos listeners
 
@@ -129,32 +117,86 @@ public class PreferenciasBusquedaFragment extends Fragment {
             }
         });
 
-        spinnerPreferencesFacultades.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        return root;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Sacamos las preferencias del usuario
+        Firebase.getPreferencesByEmail(Firebase.getUsuarioActual().getEmail(), new CallBack() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                // Obtenemos la facultad seleccionada
-                String facultad = spinnerPreferencesFacultades.getItemAtPosition(i).toString();
-                Firebase.getCarrerasByFacultad(facultad, new CallBack() {
-                    @Override
-                    public void methodToCallBack(Object object) {
-                        Util.rellenarSpinner(getContext(),
-                                spinnerPreferencesCarreras, (List<String>) object);
+            public void methodToCallBack(Object object) {
+                if (object != null) {
+                    Map<String, Object> preferencias = (Map<String, Object>) object;
+                    preferencias.get("carrera");
+                    preferencias.get("facultad");
+                    // Recuperamos las edades
+                    String edadm = preferencias.get("edadMinima").toString();
+                    String edadM = preferencias.get("edadMaxima").toString();
+                    int progressm = Integer.parseInt(preferencias.get("edadMinima").toString()) - 18;
+                    int progressM = Integer.parseInt(preferencias.get("edadMaxima").toString()) - 19;
+                    seekBarMinima.setProgress(progressm);
+                    seekBarMaxima.setProgress(progressM);
+
+                    // Recuperamos los sexos de búsqueda
+                    List<String> sexos = (List<String>) preferencias.get("sexoBusqueda");
+                    for (String sexo : sexos){
+                        if (sexo.equals("M"))
+                            checkHombre.setChecked(true);
+                        else if (sexo.equals("F"))
+                            checkMujer.setChecked(true);
+                        else
+                            checkNoBinario.setChecked(true);
                     }
-                });
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
+                } else {
+                    Toast.makeText(getContext(), "No se pudieron recuperar las preferencias del usuario", Toast.LENGTH_SHORT).show();
+                }
             }
         });
-        return root;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    private void iniciarSpinners() {
+
+        Firebase.getFacultades(new CallBack() {
+            @Override
+            public void methodToCallBack(Object object) {
+                ArrayAdapter<String> adapterFacultades =
+                        new ArrayAdapter<String>(
+                                getContext(),
+                                R.layout.dropdown_menu_popup_item,
+                                R.id.prueba,
+                                (List<String>) object);
+                editTextFilledExposedDropdownFacultades.setAdapter(adapterFacultades);
+            }
+        });
+
+        editTextFilledExposedDropdownFacultades.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String facultad = editTextFilledExposedDropdownFacultades.getText().toString();
+                Firebase.getCarrerasByFacultad(facultad, new CallBack() {
+                    @Override
+                    public void methodToCallBack(Object object) {
+                        ArrayAdapter<String> adapterCarreras =
+                                new ArrayAdapter<String>(
+                                        getContext(),
+                                        R.layout.dropdown_menu_popup_item,
+                                        R.id.prueba,
+                                        (List<String>) object);
+                        editTextFilledExposedDropdownCarreras.setAdapter(adapterCarreras);
+                    }
+                });
+                editTextFilledExposedDropdownCarreras.setText("");
+            }
+        });
     }
 
 }

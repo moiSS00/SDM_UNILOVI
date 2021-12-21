@@ -212,8 +212,8 @@ public class Firebase {
     }
 
     /**
-     * Devuelve el nombre y el sexo del usuario para darle la bienvenida
-     * @param email Facultad por la que se quiere filtrar
+     * Devuelve el nombre del usuario para darle la bienvenida
+     * @param email Email del usuario
      */
     public static void getNombreByEmail(String email, CallBack callBack) {
         // Buscamos el documento para ese email
@@ -223,6 +223,31 @@ public class Firebase {
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if (documentSnapshot.exists()) { // Si existe el email
                             callBack.methodToCallBack(documentSnapshot.getData().get("nombre"));
+                        }
+                        else { // Si el email no existe
+                            callBack.methodToCallBack(null);
+                        }
+                    }})
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        callBack.methodToCallBack(null);
+                    }
+                });
+    }
+
+    /**
+     * Devuelve las preferencias del usuario
+     * @param email Email del usuario
+     */
+    public static void getPreferencesByEmail(String email, CallBack callBack) {
+        // Buscamos el documento para ese email
+        db.collection("preferencias").document(email).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) { // Si existe el email
+                            callBack.methodToCallBack(documentSnapshot.getData());
                         }
                         else { // Si el email no existe
                             callBack.methodToCallBack(null);
@@ -260,7 +285,7 @@ public class Firebase {
         Map<String, Object> userPreferences = new HashMap<>();
         userPreferences.put("edadMinima", preferences.getEdadMinima());
         userPreferences.put("edadMaxima", preferences.getEdadMaxima());
-        userPreferences.put("sexoBusqueda", preferences.getSexos().toString());
+        userPreferences.put("sexoBusqueda", preferences.getSexos());
         userPreferences.put("facultad", preferences.getFacultad());
         userPreferences.put("carrera", preferences.getCarrera());
 

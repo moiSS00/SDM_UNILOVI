@@ -129,8 +129,56 @@ public class PreferenciasBusquedaFragment extends Fragment {
             public void methodToCallBack(Object object) {
                 if (object != null) {
                     Map<String, Object> preferencias = (Map<String, Object>) object;
-                    preferencias.get("carrera");
-                    preferencias.get("facultad");
+
+
+
+                    // Recuperamos el valor de la facultad de preferencia
+                    String facultad = preferencias.get("facultad").toString();
+
+                    // Si hay una facultad en las preferencias
+                    if (!facultad.isEmpty()) {
+                        int numeroFacultad = -1;
+
+                        // Buscamos en el spinner la que coincide, cogemos su indice y ponemos ese texto en el spinner
+                        for (int i = 0; i < editTextFilledExposedDropdownFacultades.getAdapter().getCount(); i++) {
+                            if (editTextFilledExposedDropdownFacultades.getAdapter().getItem(i).toString().equals(facultad)) {
+                                numeroFacultad = i;
+                            }
+                        }
+                        editTextFilledExposedDropdownFacultades.setText(editTextFilledExposedDropdownFacultades.getAdapter().getItem(numeroFacultad).toString(), false);
+
+                        String carrera = preferencias.get("carrera").toString();
+
+                        // Le ponemos adapter al spinner de carreras según la facultad que sacamos de las preferencias
+                        Firebase.getCarrerasByFacultad(facultad, new CallBack() {
+                            @Override
+                            public void methodToCallBack(Object object) {
+                                ArrayAdapter<String> adapterCarreras =
+                                        new ArrayAdapter<String>(
+                                                getContext(),
+                                                R.layout.dropdown_menu_popup_item,
+                                                R.id.prueba,
+                                                (List<String>) object);
+                                editTextFilledExposedDropdownCarreras.setAdapter(adapterCarreras);
+                            }
+                        });
+
+                        // Si hay una carrera en las preferencias
+                        if (!carrera.isEmpty()) {
+                            int numeroCarrera = -1;
+
+                            // Buscamos en el spinner la que coincide, cogemos su indice y ponemos ese texto en el spinner
+                            if (editTextFilledExposedDropdownCarreras.getAdapter() != null) {
+                                for (int i = 0; i < editTextFilledExposedDropdownCarreras.getAdapter().getCount(); i++) {
+                                    if (editTextFilledExposedDropdownCarreras.getAdapter().getItem(i).toString().equals(carrera)) {
+                                        numeroCarrera = i;
+                                    }
+                                }
+                                editTextFilledExposedDropdownCarreras.setText(editTextFilledExposedDropdownCarreras.getAdapter().getItem(numeroCarrera).toString(), false);
+                            }
+                        }
+                    }
+
                     // Recuperamos las edades
                     String edadm = preferencias.get("edadMinima").toString();
                     String edadM = preferencias.get("edadMaxima").toString();

@@ -212,6 +212,31 @@ public class Firebase {
     }
 
     /**
+     * Devuelve el nombre y el sexo del usuario para darle la bienvenida
+     * @param email Facultad por la que se quiere filtrar
+     */
+    public static void getNombreByEmail(String email, CallBack callBack) {
+        // Buscamos el documento para ese email
+        db.collection("usuarios").document(email).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) { // Si existe el email
+                            callBack.methodToCallBack(documentSnapshot.getData().get("nombre"));
+                        }
+                        else { // Si el email no existe
+                            callBack.methodToCallBack(null);
+                        }
+                    }})
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        callBack.methodToCallBack(null);
+                    }
+                });
+    }
+
+    /**
      * Crea un usuario en la base de datos (NO EN EL SERVICIO DE AUTENTIFICACIÓN)
      * @param user Usuario a crear
      * @param callBack CallBack a ejecutar, recibirá true si no hubo errores  o

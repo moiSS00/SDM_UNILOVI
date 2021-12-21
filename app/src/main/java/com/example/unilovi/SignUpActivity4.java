@@ -37,6 +37,8 @@ public class SignUpActivity4 extends AppCompatActivity {
     private CheckBox checkOtro;
     private Button btnSiguiente;
 
+        public static final String FOTO_USUARIO = "foto_usuario";
+
     //Spinners
     private AutoCompleteTextView editTextFilledExposedDropdownFacultades;
     private AutoCompleteTextView editTextFilledExposedDropdownCarreras;
@@ -164,6 +166,7 @@ public class SignUpActivity4 extends AppCompatActivity {
                                     public void methodToCallBack(Object object) {
                                         if ((boolean) object) {
                                             Intent mainIntent = new Intent(SignUpActivity4.this, MainActivity.class);
+                                            mainIntent.putExtra(FOTO_USUARIO, user.getUriFoto());
                                             startActivity(mainIntent);
                                             finish();
                                         } else {

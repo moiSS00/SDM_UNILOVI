@@ -110,9 +110,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        if (Firebase.getUsuarioActual() != null) {
-            nombre.setText("Bienvenido " + Firebase.getUsuarioActual().getEmail());
-            email.setText(Firebase.getUsuarioActual().getEmail());
+
+        String uriFoto = getIntent().getParcelableExtra(SignUpActivity4.FOTO_USUARIO);
+        Firebase.getNombreByEmail(Firebase.getUsuarioActual().getEmail(), new CallBack() {
+            @Override
+            public void methodToCallBack(Object object) {
+                nombre.setText("Bienvenido/a " + object.toString());
+            }
+        });
+        email.setText(Firebase.getUsuarioActual().getEmail());
+        if (uriFoto != null && !uriFoto.isEmpty()) {
+            Picasso.get().load(uriFoto).into(imagen);
+        } else if (Firebase.getUsuarioActual() != null) {
             Firebase.downloadImage(Firebase.getUsuarioActual().getEmail(), new CallBack() {
                 @Override
                 public void methodToCallBack(Object object) {
@@ -122,8 +131,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             });
-            updateDayNight();
         }
+        updateDayNight();
     }
 
     /*

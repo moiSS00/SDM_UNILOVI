@@ -126,10 +126,10 @@ public class SignUpActivity4 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Recogemos los valores
-                int edadMinima = seekBarMinima.getProgress();
-                int edadMaxima = seekBarMaxima.getProgress();
-                // String facultad = spinnerPreferencesFacultades.getSelectedItem().toString();
-                // String carrera = spinnerPreferencesCarreras.getSelectedItem().toString();
+                int edadMinima = seekBarMinima.getProgress() + 18;
+                int edadMaxima = seekBarMaxima.getProgress() + 19;
+                String facultad = editTextFilledExposedDropdownFacultades.getText().toString();
+                String carrera = editTextFilledExposedDropdownCarreras.getText().toString();
 
                 ArrayList<String> sexos = new ArrayList<String>();
                 if (checkHombre.isChecked()) { sexos.add("M");}
@@ -137,46 +137,47 @@ public class SignUpActivity4 extends AppCompatActivity {
                 if (checkOtro.isChecked()) { sexos.add("O");}
 
                 // Validamos
-                // ...
+                if (sexos.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Debes elegir uno o más sexos preferentes", Toast.LENGTH_SHORT).show();
+                } else {
 
-                // Creamos las preferencias
-                Preferences preferences = new Preferences();
-                preferences.setEdadMinima(edadMinima);
-                preferences.setEdadMaxima(edadMaxima);
-                preferences.setSexos(sexos);
-                // preferences.setFacultad(facultad);
-                // preferences.setCarrera(carrera);
+                    // Creamos las preferencias
+                    Preferences preferences = new Preferences();
+                    preferences.setEdadMinima(edadMinima);
+                    preferences.setEdadMaxima(edadMaxima);
+                    preferences.setSexos(sexos);
+                    preferences.setFacultad(facultad);
+                    preferences.setCarrera(carrera);
 
-                user.setPreferences(preferences);
+                    user.setPreferences(preferences);
 
 
-                // Para obtener el radio boton del radioGroup seleccionado
+                    // Para obtener el radio boton del radioGroup seleccionado
 
-                // Guardamos al usuario
-                Firebase.createUser(user, new CallBack() {
-                    @Override
-                    public void methodToCallBack(Object object) {
-                        if (object != null) {
-                            Firebase.iniciarSesion(user.getEmail(), user.getPassword(), new CallBack() {
-                                @Override
-                                public void methodToCallBack(Object object) {
-                                    if ((boolean) object) {
-                                        Intent mainIntent = new Intent(SignUpActivity4.this, MainActivity.class);
-                                        startActivity(mainIntent);
-                                        finish();
+                    // Guardamos al usuario
+                    Firebase.createUser(user, new CallBack() {
+                        @Override
+                        public void methodToCallBack(Object object) {
+                            if (object != null) {
+                                Firebase.iniciarSesion(user.getEmail(), user.getPassword(), new CallBack() {
+                                    @Override
+                                    public void methodToCallBack(Object object) {
+                                        if ((boolean) object) {
+                                            Intent mainIntent = new Intent(SignUpActivity4.this, MainActivity.class);
+                                            startActivity(mainIntent);
+                                            finish();
+                                        } else {
+                                            Util.showAlert(context, "Hubo algún fallo al iniciar sesión. " +
+                                                    "Comprueba las credenciales introducidas");
+                                        }
                                     }
-                                    else {
-                                        Util.showAlert(context, "Hubo algún fallo al iniciar sesión. " +
-                                                "Comprueba las credenciales introducidas");
-                                    }
-                                }
-                            });
+                                });
+                            } else {
+                                Toast.makeText(getApplicationContext(), "No se pudo registrar", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                        else {
-                            Toast.makeText(getApplicationContext(), "Usuario registrado", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+                    });
+                }
             }
         });
     }

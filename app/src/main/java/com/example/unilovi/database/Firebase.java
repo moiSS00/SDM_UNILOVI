@@ -5,6 +5,7 @@ import android.net.Uri;
 
 import androidx.annotation.NonNull;
 
+import com.example.unilovi.model.Preferences;
 import com.example.unilovi.model.User;
 import com.example.unilovi.utils.CallBack;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -229,13 +230,33 @@ public class Firebase {
         userParams.put("sobreMi", user.getSobreMi());
         userParams.put("contacto", user.getFormaContacto());
 
+        // Create preferences for user
+        Preferences preferences = user.getPreferences();
+        Map<String, Object> userPreferences = new HashMap<>();
+        userPreferences.put("edadMinima", preferences.getEdadMinima());
+        userPreferences.put("edadMaxima", preferences.getEdadMaxima());
+        userPreferences.put("sexoBusqueda", preferences.getSexos().toString());
+        userPreferences.put("facultad", preferences.getFacultad());
+        userPreferences.put("carrera", preferences.getCarrera());
+
         // Añadimos al usuario
         db.collection("usuarios").document(user.getEmail()).set(userParams)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                uploadImage(Uri.parse(user.getUriFoto()));
-                callBack.methodToCallBack(true);
+                db.collection("preferencias").document(user.getEmail()).set(userPreferences)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        uploadImage(Uri.parse(user.getUriFoto()));
+                        callBack.methodToCallBack(true);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        callBack.methodToCallBack(false);
+                    }
+                });
             }})
                 .addOnFailureListener(new OnFailureListener() {
             @Override

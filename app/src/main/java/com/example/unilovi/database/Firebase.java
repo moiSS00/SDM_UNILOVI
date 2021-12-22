@@ -317,6 +317,35 @@ public class Firebase {
     }
 
     /**
+     * Actualiza las preferencias de un usuario
+     * @param user Usuario al que actualizar las preferencias
+     * @param callBack CallBack a ejecutar, recibirá true si no hubo errores  o
+     * false si hubo algún error.
+     */
+    public static void updatePreferences(User user, CallBack callBack) {
+
+        Preferences preferences = user.getPreferences();
+        Map<String, Object> userPreferences = new HashMap<>();
+        userPreferences.put("edadMinima", preferences.getEdadMinima());
+        userPreferences.put("edadMaxima", preferences.getEdadMaxima());
+        userPreferences.put("sexoBusqueda", preferences.getSexos());
+        userPreferences.put("facultad", preferences.getFacultad());
+        userPreferences.put("carrera", preferences.getCarrera());
+
+        db.collection("preferencias").document(user.getEmail()).update(userPreferences).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                callBack.methodToCallBack(true);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                callBack.methodToCallBack(false);
+            }
+        });
+    }
+
+    /**
      * Sube una foto al storage
      * @param uri Uri donde está la imagen
      */

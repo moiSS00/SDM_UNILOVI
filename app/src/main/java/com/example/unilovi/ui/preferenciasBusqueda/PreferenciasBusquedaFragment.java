@@ -21,9 +21,12 @@ import com.example.unilovi.R;
 import com.example.unilovi.SignUpActivity4;
 import com.example.unilovi.database.Firebase;
 import com.example.unilovi.databinding.FragmentPreferenciasBinding;
+import com.example.unilovi.model.Preferences;
+import com.example.unilovi.model.User;
 import com.example.unilovi.utils.Util;
 import com.example.unilovi.utils.CallBack;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -67,6 +70,36 @@ public class PreferenciasBusquedaFragment extends Fragment {
         iniciarSpinners();
 
         // Asignamos listeners
+
+        checkHombre.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!checkHombre.isChecked() && !checkMujer.isChecked() && !checkNoBinario.isChecked()) {
+                    checkHombre.setChecked(true);
+                    Toast.makeText(getContext(), "Debes elegir un sexo como mínimo", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        checkMujer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!checkHombre.isChecked() && !checkMujer.isChecked() && !checkNoBinario.isChecked()) {
+                    checkMujer.setChecked(true);
+                    Toast.makeText(getContext(), "Debes elegir un sexo como mínimo", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        checkNoBinario.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!checkHombre.isChecked() && !checkMujer.isChecked() && !checkNoBinario.isChecked()) {
+                    checkNoBinario.setChecked(true);
+                    Toast.makeText(getContext(), "Debes elegir un sexo como mínimo", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         // -- Para la barra de edad mínima --
         seekBarMinima.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -160,23 +193,23 @@ public class PreferenciasBusquedaFragment extends Fragment {
                                                 R.id.prueba,
                                                 (List<String>) object);
                                 editTextFilledExposedDropdownCarreras.setAdapter(adapterCarreras);
-                            }
-                        });
 
-                        // Si hay una carrera en las preferencias
-                        if (!carrera.isEmpty()) {
-                            int numeroCarrera = -1;
+                                // Si hay una carrera en las preferencias
+                                if (!carrera.isEmpty()) {
+                                    int numeroCarrera = -1;
 
-                            // Buscamos en el spinner la que coincide, cogemos su indice y ponemos ese texto en el spinner
-                            if (editTextFilledExposedDropdownCarreras.getAdapter() != null) {
-                                for (int i = 0; i < editTextFilledExposedDropdownCarreras.getAdapter().getCount(); i++) {
-                                    if (editTextFilledExposedDropdownCarreras.getAdapter().getItem(i).toString().equals(carrera)) {
-                                        numeroCarrera = i;
+                                    // Buscamos en el spinner la que coincide, cogemos su indice y ponemos ese texto en el spinner
+                                    if (editTextFilledExposedDropdownCarreras.getAdapter() != null) {
+                                        for (int i = 0; i < editTextFilledExposedDropdownCarreras.getAdapter().getCount(); i++) {
+                                            if (editTextFilledExposedDropdownCarreras.getAdapter().getItem(i).toString().equals(carrera)) {
+                                                numeroCarrera = i;
+                                            }
+                                        }
+                                        editTextFilledExposedDropdownCarreras.setText(editTextFilledExposedDropdownCarreras.getAdapter().getItem(numeroCarrera).toString(), false);
                                     }
                                 }
-                                editTextFilledExposedDropdownCarreras.setText(editTextFilledExposedDropdownCarreras.getAdapter().getItem(numeroCarrera).toString(), false);
                             }
-                        }
+                        });
                     }
 
                     // Recuperamos las edades
@@ -209,6 +242,35 @@ public class PreferenciasBusquedaFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+
+        User user = new User();
+        user.setEmail(Firebase.getUsuarioActual().getEmail());
+
+        // Inicializamos las nuevas preferencias
+        Preferences preferences = new Preferences();
+
+        preferences.setEdadMinima(Integer.parseInt(edadMinima.getText().toString()));
+        preferences.setEdadMaxima(Integer.parseInt(edadMaxima.getText().toString()));
+        preferences.setFacultad(editTextFilledExposedDropdownFacultades.getText().toString());
+        preferences.setCarrera(editTextFilledExposedDropdownCarreras.getText().toString());
+
+        ArrayList<String> sexos = new ArrayList<>();
+        if (checkHombre.isChecked())
+            sexos.add("M");
+        if (checkMujer.isChecked())
+            sexos.add("F");
+        if (checkNoBinario.isChecked())
+            sexos.add("O");
+        preferences.setSexos(sexos);
+
+        // Añadimos las preferencias al usuario
+        user.setPreferences(preferences);
+
+        Firebase.updatePreferences(user, new CallBack() {
+            @Override
+            public void methodToCallBack(Object object) {
+            }
+        });
     }
 
     private void iniciarSpinners() {

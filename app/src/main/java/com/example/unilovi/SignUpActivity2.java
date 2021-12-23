@@ -156,7 +156,7 @@ public class SignUpActivity2 extends AppCompatActivity {
                     dialogDatePicker = new DatePickerDialog(SignUpActivity2.this, new DatePickerDialog.OnDateSetListener() {
                         @Override
                         public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                            String fecha = year + "/" + month + "/" + day;
+                            String fecha = year + "/" + (month + 1) + "/" + day;
                             textFecha.setText(fecha);
                         }
                     }, year, month, day);

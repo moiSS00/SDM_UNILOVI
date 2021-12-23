@@ -24,6 +24,9 @@ import com.example.unilovi.utils.CallBack;
 import com.example.unilovi.utils.Util;
 import com.squareup.picasso.Picasso;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
@@ -61,6 +64,31 @@ public class HomeFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    /**
+     * Método que devuelve la edad del usuario
+     * @param fechaNacimiento fecha de nacimiento del usuario
+     * @return edad del usuario
+     */
+    public int calcularEdad(String fechaNacimiento) {
+        String[] texto = fechaNacimiento.split("/");
+        int year = Integer.parseInt(texto[0]);
+        int month = Integer.parseInt(texto[1]);
+        int day = Integer.parseInt(texto[2]);
+
+        GregorianCalendar nacimiento = new GregorianCalendar();
+        GregorianCalendar today = new GregorianCalendar();
+
+        nacimiento.set(year, month, day);
+
+        int age = today.get(Calendar.YEAR) - nacimiento.get(Calendar.YEAR);
+
+        if (today.get(Calendar.DAY_OF_YEAR) < nacimiento.get(Calendar.DAY_OF_YEAR)){
+            age--;
+        }
+
+        return age;
     }
 
 }

@@ -82,6 +82,8 @@ public class Firebase {
         userParams.put("carrera", user.getCarrera());
         userParams.put("sobreMi", user.getSobreMi());
         userParams.put("contacto", user.getFormaContacto());
+        userParams.put("solicitudes", user.getSolicitudes());
+        userParams.put("matches", user.getMatches());
 
         // Create preferences for user
         Map<String, Object> userPreferences = new HashMap<>();
@@ -353,6 +355,13 @@ public class Firebase {
             }
         });
     }
+
+    /**
+     * Devuelve una lista con los emails de los pretendientes en funcion de las preferencias seleccionadas
+     * @param  preferences Preferencias que se usarán para buscar pretendientes
+     * @param  callBack Callback a ejecutar
+     */
+    public static void getPretendientesByPreferences(Preferences preferences, CallBack callBack) { }
 
     // ---- Interactuar directamente con el módulo multimedia ----
 

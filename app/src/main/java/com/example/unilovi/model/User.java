@@ -3,6 +3,9 @@ package com.example.unilovi.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class User implements Parcelable {
 
@@ -22,6 +25,8 @@ public class User implements Parcelable {
     private String sobreMi;
     private String formaContacto;
     private int edad;
+    private List<String> solicitudes = new ArrayList<String>();
+    private List<String> matches = new ArrayList<String>();
 
     public User() {
 
@@ -116,6 +121,22 @@ public class User implements Parcelable {
         this.edad = edad;
     }
 
+    public List<String> getSolicitudes() {
+        return solicitudes;
+    }
+
+    public void setSolicitudes(List<String> solicitudes) {
+        this.solicitudes = solicitudes;
+    }
+
+    public List<String> getMatches() {
+        return matches;
+    }
+
+    public void setMatches(List<String> matches) {
+        this.matches = matches;
+    }
+
     // --- Métodos para que categoría sea parceable ---
 
     protected User(Parcel in) {
@@ -129,6 +150,9 @@ public class User implements Parcelable {
         carrera = in.readString();
         sobreMi = in.readString();
         formaContacto = in.readString();
+
+        in.readStringList(solicitudes);
+        in.readStringList(matches);
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -160,5 +184,7 @@ public class User implements Parcelable {
         parcel.writeString(carrera);
         parcel.writeString(sobreMi);
         parcel.writeString(formaContacto);
+        parcel.writeList(solicitudes);
+        parcel.writeList(matches);
     }
 }

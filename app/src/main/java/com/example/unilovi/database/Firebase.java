@@ -247,7 +247,14 @@ public class Firebase {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if (documentSnapshot.exists()) { // Si existe el email
-                            callBack.methodToCallBack(documentSnapshot.getData());
+                            Map<String, Object> datos = documentSnapshot.getData();
+                            Preferences preferences = new Preferences();
+                            preferences.setFacultad(datos.get("facultad").toString());
+                            preferences.setCarrera(datos.get("carrera").toString());
+                            preferences.setEdadMaxima(Integer.parseInt(datos.get("edadMaxima").toString()));
+                            preferences.setEdadMinima(Integer.parseInt(datos.get("edadMinima").toString()));
+                            preferences.setSexos((ArrayList<String>) datos.get("sexoBusqueda"));
+                            callBack.methodToCallBack(preferences);
                         }
                         else { // Si el email no existe
                             callBack.methodToCallBack(null);
@@ -318,21 +325,20 @@ public class Firebase {
 
     /**
      * Actualiza las preferencias de un usuario
-     * @param user Usuario al que actualizar las preferencias
+     * @param email Email del usuario al que queremos cambiarle las preferencias
      * @param callBack CallBack a ejecutar, recibirá true si no hubo errores  o
      * false si hubo algún error.
      */
-    public static void updatePreferences(User user, CallBack callBack) {
+    public static void updatePreferences(String email, Preferences preferences, CallBack callBack) {
 
-        Preferences preferences = user.getPreferences();
-        Map<String, Object> userPreferences = new HashMap<>();
-        userPreferences.put("edadMinima", preferences.getEdadMinima());
-        userPreferences.put("edadMaxima", preferences.getEdadMaxima());
-        userPreferences.put("sexoBusqueda", preferences.getSexos());
-        userPreferences.put("facultad", preferences.getFacultad());
-        userPreferences.put("carrera", preferences.getCarrera());
+        Map<String, Object> newPreferences = new HashMap<>();
+        newPreferences.put("edadMinima", preferences.getEdadMinima());
+        newPreferences.put("edadMaxima", preferences.getEdadMaxima());
+        newPreferences.put("sexoBusqueda", preferences.getSexos());
+        newPreferences.put("facultad", preferences.getFacultad());
+        newPreferences.put("carrera", preferences.getCarrera());
 
-        db.collection("preferencias").document(user.getEmail()).update(userPreferences).addOnSuccessListener(new OnSuccessListener<Void>() {
+        db.collection("preferencias").document(email).update(newPreferences).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 callBack.methodToCallBack(true);

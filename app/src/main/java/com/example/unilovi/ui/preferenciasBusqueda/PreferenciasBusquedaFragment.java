@@ -242,28 +242,32 @@ public class PreferenciasBusquedaFragment extends Fragment {
         super.onDestroyView();
         binding = null;
 
-        // Inicializamos las nuevas preferencias
-        Preferences preferences = new Preferences();
+        // Se controla que el usuario aún siga en sesión
+        if (Firebase.getUsuarioActual() != null) {
+            // Inicializamos las nuevas preferencias
+            Preferences preferences = new Preferences();
 
-        preferences.setEdadMinima(Integer.parseInt(edadMinima.getText().toString()));
-        preferences.setEdadMaxima(Integer.parseInt(edadMaxima.getText().toString()));
-        preferences.setFacultad(editTextFilledExposedDropdownFacultades.getText().toString());
-        preferences.setCarrera(editTextFilledExposedDropdownCarreras.getText().toString());
+            preferences.setEdadMinima(Integer.parseInt(edadMinima.getText().toString()));
+            preferences.setEdadMaxima(Integer.parseInt(edadMaxima.getText().toString()));
+            preferences.setFacultad(editTextFilledExposedDropdownFacultades.getText().toString());
+            preferences.setCarrera(editTextFilledExposedDropdownCarreras.getText().toString());
 
-        ArrayList<String> sexos = new ArrayList<>();
-        if (checkHombre.isChecked())
-            sexos.add("M");
-        if (checkMujer.isChecked())
-            sexos.add("F");
-        if (checkNoBinario.isChecked())
-            sexos.add("O");
-        preferences.setSexos(sexos);
+            ArrayList<String> sexos = new ArrayList<>();
+            if (checkHombre.isChecked())
+                sexos.add("M");
+            if (checkMujer.isChecked())
+                sexos.add("F");
+            if (checkNoBinario.isChecked())
+                sexos.add("O");
+            preferences.setSexos(sexos);
 
-        Firebase.updatePreferences(Firebase.getUsuarioActual().getEmail(), preferences, new CallBack() {
-            @Override
-            public void methodToCallBack(Object object) {
-            }
-        });
+            Firebase.updatePreferences(Firebase.getUsuarioActual().getEmail(), preferences, new CallBack() {
+                @Override
+                public void methodToCallBack(Object object) {
+                }
+            });
+        }
+
     }
 
     private void iniciarSpinners() {

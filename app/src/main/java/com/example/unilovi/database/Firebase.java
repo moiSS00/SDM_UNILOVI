@@ -2,6 +2,7 @@ package com.example.unilovi.database;
 
 
 import android.net.Uri;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -17,12 +18,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -194,17 +198,8 @@ public class Firebase {
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if (documentSnapshot.exists()) { // Si existe el email
                             Map<String, Object> datos = documentSnapshot.getData();
-                            User user = new User();
-                            user.setEmail(documentSnapshot.getId());
-                            user.setNombre(datos.get("nombre").toString());
-                            user.setApellidos(datos.get("apellidos").toString());
-                            user.setFechaNacimiento(datos.get("fechaNacimiento").toString());
-                            user.setSexo(datos.get("sexo").toString());
-                            user.setFacultad(datos.get("facultad").toString());
-                            user.setCarrera(datos.get("carrera").toString());
-                            user.setSobreMi(datos.get("sobreMi").toString());
-                            user.setFormaContacto(datos.get("contacto").toString());
-                            callBack.methodToCallBack(user);
+                            datos.put("email",documentSnapshot.getId());
+                            callBack.methodToCallBack(mapearUser(datos));
                         }
                         else { // Si el email no existe
                             callBack.methodToCallBack(null);
@@ -309,12 +304,7 @@ public class Firebase {
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if (documentSnapshot.exists()) { // Si existe el email
                             Map<String, Object> datos = documentSnapshot.getData();
-                            Preferences preferences = new Preferences();
-                            preferences.setFacultad(datos.get("facultad").toString());
-                            preferences.setCarrera(datos.get("carrera").toString());
-                            preferences.setEdadMaxima(Integer.parseInt(datos.get("edadMaxima").toString()));
-                            preferences.setEdadMinima(Integer.parseInt(datos.get("edadMinima").toString()));
-                            preferences.setSexos((ArrayList<String>) datos.get("sexoBusqueda"));
+                            Preferences preferences = mapearPreferences(datos);
                             callBack.methodToCallBack(preferences);
                         }
                         else { // Si el email no existe
@@ -361,7 +351,60 @@ public class Firebase {
      * @param  preferences Preferencias que se usarán para buscar pretendientes
      * @param  callBack Callback a ejecutar
      */
-    public static void getPretendientesByPreferences(Preferences preferences, CallBack callBack) { }
+    public static void getPretendientesByPreferences(Preferences preferences, CallBack callBack) {
+
+        // Inicializamos la lista de emails de pretendientes
+        ArrayList<String> pretendientes = new ArrayList<String>();
+
+        // Obtenemos el email del usuario actual
+        String emailUsuarioActual = Firebase.getUsuarioActual().getEmail();
+
+        // Preparamos la consulta para filtrar por facultad, carrera y por sexo.
+        Query consulta = db.collection("usuarios")
+                .whereEqualTo("facultad",preferences.getFacultad())
+                .whereEqualTo("carrera", preferences.getCarrera())
+                .whereIn("sexo", preferences.getSexos());
+
+        // Realizamos la consulta
+        consulta.get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+
+                        // Para cada pretendiente encontrado
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+
+                            // Se comprueba que no sea el usuario actual
+                            if (!document.getId().equals(emailUsuarioActual)) {
+
+                                // Obtenemos los datos del posible pretendiente
+                                Map<String, Object> datos = document.getData();
+                                Log.d("pretendiente", datos.toString());
+                                datos.put("email", document.getId());
+                                User user = mapearUser(datos);
+
+                                // Si no le ha mandado solicitud ya o tiene match con el
+                                if (!user.getSolicitudes().contains(emailUsuarioActual) &&
+                                        !user.getMatches().contains(emailUsuarioActual)) {
+
+                                    // Se comprueba si su edad este en el intervalo deseado
+                                    if (user.getEdad() >= preferences.getEdadMinima() &&
+                                        user.getEdad() <= preferences.getEdadMaxima()) {
+                                        pretendientes.add(document.getId()); // Añadimos el email del pretendiente
+                                    }
+
+                                }
+                            }
+                        }
+                        // Mandamos la lista de emails de pretendientes
+                        callBack.methodToCallBack(pretendientes);
+                    }})
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        callBack.methodToCallBack(pretendientes);
+                    }});
+    }
 
     // ---- Interactuar directamente con el módulo multimedia ----
 
@@ -392,4 +435,39 @@ public class Firebase {
     }
 
 
+    // ---- Métodos auxiliares ----
+
+    /**
+     * Método que recoge los datos en un objeto de la clase user
+     * @param datos Datos del usuario
+     * @return Objeto usuario con los datos
+     */
+    private static User mapearUser(Map<String, Object> datos) {
+        User user = new User();
+        user.setEmail(datos.get("email").toString());
+        user.setNombre(datos.get("nombre").toString());
+        user.setApellidos(datos.get("apellidos").toString());
+        user.setFechaNacimiento(datos.get("fechaNacimiento").toString());
+        user.setSexo(datos.get("sexo").toString());
+        user.setFacultad(datos.get("facultad").toString());
+        user.setCarrera(datos.get("carrera").toString());
+        user.setSobreMi(datos.get("sobreMi").toString());
+        user.setFormaContacto(datos.get("contacto").toString());
+        return user;
+    }
+
+    /**
+     * Método que recoge los datos en un objeto de la clase preferences
+     * @param datos Datos de las preferencias
+     * @return Objeto preferences con los datos
+     */
+    private static Preferences mapearPreferences(Map<String, Object> datos) {
+        Preferences preferences = new Preferences();
+        preferences.setFacultad(datos.get("facultad").toString());
+        preferences.setCarrera(datos.get("carrera").toString());
+        preferences.setEdadMaxima(Integer.parseInt(datos.get("edadMaxima").toString()));
+        preferences.setEdadMinima(Integer.parseInt(datos.get("edadMinima").toString()));
+        preferences.setSexos((ArrayList<String>) datos.get("sexoBusqueda"));
+        return preferences;
+    }
 }

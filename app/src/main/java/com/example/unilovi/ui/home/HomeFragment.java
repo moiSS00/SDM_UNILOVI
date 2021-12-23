@@ -5,56 +5,126 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
-import com.example.unilovi.MainActivity;
 import com.example.unilovi.R;
-import com.example.unilovi.SignInActivity;
 import com.example.unilovi.database.Firebase;
 import com.example.unilovi.databinding.FragmentHomeBinding;
-import com.example.unilovi.databinding.FragmentPreferenciasBinding;
+import com.example.unilovi.model.Preferences;
+import com.example.unilovi.model.User;
 import com.example.unilovi.utils.CallBack;
 import com.example.unilovi.utils.Util;
 import com.squareup.picasso.Picasso;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
 
+    // Atribitos que contendrán una referencia a los componentes usados
     private FragmentHomeBinding binding;
-
     private ImageView imagenPretendiente;
+    private TextView nombreApellidosPretendiente;
+    private TextView facultadPretendiente;
+    private TextView edadPretendiente;
+    private Button btnAceptar;
+    private Button btnRechazar;
+
+    // Atributos auxiliares
+    private ArrayList<String> emailsPretendientes;
+    private int indexPretendiente;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        // Obtenemos referencias a los componentes
         imagenPretendiente = root.findViewById(R.id.imagenPretendiente);
+        nombreApellidosPretendiente = root.findViewById(R.id.nombrePretendiente);
+        facultadPretendiente = root.findViewById(R.id.facultadPretendiente);
+        edadPretendiente = root.findViewById(R.id.edadPretendiente);
+        btnAceptar = root.findViewById(R.id.btnAceptar);
+        btnRechazar = root.findViewById(R.id.btnRechazar);
+
+        // Asignamos listeners
+
+        // -- Aceptar pretendiente --
+        btnAceptar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        // -- Rechazar pretendiente --
+        btnRechazar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
         return root;
     }
 
 
-    /*
-        En este método irá la funcionalidad de actualizar las búsquedas según las preferencias
-    */
     @Override
     public void onResume() {
         super.onResume();
-        Firebase.downloadImage("uo271397@uniovi.es", new CallBack() {
+
+        // Inicializamos
+        emailsPretendientes = new ArrayList<String>();
+        indexPretendiente = 0;
+
+        // Buscamos pretendientes
+        Firebase.getPreferencesByEmail(Firebase.getUsuarioActual().getEmail(), new CallBack() {
             @Override
             public void methodToCallBack(Object object) {
                 if (object != null) {
-                    Picasso.get().load((String) object).into(imagenPretendiente);
+                    Preferences preferences = (Preferences) object;
+                    Firebase.getPretendientesByPreferences(preferences, new CallBack() {
+                        @Override
+                        public void methodToCallBack(Object object) {
+                            emailsPretendientes = (ArrayList<String>) object;
+                            if (!emailsPretendientes.isEmpty()) {
+                                String emailPretendiente = emailsPretendientes.get(indexPretendiente);
+                                Firebase.getUsuarioByEmail(emailPretendiente, new CallBack() {
+                                    @Override
+                                    public void methodToCallBack(Object object) {
+                                        if (object != null) {
+                                            User pretendiente = (User) object;
+                                            nombreApellidosPretendiente.setText(pretendiente.getNombre()
+                                                    + " " + pretendiente.getApellidos());
+                                            facultadPretendiente.setText(pretendiente.getFacultad());
+                                            edadPretendiente.setText("" + pretendiente.getEdad());
+                                            // !!OJO!! A SUSTITUIR POR LA IMAGEN DEL USUARIO
+                                            Firebase.downloadImage("uo271397@uniovi.es", new CallBack() {
+                                                @Override
+                                                public void methodToCallBack(Object object) {
+                                                    if (object != null) {
+                                                        Picasso.get().load((String) object)
+                                                                .into(imagenPretendiente);
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    }
+                                });
+                            }
+                            else { // Si no hay pretendientes
+                                btnAceptar.setEnabled(false);
+                                btnRechazar.setEnabled(false);
+                                Util.showAlert(getContext(), "No hay pretendientes disponibles " +
+                                        "con sus preferencias");
+                            }
+                        }
+                    });
                 }
             }
         });
@@ -64,31 +134,6 @@ public class HomeFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
-    }
-
-    /**
-     * Método que devuelve la edad del usuario
-     * @param fechaNacimiento fecha de nacimiento del usuario
-     * @return edad del usuario
-     */
-    public int calcularEdad(String fechaNacimiento) {
-        String[] texto = fechaNacimiento.split("/");
-        int year = Integer.parseInt(texto[0]);
-        int month = Integer.parseInt(texto[1]);
-        int day = Integer.parseInt(texto[2]);
-
-        GregorianCalendar nacimiento = new GregorianCalendar();
-        GregorianCalendar today = new GregorianCalendar();
-
-        nacimiento.set(year, month, day);
-
-        int age = today.get(Calendar.YEAR) - nacimiento.get(Calendar.YEAR);
-
-        if (today.get(Calendar.DAY_OF_YEAR) < nacimiento.get(Calendar.DAY_OF_YEAR)){
-            age--;
-        }
-
-        return age;
     }
 
 }

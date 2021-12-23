@@ -4,6 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 
@@ -71,6 +73,7 @@ public class User implements Parcelable {
 
     public void setFechaNacimiento(String fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
+        this.edad = calcularEdad(fechaNacimiento);
     }
 
     public String getSexo() {
@@ -117,10 +120,6 @@ public class User implements Parcelable {
         return edad;
     }
 
-    public void setEdad(int edad) {
-        this.edad = edad;
-    }
-
     public List<String> getSolicitudes() {
         return solicitudes;
     }
@@ -150,7 +149,7 @@ public class User implements Parcelable {
         carrera = in.readString();
         sobreMi = in.readString();
         formaContacto = in.readString();
-
+        edad = in.readInt();
         in.readStringList(solicitudes);
         in.readStringList(matches);
     }
@@ -184,7 +183,49 @@ public class User implements Parcelable {
         parcel.writeString(carrera);
         parcel.writeString(sobreMi);
         parcel.writeString(formaContacto);
+        parcel.writeInt(edad);
         parcel.writeList(solicitudes);
         parcel.writeList(matches);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "email='" + email + '\'' +
+                ", nombre='" + nombre + '\'' +
+                ", apellidos='" + apellidos + '\'' +
+                ", fechaNacimiento='" + fechaNacimiento + '\'' +
+                ", sexo='" + sexo + '\'' +
+                ", facultad='" + facultad + '\'' +
+                ", carrera='" + carrera + '\'' +
+                ", sobreMi='" + sobreMi + '\'' +
+                ", formaContacto='" + formaContacto + '\'' +
+                ", edad=" + edad +
+                '}';
+    }
+
+    /**
+     * Método que devuelve la edad del usuario
+     * @param fechaNacimiento fecha de nacimiento del usuario
+     * @return edad del usuario
+     */
+    private int calcularEdad(String fechaNacimiento) {
+        String[] texto = fechaNacimiento.split("/");
+        int year = Integer.parseInt(texto[0]);
+        int month = Integer.parseInt(texto[1]);
+        int day = Integer.parseInt(texto[2]);
+
+        GregorianCalendar nacimiento = new GregorianCalendar();
+        GregorianCalendar today = new GregorianCalendar();
+
+        nacimiento.set(year, month, day);
+
+        int age = today.get(Calendar.YEAR) - nacimiento.get(Calendar.YEAR);
+
+        if (today.get(Calendar.DAY_OF_YEAR) < nacimiento.get(Calendar.DAY_OF_YEAR)){
+            age--;
+        }
+
+        return age;
     }
 }

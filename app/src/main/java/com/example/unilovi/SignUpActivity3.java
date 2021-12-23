@@ -18,7 +18,9 @@ public class SignUpActivity3 extends AppCompatActivity {
 
     // Atributos auxiliares
     public static final String USUARIO_REGISTRADO3 = "usuario_registrado3";
+    public static final String URI_FOTO3 = "uri_foto3";
     private User user;
+    private String uriFoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,7 @@ public class SignUpActivity3 extends AppCompatActivity {
         btnSiguiente = (Button) findViewById(R.id.btnSiguienteRegistro3);
 
         user = getIntent().getParcelableExtra(SignUpActivity2.USUARIO_REGISTRADO2);
+        uriFoto = getIntent().getStringExtra(SignUpActivity2.URI_FOTO2);
 
         btnSiguiente.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,6 +48,7 @@ public class SignUpActivity3 extends AppCompatActivity {
                 user.setFormaContacto(contactoContent);
 
                 postIntent.putExtra(USUARIO_REGISTRADO3, user);
+                postIntent.putExtra(URI_FOTO3, uriFoto);
 
                 // Comenzamos siguiente parte del registro
                 startActivity(postIntent);

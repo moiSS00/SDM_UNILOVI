@@ -274,7 +274,7 @@ public class Firebase {
      * @param callBack CallBack a ejecutar, recibirá true si no hubo errores  o
      * false si hubo algún error.
      */
-    public static void createUser(User user, CallBack callBack) {
+    public static void createUser(User user, Preferences preferences, String uriFoto, CallBack callBack) {
 
         // Create a new user
         Map<String, Object> userParams = new HashMap<>();
@@ -288,7 +288,6 @@ public class Firebase {
         userParams.put("contacto", user.getFormaContacto());
 
         // Create preferences for user
-        Preferences preferences = user.getPreferences();
         Map<String, Object> userPreferences = new HashMap<>();
         userPreferences.put("edadMinima", preferences.getEdadMinima());
         userPreferences.put("edadMaxima", preferences.getEdadMaxima());
@@ -305,7 +304,7 @@ public class Firebase {
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        uploadImage(Uri.parse(user.getUriFoto()));
+                        uploadImage(Uri.parse(uriFoto));
                         callBack.methodToCallBack(true);
                     }
                 }).addOnFailureListener(new OnFailureListener() {

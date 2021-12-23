@@ -15,16 +15,13 @@ public class User implements Parcelable {
     private String password;
     private String nombre;
     private String apellidos;
-    private String uriFoto;
     private String fechaNacimiento;
     private String sexo;
     private String facultad;
     private String carrera;
-    private Preferences preferences;
     private String sobreMi;
     private String formaContacto;
-
-    // private int age;
+    private int edad;
 
     public User() {
 
@@ -63,14 +60,6 @@ public class User implements Parcelable {
         this.apellidos = apellidos;
     }
 
-    public String getUriFoto() {
-        return uriFoto;
-    }
-
-    public void setUriFoto(String uriFoto) {
-        this.uriFoto = uriFoto;
-    }
-
     public String getFechaNacimiento() {
         return fechaNacimiento;
     }
@@ -103,14 +92,6 @@ public class User implements Parcelable {
         this.carrera = carrera;
     }
 
-    public Preferences getPreferences() {
-        return preferences;
-    }
-
-    public void setPreferences(Preferences preferences) {
-        this.preferences = preferences;
-    }
-
     public String getSobreMi() {
         return sobreMi;
     }
@@ -127,6 +108,14 @@ public class User implements Parcelable {
         this.formaContacto = formaContacto;
     }
 
+    public int getEdad() {
+        return edad;
+    }
+
+    public void setEdad(int edad) {
+        this.edad = edad;
+    }
+
     // --- Métodos para que categoría sea parceable ---
 
     protected User(Parcel in) {
@@ -134,12 +123,10 @@ public class User implements Parcelable {
         password = in.readString();
         nombre = in.readString();
         apellidos = in.readString();
-        uriFoto = in.readString();
         fechaNacimiento = in.readString();
         sexo = in.readString();
         facultad = in.readString();
         carrera = in.readString();
-        preferences = in.readParcelable(Preferences.class.getClassLoader());
         sobreMi = in.readString();
         formaContacto = in.readString();
     }
@@ -167,12 +154,10 @@ public class User implements Parcelable {
         parcel.writeString(password);
         parcel.writeString(nombre);
         parcel.writeString(apellidos);
-        parcel.writeString(uriFoto);
         parcel.writeString(fechaNacimiento);
         parcel.writeString(sexo);
         parcel.writeString(facultad);
         parcel.writeString(carrera);
-        parcel.writeParcelable(preferences, i);
         parcel.writeString(sobreMi);
         parcel.writeString(formaContacto);
     }

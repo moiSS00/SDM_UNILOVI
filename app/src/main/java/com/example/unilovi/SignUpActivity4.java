@@ -37,15 +37,15 @@ public class SignUpActivity4 extends AppCompatActivity {
     private CheckBox checkOtro;
     private Button btnSiguiente;
 
-        public static final String FOTO_USUARIO = "foto_usuario";
-
     //Spinners
     private AutoCompleteTextView editTextFilledExposedDropdownFacultades;
     private AutoCompleteTextView editTextFilledExposedDropdownCarreras;
 
     // Atributos auxiliares
     private Context context = this;
+    public static final String URI_FOTO4 = "URI_FOTO4";
     private User user;
+    private String uriFoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,6 +122,7 @@ public class SignUpActivity4 extends AppCompatActivity {
 
         // Obtenemos al usuario que se esta registrando
         user = getIntent().getParcelableExtra(SignUpActivity3.USUARIO_REGISTRADO3);
+        uriFoto = getIntent().getStringExtra(SignUpActivity3.URI_FOTO3);
 
         // Asignamos listenes
         btnSiguiente.setOnClickListener(new View.OnClickListener() {
@@ -151,13 +152,10 @@ public class SignUpActivity4 extends AppCompatActivity {
                     preferences.setFacultad(facultad);
                     preferences.setCarrera(carrera);
 
-                    user.setPreferences(preferences);
-
-
                     // Para obtener el radio boton del radioGroup seleccionado
 
                     // Guardamos al usuario
-                    Firebase.createUser(user, new CallBack() {
+                    Firebase.createUser(user, preferences, uriFoto, new CallBack() {
                         @Override
                         public void methodToCallBack(Object object) {
                             if (object != null) {
@@ -166,7 +164,7 @@ public class SignUpActivity4 extends AppCompatActivity {
                                     public void methodToCallBack(Object object) {
                                         if ((boolean) object) {
                                             Intent mainIntent = new Intent(SignUpActivity4.this, MainActivity.class);
-                                            mainIntent.putExtra(FOTO_USUARIO, user.getUriFoto());
+                                            mainIntent.putExtra(URI_FOTO4, uriFoto);
                                             startActivity(mainIntent);
                                             finish();
                                         } else {

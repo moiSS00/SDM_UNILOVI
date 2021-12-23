@@ -76,6 +76,7 @@ public class SignUpActivity2 extends AppCompatActivity {
     // Atributos auxiliares
     private static final int GALLERY_INTENT = 1;
     public static final String USUARIO_REGISTRADO2 = "usuario_registrado2";
+    public static final String URI_FOTO2 = "uri_foto2";
     private User user;
 
     @Override
@@ -223,7 +224,6 @@ public class SignUpActivity2 extends AppCompatActivity {
                             // Se le va asignando la información del registro
                             user.setNombre(nombre);
                             user.setApellidos(apellidos);
-                            user.setUriFoto(dataImagen.toString());
                             user.setFechaNacimiento(fecha);
                             user.setFacultad(facultad);
                             user.setCarrera(carrera);
@@ -233,6 +233,7 @@ public class SignUpActivity2 extends AppCompatActivity {
                             user.setSexo(sexo);
 
                             postIntent.putExtra(USUARIO_REGISTRADO2, user);
+                            postIntent.putExtra(URI_FOTO2, dataImagen.toString());
 
                             // Comenzamos siguiente parte del registro
                             startActivity(postIntent);

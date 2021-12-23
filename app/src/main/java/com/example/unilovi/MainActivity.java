@@ -111,7 +111,8 @@ public class MainActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
 
-        String uriFoto = getIntent().getStringExtra(SignUpActivity4.FOTO_USUARIO);
+        String uriFoto = getIntent().getStringExtra(SignUpActivity4.URI_FOTO4);
+
         Firebase.getNombreByEmail(Firebase.getUsuarioActual().getEmail(), new CallBack() {
             @Override
             public void methodToCallBack(Object object) {

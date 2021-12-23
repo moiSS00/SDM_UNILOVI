@@ -2,7 +2,6 @@ package com.example.unilovi.database;
 
 
 import android.net.Uri;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -22,6 +21,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -247,14 +247,7 @@ public class Firebase {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if (documentSnapshot.exists()) { // Si existe el email
-                            Map<String, Object> datos = documentSnapshot.getData();
-                            Preferences preferences = new Preferences();
-                            preferences.setFacultad(datos.get("facultad").toString());
-                            preferences.setCarrera(datos.get("carrera").toString());
-                            preferences.setEdadMaxima(Integer.parseInt(datos.get("edadMaxima").toString()));
-                            preferences.setEdadMinima(Integer.parseInt(datos.get("edadMinima").toString()));
-                            preferences.setSexos((ArrayList<String>) datos.get("sexoBusqueda"));
-                            callBack.methodToCallBack(preferences);
+                            callBack.methodToCallBack(documentSnapshot.getData());
                         }
                         else { // Si el email no existe
                             callBack.methodToCallBack(null);

@@ -28,14 +28,14 @@ public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
 
-    private ImageView imagenRandom;
+    private ImageView imagenPretendiente;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        imagenRandom = root.findViewById(R.id.imagenPretendiente);
+        imagenPretendiente = root.findViewById(R.id.imagenPretendiente);
 
         return root;
     }
@@ -51,7 +51,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void methodToCallBack(Object object) {
                 if (object != null) {
-                    Picasso.get().load((String) object).into(imagenRandom);
+                    Picasso.get().load((String) object).into(imagenPretendiente);
                 }
             }
         });

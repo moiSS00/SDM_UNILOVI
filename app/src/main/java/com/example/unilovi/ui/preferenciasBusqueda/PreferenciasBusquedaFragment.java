@@ -156,16 +156,17 @@ public class PreferenciasBusquedaFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
         // Sacamos las preferencias del usuario
         Firebase.getPreferencesByEmail(Firebase.getUsuarioActual().getEmail(), new CallBack() {
             @Override
             public void methodToCallBack(Object object) {
                 if (object != null) {
-                    Preferences preferencias = (Preferences) object;
+                    Map<String, Object> preferencias = (Map<String, Object>) object;
+
+
 
                     // Recuperamos el valor de la facultad de preferencia
-                    String facultad = preferencias.getFacultad();
+                    String facultad = preferencias.get("facultad").toString();
 
                     // Si hay una facultad en las preferencias
                     if (!facultad.isEmpty()) {
@@ -179,7 +180,7 @@ public class PreferenciasBusquedaFragment extends Fragment {
                         }
                         editTextFilledExposedDropdownFacultades.setText(editTextFilledExposedDropdownFacultades.getAdapter().getItem(numeroFacultad).toString(), false);
 
-                        String carrera = preferencias.getCarrera();
+                        String carrera = preferencias.get("carrera").toString();
 
                         // Le ponemos adapter al spinner de carreras según la facultad que sacamos de las preferencias
                         Firebase.getCarrerasByFacultad(facultad, new CallBack() {
@@ -212,15 +213,15 @@ public class PreferenciasBusquedaFragment extends Fragment {
                     }
 
                     // Recuperamos las edades
-                    int edadm = preferencias.getEdadMinima();
-                    int edadM = preferencias.getEdadMaxima();
-                    int progressm = edadm - 18;
-                    int progressM = edadM - 19;
+                    String edadm = preferencias.get("edadMinima").toString();
+                    String edadM = preferencias.get("edadMaxima").toString();
+                    int progressm = Integer.parseInt(preferencias.get("edadMinima").toString()) - 18;
+                    int progressM = Integer.parseInt(preferencias.get("edadMaxima").toString()) - 19;
                     seekBarMinima.setProgress(progressm);
                     seekBarMaxima.setProgress(progressM);
 
                     // Recuperamos los sexos de búsqueda
-                    List<String> sexos = preferencias.getSexos();
+                    List<String> sexos = (List<String>) preferencias.get("sexoBusqueda");
                     for (String sexo : sexos){
                         if (sexo.equals("M"))
                             checkHombre.setChecked(true);

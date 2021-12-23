@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.unilovi.database.Firebase;
+import com.example.unilovi.model.User;
 import com.example.unilovi.utils.Util;
 import com.example.unilovi.utils.CallBack;
 import com.google.android.material.navigation.NavigationView;
@@ -113,10 +114,13 @@ public class MainActivity extends AppCompatActivity {
 
         String uriFoto = getIntent().getStringExtra(SignUpActivity4.URI_FOTO4);
 
-        Firebase.getNombreByEmail(Firebase.getUsuarioActual().getEmail(), new CallBack() {
+        Firebase.getUsuarioByEmail(Firebase.getUsuarioActual().getEmail(), new CallBack() {
             @Override
             public void methodToCallBack(Object object) {
-                nombre.setText("Bienvenido/a " + object.toString());
+                if (object != null) {
+                    User user = (User) object;
+                    nombre.setText("Bienvenido/a " + user.getNombre());
+                }
             }
         });
         email.setText(Firebase.getUsuarioActual().getEmail());

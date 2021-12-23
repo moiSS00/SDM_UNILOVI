@@ -21,7 +21,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -215,14 +214,25 @@ public class Firebase {
      * Devuelve el nombre del usuario para darle la bienvenida
      * @param email Email del usuario
      */
-    public static void getNombreByEmail(String email, CallBack callBack) {
+    public static void getUsuarioByEmail(String email, CallBack callBack) {
         // Buscamos el documento para ese email
         db.collection("usuarios").document(email).get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if (documentSnapshot.exists()) { // Si existe el email
-                            callBack.methodToCallBack(documentSnapshot.getData().get("nombre"));
+                            Map<String, Object> datos = documentSnapshot.getData();
+                            User user = new User();
+                            user.setEmail(documentSnapshot.getId());
+                            user.setNombre(datos.get("nombre").toString());
+                            user.setApellidos(datos.get("apellidos").toString());
+                            user.setFechaNacimiento(datos.get("fechaNacimiento").toString());
+                            user.setSexo(datos.get("sexo").toString());
+                            user.setFacultad(datos.get("facultad").toString());
+                            user.setCarrera(datos.get("carrera").toString());
+                            user.setSobreMi(datos.get("sobreMi").toString());
+                            user.setFormaContacto(datos.get("contacto").toString());
+                            callBack.methodToCallBack(user);
                         }
                         else { // Si el email no existe
                             callBack.methodToCallBack(null);

@@ -365,45 +365,61 @@ public class Firebase {
                 .whereEqualTo("carrera", preferences.getCarrera())
                 .whereIn("sexo", preferences.getSexos());
 
-        // Realizamos la consulta
-        consulta.get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+        // Recuperamos la información del usuario actual
+        Firebase.getUsuarioByEmail(emailUsuarioActual, new CallBack() {
+            @Override
+            public void methodToCallBack(Object object) {
+                if (object != null) {
+                    User usuarioActual = (User) object;
+                    // Realizamos la consulta
+                    consulta.get()
+                            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                @Override
+                                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
-                        // Para cada pretendiente encontrado
-                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                                    // Para cada pretendiente encontrado
+                                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
 
-                            // Se comprueba que no sea el usuario actual
-                            if (!document.getId().equals(emailUsuarioActual)) {
+                                        // Se comprueba que no sea el usuario actual
+                                        if (!document.getId().equals(emailUsuarioActual)) {
 
-                                // Obtenemos los datos del posible pretendiente
-                                Map<String, Object> datos = document.getData();
-                                Log.d("pretendiente", datos.toString());
-                                datos.put("email", document.getId());
-                                User user = mapearUser(datos);
+                                            // Obtenemos los datos del posible pretendiente
+                                            Map<String, Object> datos = document.getData();
+                                            Log.d("pretendiente", datos.toString());
+                                            datos.put("email", document.getId());
+                                            User pretendiente = mapearUser(datos);
 
-                                // Si no le ha mandado solicitud ya o tiene match con el
-                                if (!user.getSolicitudes().contains(emailUsuarioActual) &&
-                                        !user.getMatches().contains(emailUsuarioActual)) {
+                                            // Si
+                                            // Tienen match (se da en los dos sentidos)
+                                            // Le haya mandado solicitud
+                                            // Me ha mandado solicitud
+                                            if (!usuarioActual.getMatches().contains(pretendiente.getEmail())
+                                                && !usuarioActual.getSolicitudes().contains(pretendiente.getEmail())
+                                                && !pretendiente.getSolicitudes().contains(usuarioActual.getEmail())) {
 
-                                    // Se comprueba si su edad este en el intervalo deseado
-                                    if (user.getEdad() >= preferences.getEdadMinima() &&
-                                        user.getEdad() <= preferences.getEdadMaxima()) {
-                                        pretendientes.add(document.getId()); // Añadimos el email del pretendiente
+                                                // Se comprueba si su edad este en el intervalo deseado
+                                                if (pretendiente.getEdad() >= preferences.getEdadMinima() &&
+                                                        pretendiente.getEdad() <= preferences.getEdadMaxima()) {
+                                                    pretendientes.add(document.getId()); // Añadimos el email del pretendiente
+                                                }
+
+                                            }
+                                        }
                                     }
-
-                                }
-                            }
-                        }
-                        // Mandamos la lista de emails de pretendientes
-                        callBack.methodToCallBack(pretendientes);
-                    }})
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        callBack.methodToCallBack(pretendientes);
-                    }});
+                                    // Mandamos la lista de emails de pretendientes
+                                    callBack.methodToCallBack(pretendientes);
+                                }})
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    callBack.methodToCallBack(pretendientes);
+                                }});
+                }
+                else {
+                    callBack.methodToCallBack(pretendientes);
+                }
+            }
+        });
     }
 
     // ---- Interactuar directamente con el módulo multimedia ----

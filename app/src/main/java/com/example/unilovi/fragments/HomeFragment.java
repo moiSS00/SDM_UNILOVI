@@ -80,18 +80,35 @@ public class HomeFragment extends Fragment {
         btnAceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Aqui se acualizaria lista de pretendientes
-                Firebase.getUsuarioByEmail(emailPretendiente, new CallBack() {
+                Firebase.getUsuarioByEmail(Firebase.getUsuarioActual().getEmail(), new CallBack() {
                     @Override
                     public void methodToCallBack(Object object) {
                         if (object != null) {
-                            User pretendiente = (User) object;
-                            pretendiente.getSolicitudes().add(Firebase.getUsuarioActual().getEmail());
-                            Firebase.updateUser(pretendiente.getEmail(), pretendiente, new CallBack() {
+                            User usuarioActual = (User) object;
+                            Firebase.getUsuarioByEmail(emailPretendiente, new CallBack() {
                                 @Override
                                 public void methodToCallBack(Object object) {
-                                    if ((boolean) object) {
-                                        getNextEmail();
+                                    if (object != null) {
+                                        User usuarioAceptado = (User) object;
+
+                                        usuarioActual.getRechazados().add(usuarioAceptado.getEmail());
+
+                                        Firebase.updateUser(usuarioActual.getEmail(), usuarioActual, new CallBack() {
+                                            @Override
+                                            public void methodToCallBack(Object object) {
+                                                if ((boolean) object) {
+                                                    usuarioAceptado.getSolicitudes().add(usuarioActual.getEmail());
+                                                    Firebase.updateUser(usuarioAceptado.getEmail(), usuarioAceptado, new CallBack() {
+                                                        @Override
+                                                        public void methodToCallBack(Object object) {
+                                                            if ((boolean) object) {
+                                                                getNextEmail();
+                                                            }
+                                                        }
+                                                    });
+                                                }
+                                            }
+                                        });
                                     }
                                 }
                             });
@@ -105,17 +122,36 @@ public class HomeFragment extends Fragment {
         btnRechazar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Aqui se acualizaria lista de pretendientes
                 Firebase.getUsuarioByEmail(Firebase.getUsuarioActual().getEmail(), new CallBack() {
                     @Override
                     public void methodToCallBack(Object object) {
                         if (object != null) {
                             User usuarioActual = (User) object;
-                            usuarioActual.getRechazados().add(emailPretendiente);
-                            Firebase.updateUser(usuarioActual.getEmail(), usuarioActual, new CallBack() {
+                            Firebase.getUsuarioByEmail(emailPretendiente, new CallBack() {
                                 @Override
                                 public void methodToCallBack(Object object) {
-                                    getNextEmail();
+                                    if (object != null) {
+                                        User usuarioAceptado = (User) object;
+
+                                        usuarioActual.getRechazados().add(usuarioAceptado.getEmail());
+
+                                        Firebase.updateUser(usuarioActual.getEmail(), usuarioActual, new CallBack() {
+                                            @Override
+                                            public void methodToCallBack(Object object) {
+                                                if ((boolean) object) {
+                                                    usuarioAceptado.getRechazados().add(usuarioActual.getEmail());
+                                                    Firebase.updateUser(usuarioAceptado.getEmail(), usuarioAceptado, new CallBack() {
+                                                        @Override
+                                                        public void methodToCallBack(Object object) {
+                                                            if ((boolean) object) {
+                                                                getNextEmail();
+                                                            }
+                                                        }
+                                                    });
+                                                }
+                                            }
+                                        });
+                                    }
                                 }
                             });
                         }

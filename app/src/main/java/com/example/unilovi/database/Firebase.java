@@ -331,6 +331,9 @@ public class Firebase {
      * @param email Email del usuario al que queremos cambiarle las preferencias
      * @param preferences Objeto preferences que contiene la nueva información
      * @param callBack CallBack a ejecutar
+     * Firebase no es bueno con operaciones con arrays. Las operaciones notIn y Contains solo admiten
+     * hasta 10 valores de comparación, no se pueden anidar ciertas consultas y no se da soporte para la
+     * operación ArrayNotContains.
      */
     public static void updatePreferences(String email, Preferences preferences, CallBack callBack) {
 
@@ -385,21 +388,19 @@ public class Firebase {
                                         // Se comprueba que no sea el usuario actual
                                         if (!document.getId().equals(emailUsuarioActual)) {
 
-                                            // Obtenemos los datos del posible pretendiente
-                                            Map<String, Object> datos = document.getData();
-                                            datos.put("email", document.getId());
-                                            User pretendiente = createUserFromMap(datos);
-                                            Log.d("pretendiente", pretendiente.toString());
+                                            // Un email puede estar en
+                                            // Matches -> Si hemos tenido match con el
+                                            // SolicitudesRecibidas -> Si nos ha mandado una solicitud
+                                            // NoVisibles -> Si lo hemos rechazado o le hemos mandado una petición
+                                            if (!usuarioActual.getMatches().contains(document.getId())
+                                                    && !usuarioActual.getSolicitudes().contains(document.getId())
+                                                    && !usuarioActual.getRechazados().contains(document.getId())) {
 
-                                            // Si
-                                            // Tienen match (se da en los dos sentidos)
-                                            // Le haya mandado solicitud
-                                            // Me ha mandado solicitud
-                                            // Ya se rechazo
-                                            if (!usuarioActual.getMatches().contains(pretendiente.getEmail())
-                                                && !usuarioActual.getSolicitudes().contains(pretendiente.getEmail())
-                                                && !pretendiente.getSolicitudes().contains(usuarioActual.getEmail())
-                                                && !usuarioActual.getRechazados().contains(pretendiente.getEmail())) {
+                                                // Obtenemos los datos del posible pretendiente
+                                                Map<String, Object> datos = document.getData();
+                                                datos.put("email", document.getId());
+                                                User pretendiente = createUserFromMap(datos);
+                                                Log.d("pretendiente", pretendiente.toString());
 
                                                 // Se comprueba si su edad este en el intervalo deseado
                                                 if (pretendiente.getEdad() >= preferences.getEdadMinima() &&
@@ -408,7 +409,6 @@ public class Firebase {
                                                     found = true;
                                                     break;
                                                 }
-
                                             }
                                         }
                                     }

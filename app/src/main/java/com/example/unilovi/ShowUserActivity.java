@@ -134,7 +134,6 @@ public class ShowUserActivity extends AppCompatActivity {
         volver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getBaseContext(), "Volver", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
         });

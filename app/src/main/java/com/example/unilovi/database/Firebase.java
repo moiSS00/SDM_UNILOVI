@@ -25,8 +25,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,25 +75,10 @@ public class Firebase {
     public static void createUser(User user, Preferences preferences, String uriFoto, CallBack callBack) {
 
         // Create a new user
-        Map<String, Object> userParams = new HashMap<>();
-        userParams.put("nombre", user.getNombre());
-        userParams.put("apellidos", user.getApellidos());
-        userParams.put("fechaNacimiento", user.getFechaNacimiento());
-        userParams.put("sexo", user.getSexo());
-        userParams.put("facultad", user.getFacultad());
-        userParams.put("carrera", user.getCarrera());
-        userParams.put("sobreMi", user.getSobreMi());
-        userParams.put("contacto", user.getFormaContacto());
-        userParams.put("solicitudes", user.getSolicitudes());
-        userParams.put("matches", user.getMatches());
+        Map<String, Object> userParams = createMapFromUser(user);
 
         // Create preferences for user
-        Map<String, Object> userPreferences = new HashMap<>();
-        userPreferences.put("edadMinima", preferences.getEdadMinima());
-        userPreferences.put("edadMaxima", preferences.getEdadMaxima());
-        userPreferences.put("sexoBusqueda", preferences.getSexos());
-        userPreferences.put("facultad", preferences.getFacultad());
-        userPreferences.put("carrera", preferences.getCarrera());
+        Map<String, Object> userPreferences = createMapFromPrefernces(preferences); 
 
         // Añadimos al usuario
         db.collection("usuarios").document(user.getEmail()).set(userParams)
@@ -199,7 +182,7 @@ public class Firebase {
                         if (documentSnapshot.exists()) { // Si existe el email
                             Map<String, Object> datos = documentSnapshot.getData();
                             datos.put("email",documentSnapshot.getId());
-                            callBack.methodToCallBack(mapearUser(datos));
+                            callBack.methodToCallBack(createUserFromMap(datos));
                         }
                         else { // Si el email no existe
                             callBack.methodToCallBack(null);
@@ -304,7 +287,7 @@ public class Firebase {
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if (documentSnapshot.exists()) { // Si existe el email
                             Map<String, Object> datos = documentSnapshot.getData();
-                            Preferences preferences = mapearPreferences(datos);
+                            Preferences preferences = createPreferencesFromMap(datos);
                             callBack.methodToCallBack(preferences);
                         }
                         else { // Si el email no existe
@@ -327,17 +310,7 @@ public class Firebase {
      */
     public static void updateUser(String email, User user, CallBack callBack) {
 
-        Map<String, Object> newUser = new HashMap<>();
-        newUser.put("nombre", user.getNombre());
-        newUser.put("apellidos", user.getApellidos());
-        newUser.put("fechaNacimiento", user.getFechaNacimiento());
-        newUser.put("sexo", user.getSexo());
-        newUser.put("facultad", user.getFacultad());
-        newUser.put("carrera", user.getCarrera());
-        newUser.put("sobreMi", user.getSobreMi());
-        newUser.put("contacto", user.getFormaContacto());
-        newUser.put("solicitudes", user.getSolicitudes());
-        newUser.put("matches", user.getMatches());
+        Map<String, Object> newUser = createMapFromUser(user);
 
         db.collection("preferencias").document(email).update(newUser).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
@@ -360,12 +333,7 @@ public class Firebase {
      */
     public static void updatePreferences(String email, Preferences preferences, CallBack callBack) {
 
-        Map<String, Object> newPreferences = new HashMap<>();
-        newPreferences.put("edadMinima", preferences.getEdadMinima());
-        newPreferences.put("edadMaxima", preferences.getEdadMaxima());
-        newPreferences.put("sexoBusqueda", preferences.getSexos());
-        newPreferences.put("facultad", preferences.getFacultad());
-        newPreferences.put("carrera", preferences.getCarrera());
+        Map<String, Object> newPreferences = createMapFromPrefernces(preferences);
 
         db.collection("preferencias").document(email).update(newPreferences).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
@@ -420,7 +388,7 @@ public class Firebase {
                                             // Obtenemos los datos del posible pretendiente
                                             Map<String, Object> datos = document.getData();
                                             datos.put("email", document.getId());
-                                            User pretendiente = mapearUser(datos);
+                                            User pretendiente = createUserFromMap(datos);
                                             Log.d("pretendiente", pretendiente.toString());
 
                                             // Si
@@ -488,11 +456,31 @@ public class Firebase {
     // ---- Métodos auxiliares ----
 
     /**
-     * Método que recoge los datos en un objeto de la clase user
+     * Método que convierte de User a map
+     * @param user Usuario a convertir
+     * @return Map que representa al usuario
+     */
+    private static Map<String, Object> createMapFromUser(User user) {
+        Map<String, Object> mapUser = new HashMap<>();
+        mapUser.put("nombre", user.getNombre());
+        mapUser.put("apellidos", user.getApellidos());
+        mapUser.put("fechaNacimiento", user.getFechaNacimiento());
+        mapUser.put("sexo", user.getSexo());
+        mapUser.put("facultad", user.getFacultad());
+        mapUser.put("carrera", user.getCarrera());
+        mapUser.put("sobreMi", user.getSobreMi());
+        mapUser.put("contacto", user.getFormaContacto());
+        mapUser.put("solicitudes", user.getSolicitudes());
+        mapUser.put("matches", user.getMatches());
+        return mapUser;
+    }
+
+    /**
+     * Método que convierte de map a user
      * @param datos Datos del usuario
      * @return Objeto usuario con los datos
      */
-    private static User mapearUser(Map<String, Object> datos) {
+    private static User createUserFromMap(Map<String, Object> datos) {
         User user = new User();
         user.setEmail(datos.get("email").toString());
         user.setNombre(datos.get("nombre").toString());
@@ -507,11 +495,26 @@ public class Firebase {
     }
 
     /**
-     * Método que recoge los datos en un objeto de la clase preferences
+     * Método que convierte de preferences a map
+     * @param preferences Preferencias a convertir
+     * @return Map que representa a las preferencias
+     */
+    private static Map<String, Object> createMapFromPrefernces(Preferences preferences) {
+        Map<String, Object> mapPreferences = new HashMap<>();
+        mapPreferences.put("edadMinima", preferences.getEdadMinima());
+        mapPreferences.put("edadMaxima", preferences.getEdadMaxima());
+        mapPreferences.put("sexoBusqueda", preferences.getSexos());
+        mapPreferences.put("facultad", preferences.getFacultad());
+        mapPreferences.put("carrera", preferences.getCarrera());
+        return mapPreferences;
+    }
+
+    /**
+     * Método que convierte de map a preferences
      * @param datos Datos de las preferencias
      * @return Objeto preferences con los datos
      */
-    private static Preferences mapearPreferences(Map<String, Object> datos) {
+    private static Preferences createPreferencesFromMap(Map<String, Object> datos) {
         Preferences preferences = new Preferences();
         preferences.setFacultad(datos.get("facultad").toString());
         preferences.setCarrera(datos.get("carrera").toString());

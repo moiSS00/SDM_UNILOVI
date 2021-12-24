@@ -70,19 +70,8 @@ public class ShowUserActivity extends AppCompatActivity {
 
         // Recepción de datos
         Intent intentUser = getIntent();
-        String userEmail = intentUser.getStringExtra(HomeFragment.EMAIL_DETALLE);
-        Firebase.getUsuarioByEmail(userEmail, new CallBack() {
-            @Override
-            public void methodToCallBack(Object object) {
-                if (object != null) {
-                    user = (User) object;
-                    showUser();
-                }
-                else {
-                    finish();
-                }
-            }
-        });
+        user = intentUser.getParcelableExtra(HomeFragment.USUARIO_PRETENDIENTE);
+        showUser();
 
         // Asignamos listeners
 

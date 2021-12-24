@@ -405,7 +405,7 @@ public class Firebase {
                                                 // Se comprueba si su edad este en el intervalo deseado
                                                 if (pretendiente.getEdad() >= preferences.getEdadMinima() &&
                                                         pretendiente.getEdad() <= preferences.getEdadMaxima()) {
-                                                    callBack.methodToCallBack(pretendiente.getEmail());
+                                                    callBack.methodToCallBack(pretendiente);
                                                     found = true;
                                                     break;
                                                 }

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -38,10 +39,13 @@ public class HomeFragment extends Fragment {
     private TextView edadPretendiente;
     private Button btnAceptar;
     private Button btnRechazar;
+    private LinearLayout layoutInfo;
+    private LinearLayout layoutBotones;
 
     // Atributos auxiliares
-    public static final String EMAIL_DETALLE = "email_detalle";
-    private String emailPretendiente;
+    public static final String USUARIO_PRETENDIENTE = "usuario_pretendiente";
+    private User pretendiente;
+    private User usuarioActual;
     private boolean detail = false;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -57,6 +61,16 @@ public class HomeFragment extends Fragment {
         edadPretendiente = root.findViewById(R.id.edadPretendiente);
         btnAceptar = root.findViewById(R.id.btnAceptar);
         btnRechazar = root.findViewById(R.id.btnRechazar);
+        layoutInfo = root.findViewById(R.id.layoutHomeInfo);
+        layoutBotones = root.findViewById(R.id.layoutHomeBotones);
+
+        // Recogemos los datos del usuario actual
+        Firebase.getUsuarioByEmail(Firebase.getUsuarioActual().getEmail(), new CallBack() {
+            @Override
+            public void methodToCallBack(Object object) {
+                usuarioActual = (User) object;
+            }
+        });
 
         // Asignamos listeners
 
@@ -67,7 +81,7 @@ public class HomeFragment extends Fragment {
 
                 // Se pasa el email del usuario a comprobar
                 Intent detailIntent = new Intent(getActivity(), ShowUserActivity.class);
-                detailIntent.putExtra(EMAIL_DETALLE, emailPretendiente);
+                detailIntent.putExtra(USUARIO_PRETENDIENTE, pretendiente);
 
                 // Se muestra la activity con los detalles
                 detail = true;
@@ -80,41 +94,23 @@ public class HomeFragment extends Fragment {
         btnAceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Firebase.getUsuarioByEmail(Firebase.getUsuarioActual().getEmail(), new CallBack() {
+
+                // Modificamos las lista de ambos usuarios
+                usuarioActual.getRechazados().add(pretendiente.getEmail());
+                pretendiente.getSolicitudes().add(usuarioActual.getEmail());
+
+                Firebase.updateUser(usuarioActual.getEmail(), usuarioActual, new CallBack() {
                     @Override
                     public void methodToCallBack(Object object) {
-                        if (object != null) {
-                            User usuarioActual = (User) object;
-                            Firebase.getUsuarioByEmail(emailPretendiente, new CallBack() {
-                                @Override
-                                public void methodToCallBack(Object object) {
-                                    if (object != null) {
-                                        User usuarioAceptado = (User) object;
-
-                                        usuarioActual.getRechazados().add(usuarioAceptado.getEmail());
-
-                                        Firebase.updateUser(usuarioActual.getEmail(), usuarioActual, new CallBack() {
-                                            @Override
-                                            public void methodToCallBack(Object object) {
-                                                if ((boolean) object) {
-                                                    usuarioAceptado.getSolicitudes().add(usuarioActual.getEmail());
-                                                    Firebase.updateUser(usuarioAceptado.getEmail(), usuarioAceptado, new CallBack() {
-                                                        @Override
-                                                        public void methodToCallBack(Object object) {
-                                                            if ((boolean) object) {
-                                                                getNextEmail();
-                                                            }
-                                                        }
-                                                    });
-                                                }
-                                            }
-                                        });
-                                    }
-                                }
-                            });
-                        }
+                        Firebase.updateUser(pretendiente.getEmail(), pretendiente, new CallBack() {
+                            @Override
+                            public void methodToCallBack(Object object) {
+                                getNextPretendiente();
+                            }
+                        });
                     }
                 });
+
             }
         });
 
@@ -122,41 +118,23 @@ public class HomeFragment extends Fragment {
         btnRechazar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Firebase.getUsuarioByEmail(Firebase.getUsuarioActual().getEmail(), new CallBack() {
+
+                // Modificamos las lista de ambos usuarios
+                usuarioActual.getRechazados().add(pretendiente.getEmail());
+                pretendiente.getRechazados().add(usuarioActual.getEmail());
+
+                Firebase.updateUser(usuarioActual.getEmail(), usuarioActual, new CallBack() {
                     @Override
                     public void methodToCallBack(Object object) {
-                        if (object != null) {
-                            User usuarioActual = (User) object;
-                            Firebase.getUsuarioByEmail(emailPretendiente, new CallBack() {
-                                @Override
-                                public void methodToCallBack(Object object) {
-                                    if (object != null) {
-                                        User usuarioAceptado = (User) object;
-
-                                        usuarioActual.getRechazados().add(usuarioAceptado.getEmail());
-
-                                        Firebase.updateUser(usuarioActual.getEmail(), usuarioActual, new CallBack() {
-                                            @Override
-                                            public void methodToCallBack(Object object) {
-                                                if ((boolean) object) {
-                                                    usuarioAceptado.getRechazados().add(usuarioActual.getEmail());
-                                                    Firebase.updateUser(usuarioAceptado.getEmail(), usuarioAceptado, new CallBack() {
-                                                        @Override
-                                                        public void methodToCallBack(Object object) {
-                                                            if ((boolean) object) {
-                                                                getNextEmail();
-                                                            }
-                                                        }
-                                                    });
-                                                }
-                                            }
-                                        });
-                                    }
-                                }
-                            });
-                        }
+                        Firebase.updateUser(pretendiente.getEmail(), pretendiente, new CallBack() {
+                            @Override
+                            public void methodToCallBack(Object object) {
+                                getNextPretendiente();
+                            }
+                        });
                     }
                 });
+
             }
         });
 
@@ -168,7 +146,7 @@ public class HomeFragment extends Fragment {
         super.onResume();
 
         if (!detail) {
-            getNextEmail();
+            getNextPretendiente();
         }
         else {
             detail = false;
@@ -176,8 +154,7 @@ public class HomeFragment extends Fragment {
 
     }
 
-    private void getNextEmail() {
-        // Buscamos pretendientes
+    private void getNextPretendiente() {
         Firebase.getPreferencesByEmail(Firebase.getUsuarioActual().getEmail(), new CallBack() {
             @Override
             public void methodToCallBack(Object object) {
@@ -187,39 +164,26 @@ public class HomeFragment extends Fragment {
                         @Override
                         public void methodToCallBack(Object object) {
                             if (object != null) {
-                                emailPretendiente = (String) object;
-                                loadEmail();
+                                layoutBotones.setVisibility(View.VISIBLE);
+                                layoutInfo.setVisibility(View.VISIBLE);
+                                pretendiente = (User) object;
+                                nombreApellidosPretendiente.setText(pretendiente.getNombre()
+                                        + " " + pretendiente.getApellidos());
+                                facultadPretendiente.setText(pretendiente.getFacultad());
+                                edadPretendiente.setText("" + pretendiente.getEdad());
+                                // !!OJO!! A SUSTITUIR POR LA IMAGEN DEL USUARIO
+                                Firebase.downloadImage("uo270824@uniovi.es", new CallBack() {
+                                    @Override
+                                    public void methodToCallBack(Object object) {
+                                        Picasso.get().load((String) object).into(imagenPretendiente);
+                                    }
+                                });
                             }
-                            else { // Si no hay pretendientes
-                                btnAceptar.setEnabled(false);
-                                btnRechazar.setEnabled(false);
-                                Util.showAlert(getContext(), "No hay pretendientes disponibles " +
-                                        "con sus preferencias");
-                            }
-                        }
-                    });
-                }
-            }
-        });
-    }
-
-    private void loadEmail() {
-        Firebase.getUsuarioByEmail(emailPretendiente, new CallBack() {
-            @Override
-            public void methodToCallBack(Object object) {
-                if (object != null) {
-                    User pretendiente = (User) object;
-                    nombreApellidosPretendiente.setText(pretendiente.getNombre()
-                            + " " + pretendiente.getApellidos());
-                    facultadPretendiente.setText(pretendiente.getFacultad());
-                    edadPretendiente.setText("" + pretendiente.getEdad());
-                    // !!OJO!! A SUSTITUIR POR LA IMAGEN DEL USUARIO
-                    Firebase.downloadImage("uo270824@uniovi.es", new CallBack() {
-                        @Override
-                        public void methodToCallBack(Object object) {
-                            if (object != null) {
-                                Picasso.get().load((String) object)
-                                        .into(imagenPretendiente);
+                            else {
+                                // Se cargaria una imagen por defecto
+                                layoutBotones.setVisibility(View.INVISIBLE);
+                                layoutInfo.setVisibility(View.INVISIBLE);
+                                Util.showAlert(getContext(), "No hay usuarios que coincidan con tus preferencias");
                             }
                         }
                     });

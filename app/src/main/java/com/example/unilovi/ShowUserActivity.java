@@ -98,7 +98,7 @@ public class ShowUserActivity extends AppCompatActivity {
     private void showUser() {
         // Cargamos imagen
         // ¡OJO! A sustituir por email del usuario
-        Firebase.downloadImage("uo271397@uniovi.es", new CallBack() {
+        Firebase.downloadImage("uo270824@uniovi.es", new CallBack() {
             @Override
             public void methodToCallBack(Object object) {
                 if (object != null) {

@@ -41,8 +41,7 @@ public class HomeFragment extends Fragment {
 
     // Atributos auxiliares
     public static final String EMAIL_DETALLE = "email_detalle";
-    private ArrayList<String> emailsPretendientes;
-    private int indexPretendiente;
+    private String emailPretendiente;
     private boolean detail = false;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -68,7 +67,7 @@ public class HomeFragment extends Fragment {
 
                 // Se pasa el email del usuario a comprobar
                 Intent detailIntent = new Intent(getActivity(), ShowUserActivity.class);
-                detailIntent.putExtra(EMAIL_DETALLE, emailsPretendientes.get(indexPretendiente));
+                detailIntent.putExtra(EMAIL_DETALLE, emailPretendiente);
 
                 // Se muestra la activity con los detalles
                 detail = true;
@@ -81,11 +80,24 @@ public class HomeFragment extends Fragment {
         btnAceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (indexPretendiente + 1 < emailsPretendientes.size()) {
-                    indexPretendiente++;
-                    loadEmail(emailsPretendientes.get(indexPretendiente));
-                    // Aqui se acualizaria lista de pretendientes
-                }
+                // Aqui se acualizaria lista de pretendientes
+                Firebase.getUsuarioByEmail(emailPretendiente, new CallBack() {
+                    @Override
+                    public void methodToCallBack(Object object) {
+                        if (object != null) {
+                            User pretendiente = (User) object;
+                            pretendiente.getSolicitudes().add(Firebase.getUsuarioActual().getEmail());
+                            Firebase.updateUser(pretendiente.getEmail(), pretendiente, new CallBack() {
+                                @Override
+                                public void methodToCallBack(Object object) {
+                                    if ((boolean) object) {
+                                        getNextEmail();
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
             }
         });
 
@@ -93,31 +105,42 @@ public class HomeFragment extends Fragment {
         btnRechazar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (indexPretendiente + 1 > emailsPretendientes.size()) {
-                    indexPretendiente++;
-                    loadEmail(emailsPretendientes.get(indexPretendiente));
-                    // Aqui se acualizaria lista de pretendientes
-                }
+                // Aqui se acualizaria lista de pretendientes
+                Firebase.getUsuarioByEmail(Firebase.getUsuarioActual().getEmail(), new CallBack() {
+                    @Override
+                    public void methodToCallBack(Object object) {
+                        if (object != null) {
+                            User usuarioActual = (User) object;
+                            usuarioActual.getRechazados().add(emailPretendiente);
+                            Firebase.updateUser(usuarioActual.getEmail(), usuarioActual, new CallBack() {
+                                @Override
+                                public void methodToCallBack(Object object) {
+                                    getNextEmail();
+                                }
+                            });
+                        }
+                    }
+                });
             }
         });
 
         return root;
     }
 
-
     @Override
     public void onResume() {
         super.onResume();
 
-        // Inicializamos
         if (!detail) {
-            emailsPretendientes = new ArrayList<String>();
-            indexPretendiente = 0;
+            getNextEmail();
         }
         else {
             detail = false;
         }
 
+    }
+
+    private void getNextEmail() {
         // Buscamos pretendientes
         Firebase.getPreferencesByEmail(Firebase.getUsuarioActual().getEmail(), new CallBack() {
             @Override
@@ -127,10 +150,9 @@ public class HomeFragment extends Fragment {
                     Firebase.getPretendientesByPreferences(preferences, new CallBack() {
                         @Override
                         public void methodToCallBack(Object object) {
-                            emailsPretendientes = (ArrayList<String>) object;
-                            if (!emailsPretendientes.isEmpty()) {
-                                String emailPretendiente = emailsPretendientes.get(indexPretendiente);
-                                loadEmail(emailPretendiente);
+                            if (object != null) {
+                                emailPretendiente = (String) object;
+                                loadEmail();
                             }
                             else { // Si no hay pretendientes
                                 btnAceptar.setEnabled(false);
@@ -145,8 +167,8 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private void loadEmail(String email) {
-        Firebase.getUsuarioByEmail(email, new CallBack() {
+    private void loadEmail() {
+        Firebase.getUsuarioByEmail(emailPretendiente, new CallBack() {
             @Override
             public void methodToCallBack(Object object) {
                 if (object != null) {
@@ -156,7 +178,7 @@ public class HomeFragment extends Fragment {
                     facultadPretendiente.setText(pretendiente.getFacultad());
                     edadPretendiente.setText("" + pretendiente.getEdad());
                     // !!OJO!! A SUSTITUIR POR LA IMAGEN DEL USUARIO
-                    Firebase.downloadImage("uo271397@uniovi.es", new CallBack() {
+                    Firebase.downloadImage("uo270824@uniovi.es", new CallBack() {
                         @Override
                         public void methodToCallBack(Object object) {
                             if (object != null) {

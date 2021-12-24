@@ -29,6 +29,7 @@ public class User implements Parcelable {
     private int edad;
     private List<String> solicitudes = new ArrayList<String>();
     private List<String> matches = new ArrayList<String>();
+    private List<String> rechazados = new ArrayList<String>();
 
     public User() {
 
@@ -136,6 +137,14 @@ public class User implements Parcelable {
         this.matches = matches;
     }
 
+    public List<String> getRechazados() {
+        return rechazados;
+    }
+
+    public void setRechazados(List<String> rechazados) {
+        this.rechazados = rechazados;
+    }
+
     // --- Métodos para que categoría sea parceable ---
 
     protected User(Parcel in) {
@@ -152,6 +161,7 @@ public class User implements Parcelable {
         edad = in.readInt();
         in.readStringList(solicitudes);
         in.readStringList(matches);
+        in.readStringList(rechazados);
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -184,8 +194,9 @@ public class User implements Parcelable {
         parcel.writeString(sobreMi);
         parcel.writeString(formaContacto);
         parcel.writeInt(edad);
-        parcel.writeList(solicitudes);
-        parcel.writeList(matches);
+        parcel.writeStringList(solicitudes);
+        parcel.writeStringList(matches);
+        parcel.writeStringList(rechazados);
     }
 
     @Override

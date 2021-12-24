@@ -78,7 +78,7 @@ public class Firebase {
         Map<String, Object> userParams = createMapFromUser(user);
 
         // Create preferences for user
-        Map<String, Object> userPreferences = createMapFromPrefernces(preferences); 
+        Map<String, Object> userPreferences = createMapFromPrefernces(preferences);
 
         // Añadimos al usuario
         db.collection("usuarios").document(user.getEmail()).set(userParams)
@@ -181,6 +181,7 @@ public class Firebase {
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if (documentSnapshot.exists()) { // Si existe el email
                             Map<String, Object> datos = documentSnapshot.getData();
+                            Log.d("prueba3", datos.toString());
                             datos.put("email",documentSnapshot.getId());
                             callBack.methodToCallBack(createUserFromMap(datos));
                         }
@@ -312,7 +313,7 @@ public class Firebase {
 
         Map<String, Object> newUser = createMapFromUser(user);
 
-        db.collection("preferencias").document(email).update(newUser).addOnSuccessListener(new OnSuccessListener<Void>() {
+        db.collection("usuarios").document(email).update(newUser).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 callBack.methodToCallBack(true);
@@ -355,9 +356,6 @@ public class Firebase {
      */
     public static void getPretendientesByPreferences(Preferences preferences, CallBack callBack) {
 
-        // Inicializamos la lista de emails de pretendientes
-        ArrayList<String> pretendientes = new ArrayList<String>();
-
         // Obtenemos el email del usuario actual
         String emailUsuarioActual = Firebase.getUsuarioActual().getEmail();
 
@@ -379,6 +377,8 @@ public class Firebase {
                                 @Override
                                 public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
+                                    boolean found = false;
+
                                     // Para cada pretendiente encontrado
                                     for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
 
@@ -395,30 +395,35 @@ public class Firebase {
                                             // Tienen match (se da en los dos sentidos)
                                             // Le haya mandado solicitud
                                             // Me ha mandado solicitud
+                                            // Ya se rechazo
                                             if (!usuarioActual.getMatches().contains(pretendiente.getEmail())
                                                 && !usuarioActual.getSolicitudes().contains(pretendiente.getEmail())
-                                                && !pretendiente.getSolicitudes().contains(usuarioActual.getEmail())) {
+                                                && !pretendiente.getSolicitudes().contains(usuarioActual.getEmail())
+                                                && !usuarioActual.getRechazados().contains(pretendiente.getEmail())) {
 
                                                 // Se comprueba si su edad este en el intervalo deseado
                                                 if (pretendiente.getEdad() >= preferences.getEdadMinima() &&
                                                         pretendiente.getEdad() <= preferences.getEdadMaxima()) {
-                                                    pretendientes.add(document.getId()); // Añadimos el email del pretendiente
+                                                    callBack.methodToCallBack(pretendiente.getEmail());
+                                                    found = true;
+                                                    break;
                                                 }
 
                                             }
                                         }
                                     }
-                                    // Mandamos la lista de emails de pretendientes
-                                    callBack.methodToCallBack(pretendientes);
+                                    if (!found) {
+                                        callBack.methodToCallBack(null);
+                                    }
                                 }})
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    callBack.methodToCallBack(pretendientes);
+                                    callBack.methodToCallBack(null);
                                 }});
                 }
                 else {
-                    callBack.methodToCallBack(pretendientes);
+                    callBack.methodToCallBack(null);
                 }
             }
         });
@@ -472,6 +477,7 @@ public class Firebase {
         mapUser.put("contacto", user.getFormaContacto());
         mapUser.put("solicitudes", user.getSolicitudes());
         mapUser.put("matches", user.getMatches());
+        mapUser.put("rechazados", user.getRechazados());
         return mapUser;
     }
 
@@ -491,6 +497,9 @@ public class Firebase {
         user.setCarrera(datos.get("carrera").toString());
         user.setSobreMi(datos.get("sobreMi").toString());
         user.setFormaContacto(datos.get("contacto").toString());
+        user.setSolicitudes((List<String>) datos.get("solicitudes"));
+        user.setMatches((List<String>) datos.get("matches"));
+        user.setRechazados((List<String>) datos.get("rechazados"));
         return user;
     }
 

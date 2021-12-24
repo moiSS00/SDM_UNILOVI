@@ -6,10 +6,12 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
+import com.example.unilovi.database.Firebase;
 import com.example.unilovi.model.User;
+import com.example.unilovi.fragments.HomeFragment;
+import com.example.unilovi.utils.CallBack;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,6 +43,7 @@ public class ShowUserActivity extends AppCompatActivity {
 
     // Atributos auxiliares
     private ActivityShowUserBinding binding;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,10 +70,19 @@ public class ShowUserActivity extends AppCompatActivity {
 
         // Recepción de datos
         Intent intentUser = getIntent();
-        User user = intentUser.getParcelableExtra(UsersRecyclerActivity.USUARIO_SELECCIONADO);
-        if (user != null)
-            abrirModoConsulta(user);
-
+        String userEmail = intentUser.getStringExtra(HomeFragment.EMAIL_DETALLE);
+        Firebase.getUsuarioByEmail(userEmail, new CallBack() {
+            @Override
+            public void methodToCallBack(Object object) {
+                if (object != null) {
+                    user = (User) object;
+                    showUser();
+                }
+                else {
+                    finish();
+                }
+            }
+        });
 
         // Asignamos listeners
 
@@ -83,22 +95,22 @@ public class ShowUserActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     * Muestra la información de un usuario en concreto
-     * @param user Usuario concretc del que queremos saber
-     */
-    private void abrirModoConsulta(User user) {
-
-        // Cargamos la imagen de perfil del usuario usando la librería Picasso
-        // (Pendiente revisar dimensiones para que se expanda por toda la superficie)
-        // Picasso.get().load("https://i.postimg.cc/vBx065cX/default-user-image.png").into(imagenPerfil);
-
-        // Actualizar componentes con valores de la película específica
-        // toolBarLayout.setTitle(user.getNombre() + ", " + user.getAge());
-        // facultad.setText(user.getSchool());
-        // carrera.setText(user.getCareer());
-        // sobreMi.setText(user.getAboutMe());
-
+    private void showUser() {
+        // Cargamos imagen
+        // ¡OJO! A sustituir por email del usuario
+        Firebase.downloadImage("uo271397@uniovi.es", new CallBack() {
+            @Override
+            public void methodToCallBack(Object object) {
+                if (object != null) {
+                    Picasso.get().load((String) object).into(imagenPerfil);
+                }
+            }
+        });
+        // Cargamos información
+        toolBarLayout.setTitle(user.getNombre() + ", " + user.getEdad());
+        facultad.setText(user.getFacultad());
+        carrera.setText(user.getCarrera());
+        sobreMi.setText(user.getSobreMi());
     }
 
     private void showDialog(){
@@ -110,7 +122,15 @@ public class ShowUserActivity extends AppCompatActivity {
         final AlertDialog dialog=builder.create();
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
+        // Obtenemos referencias a los componentes del dialog
+        TextView emailRRSS = (TextView) findViewById(R.id.emailRRSS);
+        TextView contactoRRSS = (TextView) findViewById(R.id.contactoRRSS);
         Button volver= view.findViewById(R.id.volverRRSS);
+
+        // Rellenamos con información (se verá si se puede mensajería)
+        // emailRRSS.setText(user.getEmail());
+        // contactoRRSS.setText(user.getFormaContacto());
+
         volver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

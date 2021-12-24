@@ -25,7 +25,7 @@
             android:textSize="18sp"/>
 
         <TextView
-            android:id="@+id/instagram"
+            android:id="@+id/contactoRRSS"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/ejemplo_RRSS"
@@ -33,24 +33,6 @@
             android:textSize="18sp"
             tools:layout_editor_absoluteX="35dp"
             tools:layout_editor_absoluteY="33dp"
-            tools:text="@string/ejemplo_RRSS" />
-
-        <TextView
-            android:id="@+id/tiktok"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/ejemplo_RRSS"
-            android:textColor="@android:color/background_dark"
-            android:textSize="18sp"
-            tools:text="@string/ejemplo_RRSS" />
-
-        <TextView
-            android:id="@+id/twitter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/ejemplo_RRSS"
-            android:textColor="@android:color/background_dark"
-            android:textSize="18sp"
             tools:text="@string/ejemplo_RRSS" />
 
     </LinearLayout>

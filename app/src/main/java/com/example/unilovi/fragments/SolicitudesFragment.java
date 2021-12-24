@@ -1,4 +1,4 @@
-package com.example.unilovi.ui.solicitudes;
+package com.example.unilovi.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;

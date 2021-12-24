@@ -1,4 +1,4 @@
-package com.example.unilovi.ui.preferenciasBusqueda;
+package com.example.unilovi.fragments;
 
 import android.os.Bundle;
 import android.telecom.Call;

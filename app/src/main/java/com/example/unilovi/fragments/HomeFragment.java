@@ -1,4 +1,4 @@
-package com.example.unilovi.ui.home;
+package com.example.unilovi.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,13 +6,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.unilovi.MainActivity;
 import com.example.unilovi.R;
+import com.example.unilovi.ShowUserActivity;
+import com.example.unilovi.SignInActivity;
+import com.example.unilovi.SignUpActivity1;
 import com.example.unilovi.database.Firebase;
 import com.example.unilovi.databinding.FragmentHomeBinding;
 import com.example.unilovi.model.Preferences;
@@ -27,7 +32,7 @@ public class HomeFragment extends Fragment {
 
     // Atribitos que contendrán una referencia a los componentes usados
     private FragmentHomeBinding binding;
-    private ImageView imagenPretendiente;
+    private ImageButton imagenPretendiente;
     private TextView nombreApellidosPretendiente;
     private TextView facultadPretendiente;
     private TextView edadPretendiente;
@@ -35,8 +40,10 @@ public class HomeFragment extends Fragment {
     private Button btnRechazar;
 
     // Atributos auxiliares
+    public static final String EMAIL_DETALLE = "email_detalle";
     private ArrayList<String> emailsPretendientes;
     private int indexPretendiente;
+    private boolean detail = false;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -54,11 +61,31 @@ public class HomeFragment extends Fragment {
 
         // Asignamos listeners
 
+        // -- Mostrar información del pretendiente --
+        imagenPretendiente.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                // Se pasa el email del usuario a comprobar
+                Intent detailIntent = new Intent(getActivity(), ShowUserActivity.class);
+                detailIntent.putExtra(EMAIL_DETALLE, emailsPretendientes.get(indexPretendiente));
+
+                // Se muestra la activity con los detalles
+                detail = true;
+                startActivity(detailIntent);
+
+            }
+        });
+
         // -- Aceptar pretendiente --
         btnAceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if (indexPretendiente + 1 < emailsPretendientes.size()) {
+                    indexPretendiente++;
+                    loadEmail(emailsPretendientes.get(indexPretendiente));
+                    // Aqui se acualizaria lista de pretendientes
+                }
             }
         });
 
@@ -66,7 +93,11 @@ public class HomeFragment extends Fragment {
         btnRechazar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if (indexPretendiente + 1 > emailsPretendientes.size()) {
+                    indexPretendiente++;
+                    loadEmail(emailsPretendientes.get(indexPretendiente));
+                    // Aqui se acualizaria lista de pretendientes
+                }
             }
         });
 
@@ -79,8 +110,13 @@ public class HomeFragment extends Fragment {
         super.onResume();
 
         // Inicializamos
-        emailsPretendientes = new ArrayList<String>();
-        indexPretendiente = 0;
+        if (!detail) {
+            emailsPretendientes = new ArrayList<String>();
+            indexPretendiente = 0;
+        }
+        else {
+            detail = false;
+        }
 
         // Buscamos pretendientes
         Firebase.getPreferencesByEmail(Firebase.getUsuarioActual().getEmail(), new CallBack() {
@@ -94,34 +130,38 @@ public class HomeFragment extends Fragment {
                             emailsPretendientes = (ArrayList<String>) object;
                             if (!emailsPretendientes.isEmpty()) {
                                 String emailPretendiente = emailsPretendientes.get(indexPretendiente);
-                                Firebase.getUsuarioByEmail(emailPretendiente, new CallBack() {
-                                    @Override
-                                    public void methodToCallBack(Object object) {
-                                        if (object != null) {
-                                            User pretendiente = (User) object;
-                                            nombreApellidosPretendiente.setText(pretendiente.getNombre()
-                                                    + " " + pretendiente.getApellidos());
-                                            facultadPretendiente.setText(pretendiente.getFacultad());
-                                            edadPretendiente.setText("" + pretendiente.getEdad());
-                                            // !!OJO!! A SUSTITUIR POR LA IMAGEN DEL USUARIO
-                                            Firebase.downloadImage("uo271397@uniovi.es", new CallBack() {
-                                                @Override
-                                                public void methodToCallBack(Object object) {
-                                                    if (object != null) {
-                                                        Picasso.get().load((String) object)
-                                                                .into(imagenPretendiente);
-                                                    }
-                                                }
-                                            });
-                                        }
-                                    }
-                                });
+                                loadEmail(emailPretendiente);
                             }
                             else { // Si no hay pretendientes
                                 btnAceptar.setEnabled(false);
                                 btnRechazar.setEnabled(false);
                                 Util.showAlert(getContext(), "No hay pretendientes disponibles " +
                                         "con sus preferencias");
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    private void loadEmail(String email) {
+        Firebase.getUsuarioByEmail(email, new CallBack() {
+            @Override
+            public void methodToCallBack(Object object) {
+                if (object != null) {
+                    User pretendiente = (User) object;
+                    nombreApellidosPretendiente.setText(pretendiente.getNombre()
+                            + " " + pretendiente.getApellidos());
+                    facultadPretendiente.setText(pretendiente.getFacultad());
+                    edadPretendiente.setText("" + pretendiente.getEdad());
+                    // !!OJO!! A SUSTITUIR POR LA IMAGEN DEL USUARIO
+                    Firebase.downloadImage("uo271397@uniovi.es", new CallBack() {
+                        @Override
+                        public void methodToCallBack(Object object) {
+                            if (object != null) {
+                                Picasso.get().load((String) object)
+                                        .into(imagenPretendiente);
                             }
                         }
                     });

@@ -320,8 +320,42 @@ public class Firebase {
     }
 
     /**
+     * Actualiza la información de un usuario en concreto
+     * @param email Email del usuario al que queremos cambiarle las preferencias
+     * @param user Objeto user que contiene la nueva información
+     * @param callBack CallBack a ejecutar
+     */
+    public static void updateUser(String email, User user, CallBack callBack) {
+
+        Map<String, Object> newUser = new HashMap<>();
+        newUser.put("nombre", user.getNombre());
+        newUser.put("apellidos", user.getApellidos());
+        newUser.put("fechaNacimiento", user.getFechaNacimiento());
+        newUser.put("sexo", user.getSexo());
+        newUser.put("facultad", user.getFacultad());
+        newUser.put("carrera", user.getCarrera());
+        newUser.put("sobreMi", user.getSobreMi());
+        newUser.put("contacto", user.getFormaContacto());
+        newUser.put("solicitudes", user.getSolicitudes());
+        newUser.put("matches", user.getMatches());
+
+        db.collection("preferencias").document(email).update(newUser).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                callBack.methodToCallBack(true);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                callBack.methodToCallBack(false);
+            }
+        });
+    }
+
+    /**
      * Actualiza las preferencias de un usuario concreto
      * @param email Email del usuario al que queremos cambiarle las preferencias
+     * @param preferences Objeto preferences que contiene la nueva información
      * @param callBack CallBack a ejecutar
      */
     public static void updatePreferences(String email, Preferences preferences, CallBack callBack) {
@@ -385,9 +419,9 @@ public class Firebase {
 
                                             // Obtenemos los datos del posible pretendiente
                                             Map<String, Object> datos = document.getData();
-                                            Log.d("pretendiente", datos.toString());
                                             datos.put("email", document.getId());
                                             User pretendiente = mapearUser(datos);
+                                            Log.d("pretendiente", pretendiente.toString());
 
                                             // Si
                                             // Tienen match (se da en los dos sentidos)

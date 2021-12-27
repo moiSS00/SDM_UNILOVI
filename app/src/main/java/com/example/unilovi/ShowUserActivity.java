@@ -133,6 +133,9 @@ public class ShowUserActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         updateDayNight();
+
+        // Si es match, no se pone invisible
+        fab.setVisibility(View.INVISIBLE);
     }
 
     /*

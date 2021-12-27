@@ -26,7 +26,6 @@ public class UserSettingsActivity extends AppCompatActivity {
 
     private Spinner spinnerSettingsFacultades;
     private Spinner spinnerSettingsCarreras;
-    private Spinner spinnerSettingsCiudades;
     private RadioGroup radioGroupSettings;
     private RadioButton radioButtonMasc;
     private RadioButton radioButtonFem;
@@ -46,7 +45,6 @@ public class UserSettingsActivity extends AppCompatActivity {
         //Referencias a componentes Settings
         spinnerSettingsFacultades = (Spinner) findViewById(R.id.spinnerUserSettingsFacultades);
         spinnerSettingsCarreras = (Spinner) findViewById(R.id.spinnerUserSettingsCarreras);
-        spinnerSettingsCiudades = (Spinner) findViewById(R.id.spinnerUserSettingsCiudades);
         radioGroupSettings = (RadioGroup) findViewById(R.id.radioGroupGeneroUserSettings);
         switchTema = (Switch) findViewById(R.id.switchTemaUserSettings);
 
@@ -116,8 +114,6 @@ public class UserSettingsActivity extends AppCompatActivity {
                                 listaFacultades = (List<String>) object;
                                 Util.rellenarSpinner(getApplicationContext(),
                                         spinnerSettingsFacultades, (List<String>) object);
-                                Util.rellenarSpinner(getApplicationContext(),
-                                        spinnerSettingsCiudades, (List<String>) object);
                                 updateDayNight();
                                 findViewById(R.id.layoutLoad).setVisibility(View.GONE);
                             }

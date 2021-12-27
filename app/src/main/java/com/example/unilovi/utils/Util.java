@@ -22,11 +22,13 @@ public class Util {
     }
 
     public static void showAlert(Context context, String message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("Error");
-        builder.setMessage(message);
-        builder.setPositiveButton("Aceptar", null);
-        AlertDialog alert = builder.create();
-        alert.show();
+        if (context != null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle("Error");
+            builder.setMessage(message);
+            builder.setPositiveButton("Aceptar", null);
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
     }
 }

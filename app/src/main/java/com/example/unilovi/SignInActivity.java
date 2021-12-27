@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.unilovi.database.Firebase;
 import com.example.unilovi.model.User;
@@ -85,7 +86,9 @@ public class SignInActivity extends AppCompatActivity {
                                     }
                                 });
                             }
-                            else {
+                            else if (!Firebase.getUsuarioActual().isEmailVerified()){
+                                Util.showAlert(context, "Debes verificar el correo que hemos mandado a tu cuenta: " + emailContent);
+                            } else {
                                 Util.showAlert(context, "Hubo algún fallo al iniciar sesión. " +
                                         "Comprueba las credenciales introducidas");
                             }
@@ -123,6 +126,7 @@ public class SignInActivity extends AppCompatActivity {
                             User user = intent.getParcelableExtra(USUARIO_REGISTRADO1);
                             editEmail.setText(user.getEmail());
                             editPassword.setText(user.getPassword());
+                            Toast.makeText(context, "Te hemos mandado un correo de verificación a tu email, por favor verifica el email antes de continuar", Toast.LENGTH_LONG).show();
                         }
                     }
                 }

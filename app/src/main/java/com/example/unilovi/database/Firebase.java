@@ -381,6 +381,7 @@ public class Firebase {
                                 public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
                                     boolean found = false;
+                                    ArrayList<User> pretendientes = new ArrayList<>();
 
                                     // Para cada pretendiente encontrado
                                     for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
@@ -405,14 +406,15 @@ public class Firebase {
                                                 // Se comprueba si su edad este en el intervalo deseado
                                                 if (pretendiente.getEdad() >= preferences.getEdadMinima() &&
                                                         pretendiente.getEdad() <= preferences.getEdadMaxima()) {
-                                                    callBack.methodToCallBack(pretendiente);
+                                                    pretendientes.add(pretendiente);
                                                     found = true;
-                                                    break;
                                                 }
                                             }
                                         }
                                     }
-                                    if (!found) {
+                                    if (found) {
+                                        callBack.methodToCallBack(pretendientes);
+                                    } else {
                                         callBack.methodToCallBack(null);
                                     }
                                 }})

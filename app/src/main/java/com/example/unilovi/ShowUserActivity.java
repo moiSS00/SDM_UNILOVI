@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
+import android.telecom.Call;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -44,6 +45,7 @@ public class ShowUserActivity extends AppCompatActivity {
     // Atributos auxiliares
     private ActivityShowUserBinding binding;
     private User user;
+    private String userEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,8 +72,14 @@ public class ShowUserActivity extends AppCompatActivity {
 
         // Recepción de datos
         Intent intentUser = getIntent();
-        user = intentUser.getParcelableExtra(HomeFragment.USUARIO_PRETENDIENTE);
-        showUser();
+        userEmail = intentUser.getStringExtra(HomeFragment.USUARIO_PRETENDIENTE);
+        Firebase.getUsuarioByEmail(userEmail, new CallBack() {
+            @Override
+            public void methodToCallBack(Object object) {
+                user = (User) object;
+                showUser();
+            }
+        });
 
         // Asignamos listeners
 

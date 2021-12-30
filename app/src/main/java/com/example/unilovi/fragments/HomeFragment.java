@@ -47,6 +47,8 @@ public class HomeFragment extends Fragment {
     private User pretendiente;
     private User usuarioActual;
     private boolean detail = false;
+    private ArrayList<User> pretendientes;
+    int indicePretendiente = 0;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -81,7 +83,7 @@ public class HomeFragment extends Fragment {
 
                 // Se pasa el email del usuario a comprobar
                 Intent detailIntent = new Intent(getActivity(), ShowUserActivity.class);
-                detailIntent.putExtra(USUARIO_PRETENDIENTE, pretendiente);
+                detailIntent.putExtra(USUARIO_PRETENDIENTE, pretendiente.getEmail());
 
                 // Se muestra la activity con los detalles
                 detail = true;
@@ -146,7 +148,7 @@ public class HomeFragment extends Fragment {
         super.onResume();
 
         if (!detail) {
-            getNextPretendiente();
+            getPretendientes();
         }
         else {
             detail = false;
@@ -155,6 +157,31 @@ public class HomeFragment extends Fragment {
     }
 
     private void getNextPretendiente() {
+
+        if (indicePretendiente < pretendientes.size()) {
+            //Cogemos al pretendiente actual y sumamos para la siguiente iteración
+            pretendiente = pretendientes.get(indicePretendiente);
+            indicePretendiente++;
+
+            nombreApellidosPretendiente.setText(pretendiente.getNombre()
+                    + " " + pretendiente.getApellidos());
+            facultadPretendiente.setText(pretendiente.getFacultad());
+            edadPretendiente.setText("" + pretendiente.getEdad());
+            // !!OJO!! A SUSTITUIR POR LA IMAGEN DEL USUARIO
+            Firebase.downloadImage("uo270824@uniovi.es", new CallBack() {
+                @Override
+                public void methodToCallBack(Object object) {
+                    Picasso.get().load((String) object).into(imagenPretendiente);
+                }
+            });
+        } else {
+            Util.showAlert(getContext(), "No hay más usuarios que coincidan con tus preferencias");
+            layoutBotones.setVisibility(View.INVISIBLE);
+            layoutInfo.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    private void getPretendientes() {
         Firebase.getPreferencesByEmail(Firebase.getUsuarioActual().getEmail(), new CallBack() {
             @Override
             public void methodToCallBack(Object object) {
@@ -166,18 +193,8 @@ public class HomeFragment extends Fragment {
                             if (object != null) {
                                 layoutBotones.setVisibility(View.VISIBLE);
                                 layoutInfo.setVisibility(View.VISIBLE);
-                                pretendiente = (User) object;
-                                nombreApellidosPretendiente.setText(pretendiente.getNombre()
-                                        + " " + pretendiente.getApellidos());
-                                facultadPretendiente.setText(pretendiente.getFacultad());
-                                edadPretendiente.setText("" + pretendiente.getEdad());
-                                // !!OJO!! A SUSTITUIR POR LA IMAGEN DEL USUARIO
-                                Firebase.downloadImage("uo270824@uniovi.es", new CallBack() {
-                                    @Override
-                                    public void methodToCallBack(Object object) {
-                                        Picasso.get().load((String) object).into(imagenPretendiente);
-                                    }
-                                });
+                                pretendientes = (ArrayList<User>) object;
+                                getNextPretendiente();
                             }
                             else {
                                 // Se cargaria una imagen por defecto

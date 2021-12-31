@@ -20,6 +20,7 @@ import com.example.unilovi.database.Firebase;
 import com.example.unilovi.model.User;
 import com.example.unilovi.utils.Util;
 import com.example.unilovi.utils.CallBack;
+import com.google.android.material.textfield.TextInputLayout;
 
 public class SignInActivity extends AppCompatActivity {
 
@@ -28,6 +29,7 @@ public class SignInActivity extends AppCompatActivity {
     private Button goToSignUpButton;
     private EditText editEmail;
     private EditText editPassword;
+    private TextInputLayout filledTextFieldCorreo;
 
     // Atributos auxiliares
     public static final String USUARIO_REGISTRADO1 = "usuario_registrado1";
@@ -46,6 +48,7 @@ public class SignInActivity extends AppCompatActivity {
         goToSignUpButton = (Button) findViewById(R.id.goToSignUpButton);
         editEmail = (EditText) findViewById(R.id.emailSignInEdit);
         editPassword = (EditText) findViewById(R.id.passwordSignInEdit);
+        filledTextFieldCorreo = (TextInputLayout) findViewById(R.id.filledTextFieldCorreo);
 
         // Asignamos listeners
 
@@ -54,7 +57,8 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (validacionEntrada()) { // Si las entradas son validas
-                    String emailContent = editEmail.getText().toString();
+                    //Concatenamos el usuario con el sufijo "@uniovi.es"
+                    String emailContent = editEmail.getText().toString().concat(filledTextFieldCorreo.getSuffixText().toString());
                     String passwordContent = editPassword.getText().toString();
 
                     Firebase.iniciarSesion(emailContent, passwordContent, new CallBack() {

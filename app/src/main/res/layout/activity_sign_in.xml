@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignInActivity"
-    android:background="#FFFFFF">
+    android:background="#FFFFFF"
+    tools:context=".SignInActivity">
 
 
     <ImageView
@@ -20,21 +20,23 @@
         app:layout_constraintVertical_bias="0.07"
         app:srcCompat="@drawable/icono_432" />
 
-    <EditText
-        android:id="@+id/emailSignInEdit"
-        android:layout_width="343dp"
-        android:layout_height="59dp"
-        android:layout_marginTop="10dp"
-        android:backgroundTint="@color/black"
-        android:ems="10"
-        android:hint="Correo"
-        android:inputType="textPersonName"
-        android:minHeight="48dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.056" />
+
+    <!--
+        <EditText
+            android:id="@+id/emailSignInEdit"
+            android:layout_width="343dp"
+            android:layout_height="59dp"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@color/black"
+            android:ems="10"
+            android:hint="Correo"
+            android:inputType="textPersonName"
+            android:minHeight="48dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView"
+            app:layout_constraintVertical_bias="0.056" />
 
     <EditText
         android:id="@+id/passwordSignInEdit"
@@ -47,9 +49,53 @@
         android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.426"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailSignInEdit"
-        app:layout_constraintVertical_bias="0.053" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.586" />
+-->
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/filledTextFieldCorreo"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="343dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:hint="Usuario"
+        android:maxWidth="488dp"
+        android:minWidth="88dp"
+        app:errorEnabled="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.19"
+        app:suffixText="@string/suffix">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/emailSignInEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/filledTextFieldPass"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="Contraseña"
+            app:endIconMode="password_toggle"
+            app:errorEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/passwordSignInEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/signInButton"
@@ -60,8 +106,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordSignInEdit"
-        app:layout_constraintVertical_bias="0.139" />
+        app:layout_constraintTop_toBottomOf="@+id/filledTextFieldCorreo"
+        app:layout_constraintVertical_bias="0.19" />
 
     <Button
         android:id="@+id/goToSignUpButton"

@@ -128,7 +128,7 @@ public class UserSettingsActivity extends AppCompatActivity {
                         public void methodToCallBack(Object object) {
                             ArrayAdapter<String> adapterCarreras =
                                     new ArrayAdapter<String>(
-                                            getApplicationContext(),
+                                            UserSettingsActivity.this,
                                             R.layout.dropdown_menu_popup_item,
                                             R.id.prueba,
                                             (List<String>) object);
@@ -171,8 +171,8 @@ public class UserSettingsActivity extends AppCompatActivity {
     }
 
     /*
-            Método para cambiar el modo de modo claro a modo oscuro
-        */
+       Método para cambiar el modo de modo claro a modo oscuro
+    */
     public void updateDayNight() {
         actualizarUsuario();
         Firebase.updateUser(usuarioActual.getEmail(), usuarioActual, new CallBack() {
@@ -201,13 +201,12 @@ public class UserSettingsActivity extends AppCompatActivity {
     }
 
     private void iniciarSpinners() {
-
         Firebase.getFacultades(new CallBack() {
             @Override
             public void methodToCallBack(Object object) {
                 ArrayAdapter<String> adapterFacultades =
                         new ArrayAdapter<String>(
-                                getApplicationContext(),
+                                UserSettingsActivity.this,
                                 R.layout.dropdown_menu_popup_item,
                                 R.id.prueba,
                                 (List<String>) object);
@@ -224,7 +223,7 @@ public class UserSettingsActivity extends AppCompatActivity {
                     public void methodToCallBack(Object object) {
                         ArrayAdapter<String> adapterCarreras =
                                 new ArrayAdapter<String>(
-                                        getApplicationContext(),
+                                        UserSettingsActivity.this,
                                         R.layout.dropdown_menu_popup_item,
                                         R.id.prueba,
                                         (List<String>) object);

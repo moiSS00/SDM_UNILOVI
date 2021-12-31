@@ -182,9 +182,9 @@ public class UserSettingsActivity extends AppCompatActivity {
                                         R.id.prueba,
                                         (List<String>) object);
                         editTextFilledExposedDropdownCarreras.setAdapter(adapterCarreras);
+                        editTextFilledExposedDropdownCarreras.setText(editTextFilledExposedDropdownCarreras.getAdapter().getItem(0).toString(), false);
                     }
                 });
-                editTextFilledExposedDropdownCarreras.setText("");
             }
         });
     }

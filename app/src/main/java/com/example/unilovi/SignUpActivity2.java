@@ -287,7 +287,9 @@ public class SignUpActivity2 extends AppCompatActivity {
     public void openCargarFotoActivityForResult() {
         CropImage.activity()
                 .setGuidelines(CropImageView.Guidelines.ON)
-                .setMaxCropResultSize(350, 350)
+                .setMinCropResultSize(1080, 1080)
+                .setMaxCropResultSize(2080, 2080)
+                .setAspectRatio(1, 1)
                 .start(this);
     }
 

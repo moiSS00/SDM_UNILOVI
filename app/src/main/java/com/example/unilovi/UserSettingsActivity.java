@@ -68,9 +68,6 @@ public class UserSettingsActivity extends AppCompatActivity {
         else
             switchTema.setChecked(false);
 
-        // Inicialiozamos spinners
-        iniciarSpinners();
-
         // Asignamos listener del tema
         switchTema.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,68 +88,103 @@ public class UserSettingsActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
 
-        //Cogemos los datos del usuario actual
-        Firebase.getUsuarioByEmail(Firebase.getUsuarioActual().getEmail(), new CallBack() {
+        // Cargamos las facultades en el spinner de facultades
+        Firebase.getFacultades(new CallBack() {
             @Override
             public void methodToCallBack(Object object) {
-                usuarioActual = (User) object;
+                ArrayAdapter<String> adapterFacultades =
+                        new ArrayAdapter<String>(
+                                UserSettingsActivity.this,
+                                R.layout.dropdown_menu_popup_item,
+                                R.id.prueba,
+                                (List<String>) object);
+                editTextFilledExposedDropdownFacultades.setAdapter(adapterFacultades);
 
-                String sexo = usuarioActual.getSexo();
+                //Cogemos los datos del usuario actual
+                Firebase.getUsuarioByEmail(Firebase.getUsuarioActual().getEmail(), new CallBack() {
+                    @Override
+                    public void methodToCallBack(Object object) {
+                        usuarioActual = (User) object;
 
-                if (sexo.equals("M"))
-                    radioButtonMasc.setChecked(true);
-                else if (sexo.equals("F"))
-                    radioButtonFem.setChecked(true);
-                else
-                    radioButtonNoBinario.setChecked(true);
+                        String sexo = usuarioActual.getSexo();
 
-                // Cogemos la facultad del usuario
-                String facultad = usuarioActual.getFacultad();
+                        if (sexo.equals("M"))
+                            radioButtonMasc.setChecked(true);
+                        else if (sexo.equals("F"))
+                            radioButtonFem.setChecked(true);
+                        else
+                            radioButtonNoBinario.setChecked(true);
 
-                if (!facultad.isEmpty()) {
-                    int numeroFacultad = -1;
+                        // Cogemos la facultad del usuario
+                        String facultad = usuarioActual.getFacultad();
 
-                    // Buscamos en el spinner la que coincide, cogemos su indice y ponemos ese texto en el spinner
-                    for (int i = 0; i < editTextFilledExposedDropdownFacultades.getAdapter().getCount(); i++) {
-                        if (editTextFilledExposedDropdownFacultades.getAdapter().getItem(i).toString().equals(facultad)) {
-                            numeroFacultad = i;
-                        }
-                    }
-                    editTextFilledExposedDropdownFacultades.setText(editTextFilledExposedDropdownFacultades.getAdapter().getItem(numeroFacultad).toString(), false);
+                        if (!facultad.isEmpty()) {
+                            int numeroFacultad = -1;
 
-                    String carrera = usuarioActual.getCarrera();
-
-                    // Le ponemos adapter al spinner de carreras según la facultad que sacamos de las preferencias
-                    Firebase.getCarrerasByFacultad(facultad, new CallBack() {
-                        @Override
-                        public void methodToCallBack(Object object) {
-                            ArrayAdapter<String> adapterCarreras =
-                                    new ArrayAdapter<String>(
-                                            UserSettingsActivity.this,
-                                            R.layout.dropdown_menu_popup_item,
-                                            R.id.prueba,
-                                            (List<String>) object);
-                            editTextFilledExposedDropdownCarreras.setAdapter(adapterCarreras);
-
-                            // Si hay una carrera en las preferencias
-                            if (!carrera.isEmpty()) {
-                                int numeroCarrera = -1;
-
-                                // Buscamos en el spinner la que coincide, cogemos su indice y ponemos ese texto en el spinner
-                                if (editTextFilledExposedDropdownCarreras.getAdapter() != null) {
-                                    for (int i = 0; i < editTextFilledExposedDropdownCarreras.getAdapter().getCount(); i++) {
-                                        if (editTextFilledExposedDropdownCarreras.getAdapter().getItem(i).toString().equals(carrera)) {
-                                            numeroCarrera = i;
-                                        }
-                                    }
-                                    editTextFilledExposedDropdownCarreras.setText(editTextFilledExposedDropdownCarreras.getAdapter().getItem(numeroCarrera).toString(), false);
+                            // Buscamos en el spinner la que coincide, cogemos su indice y ponemos ese texto en el spinner
+                            for (int i = 0; i < editTextFilledExposedDropdownFacultades.getAdapter().getCount(); i++) {
+                                if (editTextFilledExposedDropdownFacultades.getAdapter().getItem(i).toString().equals(facultad)) {
+                                    numeroFacultad = i;
                                 }
                             }
-                            updateDayNight();
-                            findViewById(R.id.layoutLoad).setVisibility(View.GONE);
+                            editTextFilledExposedDropdownFacultades.setText(editTextFilledExposedDropdownFacultades.getAdapter().getItem(numeroFacultad).toString(), false);
+
+                            String carrera = usuarioActual.getCarrera();
+
+                            // Le ponemos adapter al spinner de carreras según la facultad que sacamos de las preferencias
+                            Firebase.getCarrerasByFacultad(facultad, new CallBack() {
+                                @Override
+                                public void methodToCallBack(Object object) {
+                                    ArrayAdapter<String> adapterCarreras =
+                                            new ArrayAdapter<String>(
+                                                    UserSettingsActivity.this,
+                                                    R.layout.dropdown_menu_popup_item,
+                                                    R.id.prueba,
+                                                    (List<String>) object);
+                                    editTextFilledExposedDropdownCarreras.setAdapter(adapterCarreras);
+
+                                    // Si hay una carrera en las preferencias
+                                    if (!carrera.isEmpty()) {
+                                        int numeroCarrera = -1;
+
+                                        // Buscamos en el spinner la que coincide, cogemos su indice y ponemos ese texto en el spinner
+                                        if (editTextFilledExposedDropdownCarreras.getAdapter() != null) {
+                                            for (int i = 0; i < editTextFilledExposedDropdownCarreras.getAdapter().getCount(); i++) {
+                                                if (editTextFilledExposedDropdownCarreras.getAdapter().getItem(i).toString().equals(carrera)) {
+                                                    numeroCarrera = i;
+                                                }
+                                            }
+                                            editTextFilledExposedDropdownCarreras.setText(editTextFilledExposedDropdownCarreras.getAdapter().getItem(numeroCarrera).toString(), false);
+                                        }
+                                    }
+                                    updateDayNight();
+                                    findViewById(R.id.layoutLoad).setVisibility(View.GONE);
+                                }
+                            });
                         }
-                    });
-                }
+                    }
+                });
+            }
+        });
+
+        // Añadimos listener a spinner de facultades
+        editTextFilledExposedDropdownFacultades.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String facultad = editTextFilledExposedDropdownFacultades.getText().toString();
+                Firebase.getCarrerasByFacultad(facultad, new CallBack() {
+                    @Override
+                    public void methodToCallBack(Object object) {
+                        ArrayAdapter<String> adapterCarreras =
+                                new ArrayAdapter<String>(
+                                        UserSettingsActivity.this,
+                                        R.layout.dropdown_menu_popup_item,
+                                        R.id.prueba,
+                                        (List<String>) object);
+                        editTextFilledExposedDropdownCarreras.setAdapter(adapterCarreras);
+                    }
+                });
+                editTextFilledExposedDropdownCarreras.setText("");
             }
         });
     }
@@ -198,41 +230,6 @@ public class UserSettingsActivity extends AppCompatActivity {
 
         usuarioActual.setFacultad(editTextFilledExposedDropdownFacultades.getText().toString());
         usuarioActual.setCarrera(editTextFilledExposedDropdownCarreras.getText().toString());
-    }
-
-    private void iniciarSpinners() {
-        Firebase.getFacultades(new CallBack() {
-            @Override
-            public void methodToCallBack(Object object) {
-                ArrayAdapter<String> adapterFacultades =
-                        new ArrayAdapter<String>(
-                                UserSettingsActivity.this,
-                                R.layout.dropdown_menu_popup_item,
-                                R.id.prueba,
-                                (List<String>) object);
-                editTextFilledExposedDropdownFacultades.setAdapter(adapterFacultades);
-            }
-        });
-
-        editTextFilledExposedDropdownFacultades.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String facultad = editTextFilledExposedDropdownFacultades.getText().toString();
-                Firebase.getCarrerasByFacultad(facultad, new CallBack() {
-                    @Override
-                    public void methodToCallBack(Object object) {
-                        ArrayAdapter<String> adapterCarreras =
-                                new ArrayAdapter<String>(
-                                        UserSettingsActivity.this,
-                                        R.layout.dropdown_menu_popup_item,
-                                        R.id.prueba,
-                                        (List<String>) object);
-                        editTextFilledExposedDropdownCarreras.setAdapter(adapterCarreras);
-                    }
-                });
-                editTextFilledExposedDropdownCarreras.setText("");
-            }
-        });
     }
 
 }

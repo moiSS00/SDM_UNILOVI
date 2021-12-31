@@ -94,12 +94,14 @@ public class ShowUserActivity extends AppCompatActivity {
 
     private void showUser() {
         // Cargamos imagen
-        // ¡OJO! A sustituir por email del usuario
-        Firebase.downloadImage("uo270824@uniovi.es", new CallBack() {
+        Firebase.downloadImage(userEmail, new CallBack() {
             @Override
             public void methodToCallBack(Object object) {
                 if (object != null) {
-                    Picasso.get().load((String) object).into(imagenPerfil);
+                    Picasso.get().load((String) object).fit().into(imagenPerfil);
+                }
+                else {
+                    Picasso.get().load(R.drawable.default_user_image).fit().into(imagenPerfil);
                 }
             }
         });

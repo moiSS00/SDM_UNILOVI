@@ -167,11 +167,15 @@ public class HomeFragment extends Fragment {
                     + " " + pretendiente.getApellidos());
             facultadPretendiente.setText(pretendiente.getFacultad());
             edadPretendiente.setText("" + pretendiente.getEdad());
-            // !!OJO!! A SUSTITUIR POR LA IMAGEN DEL USUARIO
-            Firebase.downloadImage("uo270824@uniovi.es", new CallBack() {
+            Firebase.downloadImage(pretendiente.getEmail(), new CallBack() {
                 @Override
                 public void methodToCallBack(Object object) {
-                    Picasso.get().load((String) object).into(imagenPretendiente);
+                    if (object != null) {
+                        Picasso.get().load((String) object).fit().into(imagenPretendiente);
+                    }
+                    else {
+                        Picasso.get().load(R.drawable.default_user_image).fit().into(imagenPretendiente);
+                    }
                 }
             });
         } else {

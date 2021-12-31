@@ -10,8 +10,10 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.InputType;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -32,6 +34,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.squareup.picasso.Picasso;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -281,25 +285,25 @@ public class SignUpActivity2 extends AppCompatActivity {
     }
 
     public void openCargarFotoActivityForResult() {
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType("image/*");
-        cargarFotoActivityResultLauncher.launch(intent);
+        CropImage.activity()
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .setMaxCropResultSize(350, 350)
+                .start(this);
     }
 
-    ActivityResultLauncher<Intent> cargarFotoActivityResultLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        Intent intent = result.getData();
-                        if (intent != null) {
-                            dataImagen = intent.getData();
-                            Picasso.get().load(intent.getData()).into(imagen);
-                        }
-                    }
-                }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                dataImagen = result.getUri();
+                Picasso.get().load(dataImagen).into(imagen);
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Exception error = result.getError();
             }
-    );
+        }
+    }
+
 
 }

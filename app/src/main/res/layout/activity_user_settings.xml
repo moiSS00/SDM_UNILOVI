@@ -7,31 +7,17 @@
     android:layout_height="match_parent"
     tools:context=".UserSettingsActivity">
 
-
-    <TextView
-        android:id="@+id/txtFacultadCarreraUserSettings"
-        android:layout_width="125dp"
-        android:layout_height="20dp"
-        android:text="Facultad y carrera:"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.104"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.232" />
-
     <Switch
         android:id="@+id/switchTemaUserSettings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="146dp"
+        android:layout_height="49dp"
         android:text="Cambiar tema"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/radioGroupGeneroUserSettings"
-        app:layout_constraintVertical_bias="0.328" />
+        app:layout_constraintVertical_bias="0.248" />
 
     <RadioGroup
         android:id="@+id/radioGroupGeneroUserSettings"
@@ -41,10 +27,8 @@
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerUserSettingsCarreras"
-        app:layout_constraintVertical_bias="0.227">
+        app:layout_constraintTop_toTopOf="@+id/filledTextFieldFacultadAjustes">
 
         <RadioButton
             android:id="@+id/radioMasculinoUserSettings"
@@ -66,29 +50,43 @@
 
     </RadioGroup>
 
-    <Spinner
-        android:id="@+id/spinnerUserSettingsFacultades"
-        android:layout_width="320dp"
-        android:layout_height="37dp"
-        android:visibility="visible"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/filledTextFieldFacultadAjustes"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="361dp"
+        android:layout_height="57dp"
+        android:hint="Facultad"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.329"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtFacultadCarreraUserSettings"
-        app:layout_constraintVertical_bias="0.029" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.186">
 
-    <Spinner
-        android:id="@+id/spinnerUserSettingsCarreras"
-        android:layout_width="320dp"
-        android:layout_height="37dp"
-        android:visibility="visible"
+        <AutoCompleteTextView
+            android:id="@+id/cbxFacultadAjustes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/filledTextFieldCarreraAjustes"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="361dp"
+        android:layout_height="57dp"
+        android:hint="Carrera"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.329"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerUserSettingsFacultades"
-        app:layout_constraintVertical_bias="0.05" />
+        app:layout_constraintTop_toBottomOf="@+id/filledTextFieldFacultadAjustes"
+        app:layout_constraintVertical_bias="0.057">
+
+        <AutoCompleteTextView
+            android:id="@+id/cbxCarreraAjustes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/txtGeneroUserSettings"
@@ -98,19 +96,19 @@
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.104"
+        app:layout_constraintHorizontal_bias="0.087"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerUserSettingsCarreras"
-        app:layout_constraintVertical_bias="0.106" />
+        app:layout_constraintTop_toBottomOf="@+id/filledTextFieldCarreraAjustes"
+        app:layout_constraintVertical_bias="0.152" />
 
     <include
         android:id="@+id/layoutLoad"
         layout="@layout/load_layout"
         android:background="@color/colorWhite"
         android:backgroundTint="@color/colorWhite"
-        android:visibility="visible"
-        tools:layout_editor_absoluteX="355dp"
-        tools:layout_editor_absoluteY="469dp" />
+        android:visibility="gone"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

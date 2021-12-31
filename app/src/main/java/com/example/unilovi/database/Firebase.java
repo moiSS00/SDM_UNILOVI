@@ -198,30 +198,6 @@ public class Firebase {
     }
 
     /**
-     * Devuelve la lista de ciudades almacenadas en la base de datos
-     * @param callBack CallBack a ejecutar
-     */
-    public static void getCiudades(CallBack callBack) {
-        db.collection("ciudades").document("ciudadesFormularioUsuario").get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if (documentSnapshot.exists()) { // Si se encontró el documento que contiene a las ciudades
-                    callBack.methodToCallBack(documentSnapshot.getData().get("Ciudades"));
-                }
-                else {
-                    callBack.methodToCallBack(null);
-                }
-            }})
-                .addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                callBack.methodToCallBack(null);
-            }
-        });
-    }
-
-    /**
      * Devuelve la lista de facultades almacenadas en la base de datos
      * @param callBack CallBack a ejecutar
      */

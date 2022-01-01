@@ -338,11 +338,25 @@ public class Firebase {
         // Obtenemos el email del usuario actual
         String emailUsuarioActual = Firebase.getUsuarioActual().getEmail();
 
-        // Preparamos la consulta para filtrar por facultad, carrera y por sexo.
-        Query consulta = db.collection("usuarios")
-                .whereEqualTo("facultad",preferences.getFacultad())
-                .whereEqualTo("carrera", preferences.getCarrera())
-                .whereIn("sexo", preferences.getSexos());
+        // Preparamos las consultas para filtrar.
+        Query consulta;
+
+        // Si no hay ni facultad ni carrera en las preferencias
+        if (preferences.getFacultad().isEmpty()) {
+            consulta = db.collection("usuarios").whereIn("sexo", preferences.getSexos());
+          // Si no hay Carrera en las preferencias
+        } else if (preferences.getCarrera().isEmpty()) {
+            consulta = db.collection("usuarios")
+                    .whereEqualTo("facultad",preferences.getFacultad())
+                    .whereIn("sexo", preferences.getSexos());
+          // Todas las preferencias están configuradas
+        } else {
+            consulta = db.collection("usuarios")
+                    .whereEqualTo("facultad", preferences.getFacultad())
+                    .whereEqualTo("carrera", preferences.getCarrera())
+                    .whereIn("sexo", preferences.getSexos());
+        }
+
 
         // Recuperamos la información del usuario actual
         Firebase.getUsuarioByEmail(emailUsuarioActual, new CallBack() {

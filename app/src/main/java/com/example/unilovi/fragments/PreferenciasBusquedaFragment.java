@@ -157,6 +157,7 @@ public class PreferenciasBusquedaFragment extends Fragment {
         Firebase.getFacultades(new CallBack() {
             @Override
             public void methodToCallBack(Object object) {
+                ((List<String>) object).add("Ninguna");
                 ArrayAdapter<String> adapterFacultades =
                         new ArrayAdapter<String>(
                                 getContext(),
@@ -252,19 +253,30 @@ public class PreferenciasBusquedaFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String facultad = editTextFilledExposedDropdownFacultades.getText().toString();
-                Firebase.getCarrerasByFacultad(facultad, new CallBack() {
-                    @Override
-                    public void methodToCallBack(Object object) {
-                        ArrayAdapter<String> adapterCarreras =
-                                new ArrayAdapter<String>(
-                                        getContext(),
-                                        R.layout.dropdown_menu_popup_item,
-                                        R.id.prueba,
-                                        (List<String>) object);
-                        editTextFilledExposedDropdownCarreras.setAdapter(adapterCarreras);
-                    }
-                });
-                editTextFilledExposedDropdownCarreras.setText("");
+                if (facultad.equals("Ninguna")) {
+                    ArrayAdapter<String> adapterCarreras =
+                            new ArrayAdapter<String>(
+                                    getContext(),
+                                    R.layout.dropdown_menu_popup_item,
+                                    R.id.prueba,
+                                    new ArrayList<String>());
+                    editTextFilledExposedDropdownCarreras.setAdapter(adapterCarreras);
+                    editTextFilledExposedDropdownCarreras.setText("");
+                } else {
+                    Firebase.getCarrerasByFacultad(facultad, new CallBack() {
+                        @Override
+                        public void methodToCallBack(Object object) {
+                            ArrayAdapter<String> adapterCarreras =
+                                    new ArrayAdapter<String>(
+                                            getContext(),
+                                            R.layout.dropdown_menu_popup_item,
+                                            R.id.prueba,
+                                            (List<String>) object);
+                            editTextFilledExposedDropdownCarreras.setAdapter(adapterCarreras);
+                        }
+                    });
+                    editTextFilledExposedDropdownCarreras.setText("");
+                }
             }
         });
 
@@ -282,7 +294,13 @@ public class PreferenciasBusquedaFragment extends Fragment {
 
             preferences.setEdadMinima(Integer.parseInt(edadMinima.getText().toString()));
             preferences.setEdadMaxima(Integer.parseInt(edadMaxima.getText().toString()));
-            preferences.setFacultad(editTextFilledExposedDropdownFacultades.getText().toString());
+
+            // Opcionalidad de la facultad
+            if (editTextFilledExposedDropdownFacultades.getText().toString().equals("Ninguna"))
+                preferences.setFacultad("");
+            else
+                preferences.setFacultad(editTextFilledExposedDropdownFacultades.getText().toString());
+
             preferences.setCarrera(editTextFilledExposedDropdownCarreras.getText().toString());
 
             ArrayList<String> sexos = new ArrayList<>();

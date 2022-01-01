@@ -229,7 +229,7 @@ public class User implements Parcelable {
         GregorianCalendar nacimiento = new GregorianCalendar();
         GregorianCalendar today = new GregorianCalendar();
 
-        nacimiento.set(year, month, day);
+        nacimiento.set(year, month - 1, day);
 
         int age = today.get(Calendar.YEAR) - nacimiento.get(Calendar.YEAR);
 

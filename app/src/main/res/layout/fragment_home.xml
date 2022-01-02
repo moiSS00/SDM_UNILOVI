@@ -41,7 +41,6 @@
                     android:id="@+id/nombrePretendiente"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Lara Rodriguez"
                     android:textAppearance="?attr/textAppearanceHeadline6" />
 
                 <LinearLayout
@@ -64,7 +63,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="Escuela de Ingeniería Informatica "
                         android:textAppearance="?attr/textAppearanceBody2"
                         android:textColor="?android:attr/textColorSecondary" />
 
@@ -88,8 +86,7 @@
                         android:id="@+id/edadPretendiente"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="19" />
+                        android:layout_marginTop="8dp" />
                 </LinearLayout>
 
             </LinearLayout>

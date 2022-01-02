@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="35dp"
         android:textAlignment="center"
-        android:textColor="@color/colorPrimary"
+        android:textColor="#F72464"
         style="@android:style/TextAppearance.DeviceDefault.Large"
         android:text="Crea una cuenta nueva" />
 
@@ -80,6 +80,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Siguiente"
+                app:backgroundTint="@null"
+                android:background="@drawable/button_rounded"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.501"

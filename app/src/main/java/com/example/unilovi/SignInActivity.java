@@ -92,7 +92,7 @@ public class SignInActivity extends AppCompatActivity {
                                     }
                                 });
                             }
-                            else if (!Firebase.getUsuarioActual().isEmailVerified()){
+                            else if (Firebase.getUsuarioActual() != null && !Firebase.getUsuarioActual().isEmailVerified()){
                                 Util.showAlert(context, "Debes verificar el correo que hemos mandado a tu cuenta: " + emailContent);
                             } else {
                                 Util.showAlert(context, "Hubo algún fallo al iniciar sesión. " +

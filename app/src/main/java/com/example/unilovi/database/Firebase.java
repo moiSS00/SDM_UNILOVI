@@ -1,11 +1,23 @@
 package com.example.unilovi.database;
 
 
+import android.app.Application;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
+import com.example.unilovi.MainActivity;
 import com.example.unilovi.R;
 import com.example.unilovi.model.Preferences;
 import com.example.unilovi.model.User;
@@ -18,7 +30,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -33,7 +47,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class Firebase {
+public class Firebase extends Application {
 
     // Base de datos
     private static FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -44,6 +58,14 @@ public class Firebase {
     // Módulo de multimedia
     private static StorageReference storage = FirebaseStorage.getInstance().getReference();
 
+    // Lista de solicitudes del usuario actual
+    private static ArrayList<String> solicitudesUsuarioActual = new ArrayList<>();
+    private static boolean listenerAdded = false;
+
+    // Notificaciones
+    private static boolean canalCreado = false;
+
+    public static MainActivity context;
 
     // ---- Autenticación ---
 
@@ -501,6 +523,66 @@ public class Firebase {
                 }
             }
         });
+    }
+
+    public static void addListenerToUsuarioActual() {
+        if (!listenerAdded) {
+            listenerAdded = true;
+            if (!canalCreado) {
+                crearCanalNotificaciones();
+            }
+            db.collection("usuarios").document(Firebase.getUsuarioActual().getEmail()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                @Override
+                public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException error) {
+                    if (error != null) {
+                        Log.i("ErrorListener", "Listen failed.", error);
+                        return;
+                    }
+
+                    if (snapshot != null && snapshot.exists()) {
+                        Log.i("OkListener", "Datos: " + snapshot.getData());
+                        Map<String, Object> datos = snapshot.getData();
+                        for (String solicitud : (ArrayList<String>) datos.get("solicitudes")) {
+                            if (!solicitudesUsuarioActual.contains(solicitud)) {
+                                // Creamos notificación
+                                if (context != null) {
+                                    Intent intent = new Intent(context, MainActivity.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+
+                                    Notification notification = new NotificationCompat.Builder(context, "canal")
+                                            .setSmallIcon(R.drawable.default_user_image)
+                                            .setContentTitle("Unilovi")
+                                            .setContentText("Tienes una nueva solicitud")
+                                            .setPriority(NotificationCompat.PRIORITY_HIGH)
+                                            .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                                            .setColor(Color.GREEN)
+                                            .setContentIntent(pendingIntent)
+                                            .setAutoCancel(true)
+                                            .build();
+                                    NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+
+                                    notificationManager.notify(1, notification);
+
+                                    solicitudesUsuarioActual.add(solicitud);
+                                }
+                            }
+                        }
+                    } else {
+                        Log.i("NullListener", "Datos devuelto por el listener: null");
+                    }
+                }
+            });
+        }
+    }
+
+    private static void crearCanalNotificaciones() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel canal = new NotificationChannel("canal", "Canal notificaciones", NotificationManager.IMPORTANCE_HIGH);
+            canal.setDescription("Canal para las notificaciones");
+            NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(canal);
+        }
     }
 
     // ---- Interactuar directamente con el módulo multimedia ----

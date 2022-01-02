@@ -114,6 +114,8 @@ public class MainActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
 
+        Firebase.context = this;
+
         String uriFoto = getIntent().getStringExtra(SignUpActivity4.URI_FOTO4);
 
         Firebase.getUsuarioByEmail(Firebase.getUsuarioActual().getEmail(), new CallBack() {
@@ -122,6 +124,9 @@ public class MainActivity extends AppCompatActivity {
                 if (object != null) {
                     User user = (User) object;
                     nombre.setText("Bienvenido/a " + user.getNombre());
+
+                    // Dentro se controla que solo se añada una vez el listener
+                    Firebase.addListenerToUsuarioActual();
                 }
             }
         });

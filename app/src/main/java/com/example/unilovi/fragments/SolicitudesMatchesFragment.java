@@ -20,18 +20,17 @@ import com.example.unilovi.R;
 import com.example.unilovi.ShowUserActivity;
 import com.example.unilovi.UsersRecyclerActivity;
 import com.example.unilovi.adapters.ListaUsuariosAdapter;
+import com.example.unilovi.database.Firebase;
 import com.example.unilovi.databinding.FragmentSolicitudesBinding;
 import com.example.unilovi.model.User;
+import com.example.unilovi.utils.CallBack;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SolicitudesFragment extends Fragment {
+public class SolicitudesMatchesFragment extends Fragment {
 
     private FragmentSolicitudesBinding binding;
-
-    // Constantes para la navegación
-    public static final String USUARIO_SELECCIONADO = "usuario_seleccionado";
 
     // Atribitos que contendrán una referencia a los componentes usados
     private RecyclerView listaMatchesView;
@@ -47,10 +46,6 @@ public class SolicitudesFragment extends Fragment {
         binding = FragmentSolicitudesBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        // Inicializa el modelo de datos
-        listaMatches = new ArrayList<User>();
-        listaSolicitudes = new ArrayList<User>();
-
         // Obtenemos referencias a los componentes
         listaMatchesView = (RecyclerView) root.findViewById(R.id.matchesRecyclerView);
         listaSolicitudesView = (RecyclerView) root.findViewById(R.id.solicitudesRecyclerView);
@@ -63,14 +58,24 @@ public class SolicitudesFragment extends Fragment {
         listaSolicitudesView.setHasFixedSize(true);
         listaSolicitudesView.setLayoutManager(layoutManagerSolicitudes);
 
-        // Creamos los adapters
-        ListaUsuariosAdapter lmAdater = new ListaUsuariosAdapter(listaMatches,
-                new ListaUsuariosAdapter.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(User usuario) {
-                        clickonItem(usuario);
-                    }
-                });
+        // Inicializa el modelo de datos y creamos los adapters
+        Firebase.getMatches(new CallBack() {
+            @Override
+            public void methodToCallBack(Object object) {
+                listaMatches = (List<User>) object;
+                ListaUsuariosAdapter lmAdater = new ListaUsuariosAdapter(listaMatches,
+                        new ListaUsuariosAdapter.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(User usuario) {
+                                clickonItem(usuario);
+                            }
+                        });
+                // Asignamos los adapters
+                listaMatchesView.setAdapter(lmAdater);
+            }
+        });
+        listaSolicitudes = new ArrayList<User>();
+
 
         ListaUsuariosAdapter lsAdater = new ListaUsuariosAdapter(listaSolicitudes,
                 new ListaUsuariosAdapter.OnItemClickListener() {
@@ -81,8 +86,7 @@ public class SolicitudesFragment extends Fragment {
                 });
 
 
-        // Asignamos los adapters
-        listaMatchesView.setAdapter(lmAdater);
+
         listaSolicitudesView.setAdapter(lsAdater);
 
         return root;
@@ -99,10 +103,10 @@ public class SolicitudesFragment extends Fragment {
      * @param usuario Usuario al que se ha dado click
      */
     public void clickonItem(User usuario) {
-        Log.i("Click adpater", "Item clicked " + usuario.getNombre());
+        Log.i("Click adpater", "Item clicked " + usuario.getEmail());
         // Paso al modo de apertura
         Intent intent = new Intent(getContext(), ShowUserActivity.class);
-        intent.putExtra(USUARIO_SELECCIONADO, usuario);
+        intent.putExtra(ShowUserActivity.USUARIO_EMAIL, usuario.getEmail());
         startActivity(intent);
     }
 }

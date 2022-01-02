@@ -1,5 +1,6 @@
 package com.example.unilovi.adapters;
 
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.unilovi.R;
+import com.example.unilovi.database.Firebase;
 import com.example.unilovi.model.User;
+import com.example.unilovi.utils.CallBack;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -49,7 +52,7 @@ public class ListaUsuariosAdapter extends RecyclerView.Adapter<ListaUsuariosAdap
     public void onBindViewHolder(@NonNull UsuariosWiewHolder holder, int position) {
         // Extrae de la lista el elemento indicando por posición
         User usuario = listaUsuarios.get(position);
-        Log.i("Lista", "Visualiza elemento " + usuario);
+        Log.i("Lista", "Visualiza elemento " + usuario.getEmail());
 
         // llama al método de nuestro holder para asignar valores a los componentes
         // además, pasamos el listener del evento onClick
@@ -80,10 +83,20 @@ public class ListaUsuariosAdapter extends RecyclerView.Adapter<ListaUsuariosAdap
 
         public void bindUser(final User usuario, final OnItemClickListener listener) {
             nombre.setText(usuario.getNombre());
-            // facultad.setText(usuario.get());
-            Picasso.get().load("https://i.postimg.cc/vBx065cX/default-user-image.png").into(imagen);
-            itemView.setOnClickListener((v) -> {
-                listener.onItemClick(usuario);
+            facultad.setText(usuario.getFacultad());
+            Firebase.downloadImage(usuario.getEmail(), new CallBack() {
+                @Override
+                public void methodToCallBack(Object object) {
+                    if (object != null) {
+                        Picasso.get().load((String) object).fit().into(imagen);
+                    }
+                    else {
+                        Picasso.get().load(R.drawable.default_user_image).fit().into(imagen);
+                    }
+                    itemView.setOnClickListener((v) -> {
+                        listener.onItemClick(usuario);
+                    });
+                }
             });
         }
 

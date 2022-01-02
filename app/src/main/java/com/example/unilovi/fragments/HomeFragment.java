@@ -43,7 +43,6 @@ public class HomeFragment extends Fragment {
     private LinearLayout layoutBotones;
 
     // Atributos auxiliares
-    public static final String USUARIO_PRETENDIENTE = "usuario_pretendiente";
     private User pretendiente;
     private User usuarioActual;
     private boolean detail = false;
@@ -83,7 +82,7 @@ public class HomeFragment extends Fragment {
 
                 // Se pasa el email del usuario a comprobar
                 Intent detailIntent = new Intent(getActivity(), ShowUserActivity.class);
-                detailIntent.putExtra(USUARIO_PRETENDIENTE, pretendiente.getEmail());
+                detailIntent.putExtra(ShowUserActivity.USUARIO_EMAIL, pretendiente.getEmail());
 
                 // Se muestra la activity con los detalles
                 detail = true;

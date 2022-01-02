@@ -6,6 +6,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.unilovi.R;
 import com.example.unilovi.model.Preferences;
 import com.example.unilovi.model.User;
 import com.example.unilovi.utils.CallBack;
@@ -181,7 +182,6 @@ public class Firebase {
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if (documentSnapshot.exists()) { // Si existe el email
                             Map<String, Object> datos = documentSnapshot.getData();
-                            Log.d("prueba3", datos.toString());
                             datos.put("email",documentSnapshot.getId());
                             callBack.methodToCallBack(createUserFromMap(datos));
                         }
@@ -338,32 +338,28 @@ public class Firebase {
         // Obtenemos el email del usuario actual
         String emailUsuarioActual = Firebase.getUsuarioActual().getEmail();
 
-        // Preparamos las consultas para filtrar.
-        Query consulta;
-
-        // Si no hay ni facultad ni carrera en las preferencias
-        if (preferences.getFacultad().isEmpty()) {
-            consulta = db.collection("usuarios").whereIn("sexo", preferences.getSexos());
-          // Si no hay Carrera en las preferencias
-        } else if (preferences.getCarrera().isEmpty()) {
-            consulta = db.collection("usuarios")
-                    .whereEqualTo("facultad",preferences.getFacultad())
-                    .whereIn("sexo", preferences.getSexos());
-          // Todas las preferencias están configuradas
-        } else {
-            consulta = db.collection("usuarios")
-                    .whereEqualTo("facultad", preferences.getFacultad())
-                    .whereEqualTo("carrera", preferences.getCarrera())
-                    .whereIn("sexo", preferences.getSexos());
-        }
-
-
         // Recuperamos la información del usuario actual
         Firebase.getUsuarioByEmail(emailUsuarioActual, new CallBack() {
             @Override
             public void methodToCallBack(Object object) {
                 if (object != null) {
+
                     User usuarioActual = (User) object;
+
+                    // Preparamos las consultas para filtrar.
+                    Query consulta = db.collection("usuarios")
+                            .whereIn("sexo", preferences.getSexos());
+
+                    if (preferences.getCarrera().isEmpty()) {
+                        consulta = consulta
+                                .whereEqualTo("facultad",preferences.getFacultad());
+                        // Todas las preferencias están configuradas
+                    } else {
+                        consulta = consulta
+                                .whereEqualTo("facultad", preferences.getFacultad())
+                                .whereEqualTo("carrera", preferences.getCarrera());
+                    }
+
                     // Realizamos la consulta
                     consulta.get()
                             .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -421,6 +417,43 @@ public class Firebase {
         });
     }
 
+    /**
+     * Devuelve la lista de matches del usuario actual
+     * @param callBack Callback a ejecutar
+     */
+    public static void getMatches(CallBack callBack) {
+        Firebase.getUsuarioByEmail(Firebase.getUsuarioActual().getEmail(), new CallBack() {
+            @Override
+            public void methodToCallBack(Object object) {
+                if (object != null) {
+                    User usuarioActual = (User) object;
+                    List<String> matchesEmails = usuarioActual.getMatches();
+                    ArrayList<User> matches = new ArrayList<User>();
+                    Query consulta = db.collection("usuarios").whereIn("email", matchesEmails);
+                    consulta.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                        @Override
+                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                            for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                                Map<String, Object> datos = document.getData();
+                                User match = createUserFromMap(datos);
+                                matches.add(match);
+                            }
+                            callBack.methodToCallBack(matches);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            callBack.methodToCallBack(new ArrayList<User>());
+                        }
+                    });
+                }
+                else {
+                    callBack.methodToCallBack(new ArrayList<User>());
+                }
+            }
+        });
+    }
+
     // ---- Interactuar directamente con el módulo multimedia ----
 
     /**
@@ -459,6 +492,7 @@ public class Firebase {
      */
     private static Map<String, Object> createMapFromUser(User user) {
         Map<String, Object> mapUser = new HashMap<>();
+        mapUser.put("email", user.getEmail());
         mapUser.put("nombre", user.getNombre());
         mapUser.put("apellidos", user.getApellidos());
         mapUser.put("fechaNacimiento", user.getFechaNacimiento());

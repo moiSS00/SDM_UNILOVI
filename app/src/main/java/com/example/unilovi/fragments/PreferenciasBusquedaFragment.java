@@ -157,7 +157,7 @@ public class PreferenciasBusquedaFragment extends Fragment {
         Firebase.getFacultades(new CallBack() {
             @Override
             public void methodToCallBack(Object object) {
-                ((List<String>) object).add("Ninguna");
+                ((List<String>) object).add("Sin definir");
                 ArrayAdapter<String> adapterFacultades =
                         new ArrayAdapter<String>(
                                 getContext(),
@@ -253,7 +253,7 @@ public class PreferenciasBusquedaFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String facultad = editTextFilledExposedDropdownFacultades.getText().toString();
-                if (facultad.equals("Ninguna")) {
+                if (facultad.equals("Sin definir")) {
                     ArrayAdapter<String> adapterCarreras =
                             new ArrayAdapter<String>(
                                     getContext(),
@@ -296,7 +296,7 @@ public class PreferenciasBusquedaFragment extends Fragment {
             preferences.setEdadMaxima(Integer.parseInt(edadMaxima.getText().toString()));
 
             // Opcionalidad de la facultad
-            if (editTextFilledExposedDropdownFacultades.getText().toString().equals("Ninguna"))
+            if (editTextFilledExposedDropdownFacultades.getText().toString().equals("Sin definir"))
                 preferences.setFacultad("");
             else
                 preferences.setFacultad(editTextFilledExposedDropdownFacultades.getText().toString());

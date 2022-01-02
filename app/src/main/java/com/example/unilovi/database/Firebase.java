@@ -26,6 +26,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -212,6 +214,7 @@ public class Firebase {
                                 // Para cada documento obtenemos su id (nombre de la facultad)
                                 facultades.add(document.getId());
                             }
+                            Collections.sort(facultades);
                             callBack.methodToCallBack(facultades);
                         }
                         else {
@@ -219,11 +222,11 @@ public class Firebase {
                         }
                     }})
                 .addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                callBack.methodToCallBack(null);
-            }
-        });
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        callBack.methodToCallBack(null);
+                    }
+                });
     }
 
     /**
@@ -235,21 +238,23 @@ public class Firebase {
         // Buscamos el documento para esa facultad
         db.collection("facultades").document(facultad).get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if (documentSnapshot.exists()) { // Si existe la facultad
-                    callBack.methodToCallBack(documentSnapshot.getData().get("carreras"));
-                }
-                else { // Si no existe la facultad mostramos valor por defecto
-                    callBack.methodToCallBack(null);
-                }
-            }})
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) { // Si existe la facultad
+                            List<String> carreras = (List<String>) documentSnapshot.getData().get("carreras");
+                            Collections.sort(carreras);
+                            callBack.methodToCallBack(carreras);
+                        }
+                        else { // Si no existe la facultad mostramos valor por defecto
+                            callBack.methodToCallBack(null);
+                        }
+                    }})
                 .addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                callBack.methodToCallBack(null);
-            }
-        });
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        callBack.methodToCallBack(null);
+                    }
+                });
     }
 
     /**
@@ -436,23 +441,19 @@ public class Firebase {
 
                     // Obtenemos los usuarios de los emails recogidos
                     ArrayList<User> matches = new ArrayList<User>();
-                    Query consulta = db.collection("usuarios").whereIn("email", matchesEmails);
-                    consulta.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                        @Override
-                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                            for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                                Map<String, Object> datos = document.getData();
-                                User match = createUserFromMap(datos);
-                                matches.add(match);
+                    for (String email : matchesEmails) {
+                        Firebase.getUsuarioByEmail(email, new CallBack() {
+                            @Override
+                            public void methodToCallBack(Object object) {
+                                if (object != null) {
+                                    matches.add((User) object);
+                                }
+                                if (matches.size() == matchesEmails.size()) {
+                                    callBack.methodToCallBack(matches);
+                                }
                             }
-                            callBack.methodToCallBack(matches);
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            callBack.methodToCallBack(new ArrayList<User>());
-                        }
-                    });
+                        });
+                    }
                 }
                 else {
                     callBack.methodToCallBack(new ArrayList<User>());
@@ -480,24 +481,20 @@ public class Firebase {
 
                     // Obtenemos los usuarios de los emails recogidos
                     ArrayList<User> solicitudes = new ArrayList<User>();
-                    Query consulta = db.collection("usuarios")
-                            .whereIn("email", solicitudesEmails);
-                    consulta.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                        @Override
-                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                            for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                                Map<String, Object> datos = document.getData();
-                                User solicitud = createUserFromMap(datos);
-                                solicitudes.add(solicitud);
+
+                    for (String email : solicitudesEmails) {
+                        Firebase.getUsuarioByEmail(email, new CallBack() {
+                            @Override
+                            public void methodToCallBack(Object object) {
+                                if (object != null) {
+                                    solicitudes.add((User) object);
+                                }
+                                if (solicitudes.size() == solicitudesEmails.size()) {
+                                    callBack.methodToCallBack(solicitudes);
+                                }
                             }
-                            callBack.methodToCallBack(solicitudes);
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            callBack.methodToCallBack(new ArrayList<User>());
-                        }
-                    });
+                        });
+                    }
                 }
                 else {
                     callBack.methodToCallBack(new ArrayList<User>());

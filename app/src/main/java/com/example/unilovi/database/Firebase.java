@@ -365,6 +365,25 @@ public class Firebase extends Application {
         // Obtenemos el email del usuario actual
         String emailUsuarioActual = Firebase.getUsuarioActual().getEmail();
 
+        // Preparamos las consultas para filtrar.
+        Query consulta;
+
+        // Si no hay ni facultad ni carrera en las preferencias
+        if (preferences.getFacultad().isEmpty()) {
+            consulta = db.collection("usuarios").whereIn("sexo", preferences.getSexos());
+            // Si no hay Carrera en las preferencias
+        } else if (preferences.getCarrera().isEmpty()) {
+            consulta = db.collection("usuarios")
+                    .whereEqualTo("facultad",preferences.getFacultad())
+                    .whereIn("sexo", preferences.getSexos());
+            // Todas las preferencias están configuradas
+        } else {
+            consulta = db.collection("usuarios")
+                    .whereEqualTo("facultad", preferences.getFacultad())
+                    .whereEqualTo("carrera", preferences.getCarrera())
+                    .whereIn("sexo", preferences.getSexos());
+        }
+
         // Recuperamos la información del usuario actual
         Firebase.getUsuarioByEmail(emailUsuarioActual, new CallBack() {
             @Override
@@ -372,20 +391,6 @@ public class Firebase extends Application {
                 if (object != null) {
 
                     User usuarioActual = (User) object;
-
-                    // Preparamos las consultas para filtrar.
-                    Query consulta = db.collection("usuarios")
-                            .whereIn("sexo", preferences.getSexos());
-
-                    if (preferences.getCarrera().isEmpty()) {
-                        consulta = consulta
-                                .whereEqualTo("facultad",preferences.getFacultad());
-                        // Todas las preferencias están configuradas
-                    } else {
-                        consulta = consulta
-                                .whereEqualTo("facultad", preferences.getFacultad())
-                                .whereEqualTo("carrera", preferences.getCarrera());
-                    }
 
                     // Realizamos la consulta
                     consulta.get()
@@ -551,7 +556,7 @@ public class Firebase extends Application {
                                     PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
 
                                     Notification notification = new NotificationCompat.Builder(context, "canal")
-                                            .setSmallIcon(R.drawable.default_user_image)
+                                            .setSmallIcon(R.drawable.icono_432)
                                             .setContentTitle("Unilovi")
                                             .setContentText("Tienes una nueva solicitud")
                                             .setPriority(NotificationCompat.PRIORITY_HIGH)

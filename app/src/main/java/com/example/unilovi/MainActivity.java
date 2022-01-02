@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
                     nombre.setText("Bienvenido/a " + user.getNombre());
 
                     // Dentro se controla que solo se añada una vez el listener
-                    Firebase.addListenerToUsuarioActual();
+                    Firebase.inicializaListenerYListas();
                 }
             }
         });

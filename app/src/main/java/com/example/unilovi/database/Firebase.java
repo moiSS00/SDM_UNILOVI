@@ -59,7 +59,8 @@ public class Firebase extends Application {
     private static StorageReference storage = FirebaseStorage.getInstance().getReference();
 
     // Lista de solicitudes del usuario actual
-    private static ArrayList<String> solicitudesUsuarioActual = new ArrayList<>();
+    private static ArrayList<String> solicitudesUsuarioActual;
+    private static ArrayList<String> matchesUsuarioActual;
     private static boolean listenerAdded = false;
 
     // Notificaciones
@@ -530,55 +531,105 @@ public class Firebase extends Application {
         });
     }
 
-    public static void addListenerToUsuarioActual() {
+    // -----   NOTIFICACIONES   -----
+
+    // Método que inicializa las listas de solicitudes y llama al método que crea el listener
+    public static void inicializaListenerYListas() {
         if (!listenerAdded) {
             listenerAdded = true;
-            if (!canalCreado) {
-                crearCanalNotificaciones();
-            }
-            db.collection("usuarios").document(Firebase.getUsuarioActual().getEmail()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            Firebase.getSolicitudes(new CallBack() {
                 @Override
-                public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException error) {
-                    if (error != null) {
-                        Log.i("ErrorListener", "Listen failed.", error);
-                        return;
-                    }
-
-                    if (snapshot != null && snapshot.exists()) {
-                        Log.i("OkListener", "Datos: " + snapshot.getData());
-                        Map<String, Object> datos = snapshot.getData();
-                        for (String solicitud : (ArrayList<String>) datos.get("solicitudes")) {
-                            if (!solicitudesUsuarioActual.contains(solicitud)) {
-                                // Creamos notificación
-                                if (context != null) {
-                                    Intent intent = new Intent(context, MainActivity.class);
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                    PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-
-                                    Notification notification = new NotificationCompat.Builder(context, "canal")
-                                            .setSmallIcon(R.drawable.icono_432)
-                                            .setContentTitle("Unilovi")
-                                            .setContentText("Tienes una nueva solicitud")
-                                            .setPriority(NotificationCompat.PRIORITY_HIGH)
-                                            .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-                                            .setColor(Color.GREEN)
-                                            .setContentIntent(pendingIntent)
-                                            .setAutoCancel(true)
-                                            .build();
-                                    NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-
-                                    notificationManager.notify(1, notification);
-
-                                    solicitudesUsuarioActual.add(solicitud);
-                                }
-                            }
+                public void methodToCallBack(Object object) {
+                    solicitudesUsuarioActual = (ArrayList<String>) object;
+                    Firebase.getMatches(new CallBack() {
+                        @Override
+                        public void methodToCallBack(Object object) {
+                            matchesUsuarioActual = (ArrayList<String>) object;
+                            addListenerToUsuarioActual();
                         }
-                    } else {
-                        Log.i("NullListener", "Datos devuelto por el listener: null");
-                    }
+                    });
                 }
             });
         }
+    }
+
+    // Método que añada listener al documento del usuario
+    public static void addListenerToUsuarioActual() {
+        if (!canalCreado) {
+            crearCanalNotificaciones();
+        }
+        db.collection("usuarios").document(Firebase.getUsuarioActual().getEmail()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException error) {
+                if (error != null) {
+                    Log.i("ErrorListener", "Listen failed.", error);
+                    return;
+                }
+
+                if (snapshot != null && snapshot.exists()) {
+                    Log.i("OkListener", "Datos: " + snapshot.getData());
+                    Map<String, Object> datos = snapshot.getData();
+
+                    for (String solicitud : (ArrayList<String>) datos.get("solicitudes")) {
+                        if (!solicitudesUsuarioActual.contains(solicitud)) {
+                            // Creamos notificación
+                            if (context != null) {
+                                Intent intent = new Intent(context, MainActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+
+                                Notification notification = new NotificationCompat.Builder(context, "canal")
+                                        .setSmallIcon(R.drawable.icono_432)
+                                        .setContentTitle("Unilovi")
+                                        .setContentText("Tienes una nueva solicitud")
+                                        .setPriority(NotificationCompat.PRIORITY_HIGH)
+                                        .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                                        .setColor(Color.GREEN)
+                                        .setContentIntent(pendingIntent)
+                                        .setAutoCancel(true)
+                                        .build();
+                                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+
+                                notificationManager.notify(1, notification);
+
+                                solicitudesUsuarioActual.add(solicitud);
+                            }
+                        }
+                    }
+
+                    for (String match : (ArrayList<String>) datos.get("matches")) {
+                        if (!matchesUsuarioActual.contains(match)) {
+                            // Creamos notificación
+                            if (context != null) {
+                                Intent intent = new Intent(context, MainActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+
+                                Notification notification = new NotificationCompat.Builder(context, "canal")
+                                        .setSmallIcon(R.drawable.icono_432)
+                                        .setContentTitle("Unilovi")
+                                        .setContentText("Tienes un nuevo match")
+                                        .setPriority(NotificationCompat.PRIORITY_HIGH)
+                                        .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                                        .setColor(Color.GREEN)
+                                        .setContentIntent(pendingIntent)
+                                        .setAutoCancel(true)
+                                        .build();
+                                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+
+                                notificationManager.notify(1, notification);
+
+                                matchesUsuarioActual.add(match);
+                            }
+                        }
+                    }
+
+                } else {
+                    Log.i("NullListener", "Datos devuelto por el listener: null");
+                }
+            }
+        });
+
     }
 
     private static void crearCanalNotificaciones() {

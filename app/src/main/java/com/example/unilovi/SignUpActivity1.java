@@ -112,7 +112,7 @@ public class SignUpActivity1 extends AppCompatActivity {
 
                                 // Pasamos el usuario
                                 User user = new User();
-                                user.setEmail(emailAux);
+                                user.setEmail(emailContent);
                                 user.setPassword(passwordContent);
 
                                 postIntent.putExtra(SignInActivity.USUARIO_REGISTRADO1, user);

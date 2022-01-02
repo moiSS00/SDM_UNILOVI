@@ -13,6 +13,7 @@
         android:ems="@integer/titleSize"
         android:text="@string/menu_preferencias"
         android:textSize="20sp"
+        android:textColor="#F72464"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -27,10 +28,21 @@
         android:max="31"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.227"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sobreMiText"
-        app:layout_constraintVertical_bias="0.025" />
+        app:layout_constraintVertical_bias="0.024" />
+
+    <TextView
+        android:id="@+id/edadMinimaRegistro4"
+        android:layout_width="56dp"
+        android:layout_height="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.103"
+        app:layout_constraintStart_toEndOf="@+id/seekBarEdadMinimaRegistro4"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.324" />
 
     <TextView
         android:id="@+id/sobreMiText"
@@ -52,10 +64,21 @@
         android:progress="100"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintHorizontal_bias="0.232"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5"
-        app:layout_constraintVertical_bias="0.044" />
+        app:layout_constraintVertical_bias="0.042" />
+
+    <TextView
+        android:id="@+id/edadMaximaRegistro4"
+        android:layout_width="56dp"
+        android:layout_height="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.114"
+        app:layout_constraintStart_toEndOf="@+id/seekBarEdadMaximaRegistro4"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.484" />
 
     <TextView
         android:id="@+id/textView5"
@@ -68,28 +91,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/seekBarEdadMinimaRegistro4"
         app:layout_constraintVertical_bias="0.084" />
-
-    <TextView
-        android:id="@+id/edadMinimaRegistro4"
-        android:layout_width="56dp"
-        android:layout_height="25dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.232"
-        app:layout_constraintStart_toEndOf="@+id/seekBarEdadMinimaRegistro4"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.324" />
-
-    <TextView
-        android:id="@+id/edadMaximaRegistro4"
-        android:layout_width="56dp"
-        android:layout_height="25dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.25"
-        app:layout_constraintStart_toEndOf="@+id/seekBarEdadMaximaRegistro4"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.485" />
 
     <TextView
         android:id="@+id/textView8"
@@ -134,7 +135,7 @@
         android:text="Otro"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.465"
+        app:layout_constraintHorizontal_bias="0.292"
         app:layout_constraintStart_toEndOf="@+id/checkMujerRegistro4"
         app:layout_constraintTop_toBottomOf="@+id/preferenciasBusquedaText"
         app:layout_constraintVertical_bias="0.062" />
@@ -142,7 +143,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/filledTextFieldFacultadRegistro4"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:layout_width="361dp"
+        android:layout_width="330dp"
         android:layout_height="57dp"
         android:hint="Facultad (opcional)"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -161,7 +162,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/filledTextFieldCarreraRegistro4"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:layout_width="361dp"
+        android:layout_width="330dp"
         android:layout_height="57dp"
         android:hint="Carrera (opcional)"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -9,7 +9,8 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.example.unilovi.adapters.ListaUsuariosAdapter;
+import com.example.unilovi.adapters.ListaMatchesAdapter;
+import com.example.unilovi.adapters.OnItemClickListener;
 import com.example.unilovi.model.User;
 
 import java.util.ArrayList;
@@ -51,16 +52,16 @@ public class UsersRecyclerActivity extends AppCompatActivity {
         listaSolicitudesView.setLayoutManager(layoutManagerSolicitudes);
 
         // Creamos los adapters
-        ListaUsuariosAdapter lmAdater = new ListaUsuariosAdapter(listaMatches,
-                new ListaUsuariosAdapter.OnItemClickListener() {
+        ListaMatchesAdapter lmAdater = new ListaMatchesAdapter(listaMatches,
+                new OnItemClickListener() {
                     @Override
                     public void onItemClick(User usuario) {
                         clickonItem(usuario);
                     }
                 });
 
-        ListaUsuariosAdapter lsAdater = new ListaUsuariosAdapter(listaSolicitudes,
-                new ListaUsuariosAdapter.OnItemClickListener() {
+        ListaMatchesAdapter lsAdater = new ListaMatchesAdapter(listaSolicitudes,
+                new OnItemClickListener() {
                     @Override
                     public void onItemClick(User usuario) {
                         clickonItem(usuario);

@@ -422,12 +422,19 @@ public class Firebase {
      * @param callBack Callback a ejecutar
      */
     public static void getMatches(CallBack callBack) {
+
+        // Obtenemos la información del usuario actual
         Firebase.getUsuarioByEmail(Firebase.getUsuarioActual().getEmail(), new CallBack() {
             @Override
             public void methodToCallBack(Object object) {
                 if (object != null) {
+
                     User usuarioActual = (User) object;
+
+                    // Obtenemos los emails que han mandado solicitud al usuario actual
                     List<String> matchesEmails = usuarioActual.getMatches();
+
+                    // Obtenemos los usuarios de los emails recogidos
                     ArrayList<User> matches = new ArrayList<User>();
                     Query consulta = db.collection("usuarios").whereIn("email", matchesEmails);
                     consulta.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -439,6 +446,51 @@ public class Firebase {
                                 matches.add(match);
                             }
                             callBack.methodToCallBack(matches);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            callBack.methodToCallBack(new ArrayList<User>());
+                        }
+                    });
+                }
+                else {
+                    callBack.methodToCallBack(new ArrayList<User>());
+                }
+            }
+        });
+    }
+
+    /**
+     * Devuelve la lista de solicitudes que ha recibido el usuario actual
+     * @param callBack Callback a ejecutar
+     */
+    public static void getSolicitudes(CallBack callBack) {
+
+        // Obtenemos la información del usuario actual
+        Firebase.getUsuarioByEmail(Firebase.getUsuarioActual().getEmail(), new CallBack() {
+            @Override
+            public void methodToCallBack(Object object) {
+                if (object != null) {
+
+                    User usuarioActual = (User) object;
+
+                    // Obtenemos los emails que han mandado solicitud al usuario actual
+                    List<String> solicitudesEmails = usuarioActual.getSolicitudes();
+
+                    // Obtenemos los usuarios de los emails recogidos
+                    ArrayList<User> solicitudes = new ArrayList<User>();
+                    Query consulta = db.collection("usuarios")
+                            .whereIn("email", solicitudesEmails);
+                    consulta.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                        @Override
+                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                            for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                                Map<String, Object> datos = document.getData();
+                                User solicitud = createUserFromMap(datos);
+                                solicitudes.add(solicitud);
+                            }
+                            callBack.methodToCallBack(solicitudes);
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override

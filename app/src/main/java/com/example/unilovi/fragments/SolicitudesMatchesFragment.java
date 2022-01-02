@@ -6,26 +6,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.unilovi.R;
 import com.example.unilovi.ShowUserActivity;
-import com.example.unilovi.UsersRecyclerActivity;
-import com.example.unilovi.adapters.ListaUsuariosAdapter;
+import com.example.unilovi.adapters.ListaMatchesAdapter;
+import com.example.unilovi.adapters.OnItemClickListener;
 import com.example.unilovi.database.Firebase;
 import com.example.unilovi.databinding.FragmentSolicitudesBinding;
 import com.example.unilovi.model.User;
 import com.example.unilovi.utils.CallBack;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SolicitudesMatchesFragment extends Fragment {
@@ -63,8 +58,8 @@ public class SolicitudesMatchesFragment extends Fragment {
             @Override
             public void methodToCallBack(Object object) {
                 listaMatches = (List<User>) object;
-                ListaUsuariosAdapter lmAdater = new ListaUsuariosAdapter(listaMatches,
-                        new ListaUsuariosAdapter.OnItemClickListener() {
+                ListaMatchesAdapter lmAdater = new ListaMatchesAdapter(listaMatches,
+                        new OnItemClickListener() {
                             @Override
                             public void onItemClick(User usuario) {
                                 clickonItem(usuario);
@@ -74,20 +69,22 @@ public class SolicitudesMatchesFragment extends Fragment {
                 listaMatchesView.setAdapter(lmAdater);
             }
         });
-        listaSolicitudes = new ArrayList<User>();
 
-
-        ListaUsuariosAdapter lsAdater = new ListaUsuariosAdapter(listaSolicitudes,
-                new ListaUsuariosAdapter.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(User usuario) {
-                        clickonItem(usuario);
-                    }
-                });
-
-
-
-        listaSolicitudesView.setAdapter(lsAdater);
+        Firebase.getSolicitudes(new CallBack() {
+            @Override
+            public void methodToCallBack(Object object) {
+                listaSolicitudes = (List<User>) object;
+                ListaMatchesAdapter lsAdater = new ListaMatchesAdapter(listaSolicitudes,
+                        new OnItemClickListener() {
+                            @Override
+                            public void onItemClick(User usuario) {
+                                clickonItem(usuario);
+                            }
+                        });
+                // Asignamos los adapters
+                listaSolicitudesView.setAdapter(lsAdater);
+            }
+        });
 
         return root;
     }

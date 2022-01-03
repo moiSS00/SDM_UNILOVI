@@ -14,14 +14,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.unilovi.R;
 import com.example.unilovi.ShowUserActivity;
-import com.example.unilovi.adapters.ListaMatchesAdapter;
-import com.example.unilovi.adapters.ListaSolicitudesAdapter;
+import com.example.unilovi.adapters.matches.ListaMatchesAdapter;
+import com.example.unilovi.adapters.solicitudes.ListaSolicitudesAdapter;
 import com.example.unilovi.adapters.OnItemClickListener;
 import com.example.unilovi.database.Firebase;
 import com.example.unilovi.databinding.FragmentSolicitudesBinding;
 import com.example.unilovi.model.User;
 import com.example.unilovi.utils.CallBack;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SolicitudesMatchesFragment extends Fragment {
@@ -31,10 +32,6 @@ public class SolicitudesMatchesFragment extends Fragment {
     // Atribitos que contendrán una referencia a los componentes usados
     private RecyclerView listaMatchesView;
     private RecyclerView listaSolicitudesView;
-
-    // Atributos auxiliares
-    private List<User> listaMatches; // Usuarios con los que tenemos me gusta mutuo
-    private List<User> listaSolicitudes; // Usuarios que nos dan me gusta
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -61,38 +58,30 @@ public class SolicitudesMatchesFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        // Inicializa el modelo de datos y creamos los adapters
-        Firebase.getMatches(new CallBack() {
-            @Override
-            public void methodToCallBack(Object object) {
-                listaMatches = (List<User>) object;
-                ListaMatchesAdapter lmAdater = new ListaMatchesAdapter(listaMatches,
-                        new OnItemClickListener() {
-                            @Override
-                            public void onItemClick(User usuario) {
-                                clickonItem(usuario);
-                            }
-                        });
-                // Asignamos los adapters
-                listaMatchesView.setAdapter(lmAdater);
-            }
-        });
+        // Creamos adapters y activamos listeners
 
-        Firebase.getSolicitudes(new CallBack() {
-            @Override
-            public void methodToCallBack(Object object) {
-                listaSolicitudes = (List<User>) object;
-                ListaSolicitudesAdapter lsAdater = new ListaSolicitudesAdapter(listaSolicitudes,
-                        new OnItemClickListener() {
-                            @Override
-                            public void onItemClick(User usuario) {
-                                clickonItem(usuario);
-                            }
-                        });
-                // Asignamos los adapters
-                listaSolicitudesView.setAdapter(lsAdater);
-            }
-        });
+        ListaMatchesAdapter lmAdater = new ListaMatchesAdapter(new ArrayList<User>(),
+                new OnItemClickListener() {
+                    @Override
+                    public void onItemClick(User usuario) {
+                        clickonItem(usuario);
+                    }
+                });
+        // Asignamos los adapters
+        Firebase.addListenerToMatchesRecycler(lmAdater);
+        listaMatchesView.setAdapter(lmAdater);
+
+        ListaSolicitudesAdapter lsAdater = new ListaSolicitudesAdapter(new ArrayList<User>(),
+                new OnItemClickListener() {
+                    @Override
+                    public void onItemClick(User usuario) {
+                        clickonItem(usuario);
+                    }
+                });
+
+        // Asignamos los adapters
+        Firebase.addListenerToSolicitudesRecycler(lsAdater);
+        listaSolicitudesView.setAdapter(lsAdater);
 
     }
 
@@ -100,6 +89,10 @@ public class SolicitudesMatchesFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+
+        // Desactivamos listeners
+        Firebase.removeListenerToSolicitudesRecycler();
+        Firebase.removeListenerToMatchesRecycler();
     }
 
     /**
@@ -113,4 +106,6 @@ public class SolicitudesMatchesFragment extends Fragment {
         intent.putExtra(ShowUserActivity.USUARIO_EMAIL, usuario.getEmail());
         startActivity(intent);
     }
+
+
 }

@@ -19,6 +19,8 @@ import androidx.core.app.NotificationManagerCompat;
 
 import com.example.unilovi.MainActivity;
 import com.example.unilovi.R;
+import com.example.unilovi.adapters.matches.ListaMatchesAdapter;
+import com.example.unilovi.adapters.solicitudes.ListaSolicitudesAdapter;
 import com.example.unilovi.model.Preferences;
 import com.example.unilovi.model.User;
 import com.example.unilovi.utils.CallBack;
@@ -33,6 +35,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -61,11 +64,16 @@ public class Firebase extends Application {
     // Lista de solicitudes del usuario actual
     private static ArrayList<String> solicitudesUsuarioActual = new ArrayList<>();
     private static ArrayList<String> matchesUsuarioActual = new ArrayList<>();
-    private static boolean listenerAdded = false;
+
+    // Listeners lista de solicitudes / matches
+    private static ListenerRegistration listenerSolicitudesRecycler;
+    private static ListenerRegistration listenerMatchesRecycler;
+    private static boolean listenerSolicitudesRecyclerAdded = false;
+    private static boolean listenerMatchesRecyclerAdded = false;
 
     // Notificaciones
     private static boolean canalCreado = false;
-
+    private static boolean listenerAdded = false;
     public static MainActivity context;
 
     // ---- Autenticación ---
@@ -529,6 +537,108 @@ public class Firebase extends Application {
                 }
             }
         });
+    }
+
+    /**
+     * Activa el listener perteneciente al recyclerView de solicitudes.
+     * @param adapter Adapter del recyclerView a manipular.
+     */
+    public static void addListenerToSolicitudesRecycler(ListaSolicitudesAdapter adapter) {
+
+        // Si no estaba ya activado el listener
+        if (!listenerSolicitudesRecyclerAdded) {
+
+            // Se activa
+            listenerSolicitudesRecyclerAdded = true;
+            listenerSolicitudesRecycler = db.collection("usuarios").document(Firebase.getUsuarioActual().getEmail()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                @Override
+                public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException error) {
+                    if (error != null) {
+                        Log.i("ErrorListener", "Listen failed.", error);
+                        return;
+                    }
+
+                    if (snapshot != null && snapshot.exists()) {
+
+                        // Comprobamos si hubo cambios especificamente en la lista de solicitudes
+                        ArrayList<String> nuevasSolicitudes = (ArrayList<String>) snapshot.getData().get("solicitudes");
+                        if (adapter.getListaSolicitudes().size() != nuevasSolicitudes.size()) {
+
+                            // Se actualiza la lista del adapter
+                            Firebase.getSolicitudes(new CallBack() {
+                                @Override
+                                public void methodToCallBack(Object object) {
+                                    adapter.swap((List<User>) object);
+                                }
+                            });
+
+                        }
+
+                    } else {
+                        Log.i("NullListener", "Datos devuelto por el listener: null");
+                    }
+                }
+            });
+        }
+    }
+
+    /**
+     * Nos permite desactivar el listener de la lista de solicitudes que estaba activo
+     */
+    public static void removeListenerToSolicitudesRecycler() {
+        listenerSolicitudesRecycler.remove();
+        listenerSolicitudesRecyclerAdded = false;
+    }
+
+    /**
+     * Activa el listener perteneciente al recyclerView de matches.
+     * @param adapter Adapter del recyclerView a manipular.
+     */
+    public static void addListenerToMatchesRecycler(ListaMatchesAdapter adapter) {
+
+        // Si no estaba ya activado el listener
+        if (!listenerMatchesRecyclerAdded) {
+
+            // Se activa
+            listenerMatchesRecyclerAdded = true;
+            listenerMatchesRecycler = db.collection("usuarios").document(Firebase.getUsuarioActual().getEmail()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                @Override
+                public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException error) {
+                    if (error != null) {
+                        Log.i("ErrorListener", "Listen failed.", error);
+                        return;
+                    }
+
+                    if (snapshot != null && snapshot.exists()) {
+
+                        // Comprobamos si hubo cambios especificamente en la lista de matches
+                        ArrayList<String> nuevosMatches = (ArrayList<String>) snapshot.getData().get("matches");
+                        if (adapter.getListaMatches().size() != nuevosMatches.size()) {
+
+                            // Se actualiza la lista del adapter
+                            Firebase.getMatches(new CallBack() {
+                                @Override
+                                public void methodToCallBack(Object object) {
+                                    adapter.swap((List<User>) object);
+                                }
+                            });
+
+                        }
+
+                    } else {
+                        Log.i("NullListener", "Datos devuelto por el listener: null");
+                    }
+                }
+            });
+        }
+    }
+
+    /**
+     * Nos permite desactivar el listener de la lista de matches que estaba activo
+     */
+    public static void removeListenerToMatchesRecycler() {
+        listenerMatchesRecycler.remove();
+        listenerMatchesRecyclerAdded = false;
     }
 
     // -----   NOTIFICACIONES   -----

@@ -3,6 +3,8 @@ package com.example.unilovi.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -197,6 +199,15 @@ public class User implements Parcelable {
         parcel.writeStringList(solicitudes);
         parcel.writeStringList(matches);
         parcel.writeStringList(rechazados);
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (obj instanceof User) {
+            User otherUser = (User) obj;
+            return email.equals(otherUser.email);
+        }
+        return super.equals(obj);
     }
 
     @Override

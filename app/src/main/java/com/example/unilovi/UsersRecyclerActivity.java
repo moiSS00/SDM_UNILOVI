@@ -9,7 +9,7 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.example.unilovi.adapters.ListaMatchesAdapter;
+import com.example.unilovi.adapters.matches.ListaMatchesAdapter;
 import com.example.unilovi.adapters.OnItemClickListener;
 import com.example.unilovi.model.User;
 

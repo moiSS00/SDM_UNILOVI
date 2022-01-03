@@ -477,18 +477,23 @@ public class Firebase extends Application {
 
                     // Obtenemos los usuarios de los emails recogidos
                     ArrayList<User> matches = new ArrayList<User>();
-                    for (String email : matchesEmails) {
-                        Firebase.getUsuarioByEmail(email, new CallBack() {
-                            @Override
-                            public void methodToCallBack(Object object) {
-                                if (object != null) {
-                                    matches.add((User) object);
+
+                    if (matchesEmails.isEmpty()) {
+                        callBack.methodToCallBack(matches);
+                    } else {
+                        for (String email : matchesEmails) {
+                            Firebase.getUsuarioByEmail(email, new CallBack() {
+                                @Override
+                                public void methodToCallBack(Object object) {
+                                    if (object != null) {
+                                        matches.add((User) object);
+                                    }
+                                    if (matches.size() == matchesEmails.size()) {
+                                        callBack.methodToCallBack(matches);
+                                    }
                                 }
-                                if (matches.size() == matchesEmails.size()) {
-                                    callBack.methodToCallBack(matches);
-                                }
-                            }
-                        });
+                            });
+                        }
                     }
                 }
                 else {
@@ -518,18 +523,22 @@ public class Firebase extends Application {
                     // Obtenemos los usuarios de los emails recogidos
                     ArrayList<User> solicitudes = new ArrayList<User>();
 
-                    for (String email : solicitudesEmails) {
-                        Firebase.getUsuarioByEmail(email, new CallBack() {
-                            @Override
-                            public void methodToCallBack(Object object) {
-                                if (object != null) {
-                                    solicitudes.add((User) object);
+                    if (solicitudesEmails.isEmpty()) {
+                        callBack.methodToCallBack(solicitudes);
+                    } else {
+                        for (String email : solicitudesEmails) {
+                            Firebase.getUsuarioByEmail(email, new CallBack() {
+                                @Override
+                                public void methodToCallBack(Object object) {
+                                    if (object != null) {
+                                        solicitudes.add((User) object);
+                                    }
+                                    if (solicitudes.size() == solicitudesEmails.size()) {
+                                        callBack.methodToCallBack(solicitudes);
+                                    }
                                 }
-                                if (solicitudes.size() == solicitudesEmails.size()) {
-                                    callBack.methodToCallBack(solicitudes);
-                                }
-                            }
-                        });
+                            });
+                        }
                     }
                 }
                 else {
@@ -672,6 +681,7 @@ public class Firebase extends Application {
     // Método que añada listener al documento del usuario
     public static void addListenerToUsuarioActual() {
         if (!canalCreado) {
+            canalCreado = true;
             crearCanalNotificaciones();
         }
         db.collection("usuarios").document(Firebase.getUsuarioActual().getEmail()).addSnapshotListener(new EventListener<DocumentSnapshot>() {

@@ -51,15 +51,7 @@ public class SolicitudesMatchesFragment extends Fragment {
         listaSolicitudesView.setHasFixedSize(true);
         listaSolicitudesView.setLayoutManager(layoutManagerSolicitudes);
 
-        return root;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        // Creamos adapters y activamos listeners
-
+        // Creamos adpaters y activamos listeners
         ListaMatchesAdapter lmAdater = new ListaMatchesAdapter(new ArrayList<User>(),
                 new OnItemClickListener() {
                     @Override
@@ -71,7 +63,7 @@ public class SolicitudesMatchesFragment extends Fragment {
         Firebase.addListenerToMatchesRecycler(lmAdater);
         listaMatchesView.setAdapter(lmAdater);
 
-        ListaSolicitudesAdapter lsAdater = new ListaSolicitudesAdapter(new ArrayList<User>(),
+        ListaSolicitudesAdapter lsAdater = new ListaSolicitudesAdapter(new ArrayList<>(),
                 new OnItemClickListener() {
                     @Override
                     public void onItemClick(User usuario) {
@@ -83,6 +75,7 @@ public class SolicitudesMatchesFragment extends Fragment {
         Firebase.addListenerToSolicitudesRecycler(lsAdater);
         listaSolicitudesView.setAdapter(lsAdater);
 
+        return root;
     }
 
     @Override

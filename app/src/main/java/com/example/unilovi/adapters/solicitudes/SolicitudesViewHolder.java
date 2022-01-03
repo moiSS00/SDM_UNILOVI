@@ -41,7 +41,6 @@ public class SolicitudesViewHolder extends RecyclerView.ViewHolder {
         btnAceptarSolicitud.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("solicitudes", "aceptada " + usuario.getEmail());
                 Firebase.aceptarSolicitud(usuario.getEmail());
             }
         });

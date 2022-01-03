@@ -549,6 +549,148 @@ public class Firebase extends Application {
     }
 
     /**
+     * Aceptar un pretendiente específico
+     * @param email Email del pretendiente especifico a aceptar
+     */
+    public static void aceptarPretendiente(String email) {
+        Firebase.getUsuarioByEmail(Firebase.getUsuarioActual().getEmail(), new CallBack() {
+            @Override
+            public void methodToCallBack(Object object) {
+                User usuarioActual = (User) object;
+                Firebase.getUsuarioByEmail(email, new CallBack() {
+                    @Override
+                    public void methodToCallBack(Object object) {
+                        User pretendiente = (User) object;
+                        usuarioActual.getRechazados().add(pretendiente.getEmail());
+                        pretendiente.getSolicitudes().add(usuarioActual.getEmail());
+                        Firebase.updateUser(usuarioActual.getEmail(), usuarioActual, new CallBack() {
+                            @Override
+                            public void methodToCallBack(Object object) {
+                                if ((Boolean) object) {
+                                    Firebase.updateUser(pretendiente.getEmail(), pretendiente, new CallBack() {
+                                        @Override
+                                        public void methodToCallBack(Object object) {
+                                            Log.d("solicitudes", "Pretendiente " + pretendiente.getEmail()
+                                                    + " aceptado con éxito");
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    }
+
+    /**
+     * Rechazar un pretendiente específico
+     * @param email Email del pretendiente especifico a rechazar
+     */
+    public static void rechazarPretendiente(String email) {
+        Firebase.getUsuarioByEmail(Firebase.getUsuarioActual().getEmail(), new CallBack() {
+            @Override
+            public void methodToCallBack(Object object) {
+                User usuarioActual = (User) object;
+                Firebase.getUsuarioByEmail(email, new CallBack() {
+                    @Override
+                    public void methodToCallBack(Object object) {
+                        User pretendiente = (User) object;
+                        usuarioActual.getRechazados().add(pretendiente.getEmail());
+                        pretendiente.getRechazados().add(usuarioActual.getEmail());
+                        Firebase.updateUser(usuarioActual.getEmail(), usuarioActual, new CallBack() {
+                            @Override
+                            public void methodToCallBack(Object object) {
+                                if ((Boolean) object) {
+                                    Firebase.updateUser(pretendiente.getEmail(), pretendiente, new CallBack() {
+                                        @Override
+                                        public void methodToCallBack(Object object) {
+                                            Log.d("solicitudes", "Pretendiente " + pretendiente.getEmail()
+                                                    + " rechazado con éxito");
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    }
+
+    /**
+     * Aceptar una solicitud especçifica
+     * @param email Email del usuario que mando la solicitud a aceptar
+     */
+    public static void aceptarSolicitud(String email) {
+        Firebase.getUsuarioByEmail(Firebase.getUsuarioActual().getEmail(), new CallBack() {
+            @Override
+            public void methodToCallBack(Object object) {
+                User usuarioActual = (User) object;
+                Firebase.getUsuarioByEmail(email, new CallBack() {
+                    @Override
+                    public void methodToCallBack(Object object) {
+                        User solicitud = (User) object;
+                        usuarioActual.getSolicitudes().remove(solicitud.getEmail());
+                        usuarioActual.getMatches().add(solicitud.getEmail());
+                        solicitud.getMatches().add(usuarioActual.getEmail());
+                        Firebase.updateUser(usuarioActual.getEmail(), usuarioActual, new CallBack() {
+                            @Override
+                            public void methodToCallBack(Object object) {
+                                if ((Boolean) object) {
+                                    Firebase.updateUser(solicitud.getEmail(), solicitud, new CallBack() {
+                                        @Override
+                                        public void methodToCallBack(Object object) {
+                                            Log.d("solicitudes", "Solicitud de " + solicitud.getEmail()
+                                                    + " aceptada con éxito");
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    }
+
+    /**
+     * Rechazar una solicitud especçifica
+     * @param email Email del usuario que mando la solicitud a rechazar
+     */
+    public static void rechazarSolicitud(String email) {
+        Firebase.getUsuarioByEmail(Firebase.getUsuarioActual().getEmail(), new CallBack() {
+            @Override
+            public void methodToCallBack(Object object) {
+                User usuarioActual = (User) object;
+                Firebase.getUsuarioByEmail(email, new CallBack() {
+                    @Override
+                    public void methodToCallBack(Object object) {
+                        User solicitud = (User) object;
+                        usuarioActual.getSolicitudes().remove(solicitud.getEmail());
+                        usuarioActual.getRechazados().add(solicitud.getEmail());
+                        solicitud.getRechazados().add(usuarioActual.getEmail());
+                        Firebase.updateUser(usuarioActual.getEmail(), usuarioActual, new CallBack() {
+                            @Override
+                            public void methodToCallBack(Object object) {
+                                if ((Boolean) object) {
+                                    Firebase.updateUser(solicitud.getEmail(), solicitud, new CallBack() {
+                                        @Override
+                                        public void methodToCallBack(Object object) {
+                                            Log.d("solicitudes", "Solicitud de " + solicitud.getEmail()
+                                                    + " rechazada con éxito");
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    }
+
+    /**
      * Activa el listener perteneciente al recyclerView de solicitudes.
      * @param adapter Adapter del recyclerView a manipular.
      */

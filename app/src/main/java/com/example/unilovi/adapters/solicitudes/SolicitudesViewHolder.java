@@ -42,6 +42,7 @@ public class SolicitudesViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View v) {
                 Log.d("solicitudes", "aceptada " + usuario.getEmail());
+                Firebase.aceptarSolicitud(usuario.getEmail());
             }
         });
 
@@ -49,7 +50,7 @@ public class SolicitudesViewHolder extends RecyclerView.ViewHolder {
         btnRechazarSolicitud.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("solicitudes", "rechazada " + usuario.getEmail());
+                Firebase.rechazarSolicitud(usuario.getEmail());
             }
         });
 

@@ -95,23 +95,8 @@ public class HomeFragment extends Fragment {
         btnAceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                // Modificamos las lista de ambos usuarios
-                usuarioActual.getRechazados().add(pretendiente.getEmail());
-                pretendiente.getSolicitudes().add(usuarioActual.getEmail());
-
-                Firebase.updateUser(usuarioActual.getEmail(), usuarioActual, new CallBack() {
-                    @Override
-                    public void methodToCallBack(Object object) {
-                        Firebase.updateUser(pretendiente.getEmail(), pretendiente, new CallBack() {
-                            @Override
-                            public void methodToCallBack(Object object) {
-                                getNextPretendiente();
-                            }
-                        });
-                    }
-                });
-
+                Firebase.aceptarPretendiente(pretendiente.getEmail());
+                getNextPretendiente();
             }
         });
 
@@ -119,23 +104,8 @@ public class HomeFragment extends Fragment {
         btnRechazar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                // Modificamos las lista de ambos usuarios
-                usuarioActual.getRechazados().add(pretendiente.getEmail());
-                pretendiente.getRechazados().add(usuarioActual.getEmail());
-
-                Firebase.updateUser(usuarioActual.getEmail(), usuarioActual, new CallBack() {
-                    @Override
-                    public void methodToCallBack(Object object) {
-                        Firebase.updateUser(pretendiente.getEmail(), pretendiente, new CallBack() {
-                            @Override
-                            public void methodToCallBack(Object object) {
-                                getNextPretendiente();
-                            }
-                        });
-                    }
-                });
-
+                Firebase.rechazarPretendiente(pretendiente.getEmail());
+                getNextPretendiente();
             }
         });
 

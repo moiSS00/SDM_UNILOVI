@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,7 +14,7 @@ import com.example.unilovi.model.User;
 
 import java.util.List;
 
-public class ListaSolicitudesAdapter extends RecyclerView.Adapter<UsuariosViewHolder> {
+public class ListaSolicitudesAdapter extends RecyclerView.Adapter<SolicitudesViewHolder> {
 
     // Atributos auxiliares
     private final OnItemClickListener listener;
@@ -28,14 +29,15 @@ public class ListaSolicitudesAdapter extends RecyclerView.Adapter<UsuariosViewHo
 
     @NonNull
     @Override
-    public UsuariosViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public SolicitudesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.linea_recycler_view_solicitud, parent, false);
-        return new UsuariosViewHolder(itemView);
+        return new SolicitudesViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull UsuariosViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull SolicitudesViewHolder holder, int position) {
+
         // Extrae de la lista el elemento indicando por posición
         User usuario = listaUsuarios.get(position);
         Log.i("Lista", "Visualiza elemento " + usuario.getEmail());

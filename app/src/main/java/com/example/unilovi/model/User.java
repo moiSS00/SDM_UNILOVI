@@ -200,16 +200,7 @@ public class User implements Parcelable {
         parcel.writeStringList(matches);
         parcel.writeStringList(rechazados);
     }
-
-    @Override
-    public boolean equals(@Nullable Object obj) {
-        if (obj instanceof User) {
-            User otherUser = (User) obj;
-            return email.equals(otherUser.email);
-        }
-        return super.equals(obj);
-    }
-
+    
     @Override
     public String toString() {
         return "User{" +

@@ -31,6 +31,8 @@ import android.widget.Toast;
 import com.example.unilovi.databinding.ActivityShowUserBinding;
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
 public class ShowUserActivity extends AppCompatActivity {
 
     // Atribitos que contendrán una referencia a los componentes usados
@@ -94,6 +96,20 @@ public class ShowUserActivity extends AppCompatActivity {
                 showDialog();
             }
         });
+
+        // Comprobamos si es macth
+        fab.setVisibility(View.INVISIBLE);
+        Firebase.getUsuarioByEmail(Firebase.getUsuarioActual().getEmail(), new CallBack() {
+            @Override
+            public void methodToCallBack(Object object) {
+                if (object != null) {
+                    User usuarioActual = (User) object;
+                    if (usuarioActual.getMatches().contains(userEmail)) {
+                        fab.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+        });
     }
 
     private void showUser() {
@@ -126,13 +142,13 @@ public class ShowUserActivity extends AppCompatActivity {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         // Obtenemos referencias a los componentes del dialog
-        TextView emailRRSS = (TextView) findViewById(R.id.emailRRSS);
-        TextView contactoRRSS = (TextView) findViewById(R.id.contactoRRSS);
-        Button volver= view.findViewById(R.id.volverRRSS);
+        TextView emailRRSS = (TextView) view.findViewById(R.id.emailRRSS);
+        TextView contactoRRSS = (TextView) view.findViewById(R.id.contactoRRSS);
+        Button volver= (Button) view.findViewById(R.id.volverRRSS);
 
         // Rellenamos con información (se verá si se puede mensajería)
-        // emailRRSS.setText(user.getEmail());
-        // contactoRRSS.setText(user.getFormaContacto());
+        emailRRSS.setText(user.getEmail());
+        contactoRRSS.setText(user.getFormaContacto());
 
         volver.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,9 +163,6 @@ public class ShowUserActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         updateDayNight();
-
-        // Si es match, no se pone invisible
-        fab.setVisibility(View.INVISIBLE);
     }
 
     /*

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.unilovi.R;
 import com.example.unilovi.ShowUserActivity;
 import com.example.unilovi.adapters.ListaMatchesAdapter;
+import com.example.unilovi.adapters.ListaSolicitudesAdapter;
 import com.example.unilovi.adapters.OnItemClickListener;
 import com.example.unilovi.database.Firebase;
 import com.example.unilovi.databinding.FragmentSolicitudesBinding;
@@ -53,6 +54,13 @@ public class SolicitudesMatchesFragment extends Fragment {
         listaSolicitudesView.setHasFixedSize(true);
         listaSolicitudesView.setLayoutManager(layoutManagerSolicitudes);
 
+        return root;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
         // Inicializa el modelo de datos y creamos los adapters
         Firebase.getMatches(new CallBack() {
             @Override
@@ -74,7 +82,7 @@ public class SolicitudesMatchesFragment extends Fragment {
             @Override
             public void methodToCallBack(Object object) {
                 listaSolicitudes = (List<User>) object;
-                ListaMatchesAdapter lsAdater = new ListaMatchesAdapter(listaSolicitudes,
+                ListaSolicitudesAdapter lsAdater = new ListaSolicitudesAdapter(listaSolicitudes,
                         new OnItemClickListener() {
                             @Override
                             public void onItemClick(User usuario) {
@@ -86,7 +94,6 @@ public class SolicitudesMatchesFragment extends Fragment {
             }
         });
 
-        return root;
     }
 
     @Override

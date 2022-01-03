@@ -59,8 +59,8 @@ public class Firebase extends Application {
     private static StorageReference storage = FirebaseStorage.getInstance().getReference();
 
     // Lista de solicitudes del usuario actual
-    private static ArrayList<String> solicitudesUsuarioActual;
-    private static ArrayList<String> matchesUsuarioActual;
+    private static ArrayList<String> solicitudesUsuarioActual = new ArrayList<>();
+    private static ArrayList<String> matchesUsuarioActual = new ArrayList<>();
     private static boolean listenerAdded = false;
 
     // Notificaciones
@@ -540,11 +540,17 @@ public class Firebase extends Application {
             Firebase.getSolicitudes(new CallBack() {
                 @Override
                 public void methodToCallBack(Object object) {
-                    solicitudesUsuarioActual = (ArrayList<String>) object;
+                    ArrayList<User> usuariosSolicitudes = (ArrayList<User>) object;
+                    for (User user : usuariosSolicitudes)
+                        solicitudesUsuarioActual.add(user.getEmail());
+
                     Firebase.getMatches(new CallBack() {
                         @Override
                         public void methodToCallBack(Object object) {
-                            matchesUsuarioActual = (ArrayList<String>) object;
+                            ArrayList<User> usuariosMatches = (ArrayList<User>) object;
+                            for (User user : usuariosMatches)
+                                matchesUsuarioActual.add(user.getEmail());
+
                             addListenerToUsuarioActual();
                         }
                     });

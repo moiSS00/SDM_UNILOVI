@@ -53,7 +53,7 @@ import java.util.Map;
 public class Firebase extends Application {
 
     // Base de datos
-    private static FirebaseFirestore db = FirebaseFirestore.getInstance();
+    public static FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     // Módulo de autentificación
     private static FirebaseAuth fAuth = FirebaseAuth.getInstance();
@@ -62,8 +62,8 @@ public class Firebase extends Application {
     private static StorageReference storage = FirebaseStorage.getInstance().getReference();
 
     // Lista de solicitudes del usuario actual
-    private static ArrayList<String> solicitudesUsuarioActual = new ArrayList<>();
-    private static ArrayList<String> matchesUsuarioActual = new ArrayList<>();
+    public static ArrayList<String> solicitudesUsuarioActual = new ArrayList<>();
+    public static ArrayList<String> matchesUsuarioActual = new ArrayList<>();
 
     // Listeners lista de solicitudes / matches
     private static ListenerRegistration listenerSolicitudesRecycler;
@@ -825,79 +825,9 @@ public class Firebase extends Application {
         if (!canalCreado) {
             canalCreado = true;
             crearCanalNotificaciones();
+            Intent serviceIntent = new Intent(context, NotificationService.class);
+            context.startService(serviceIntent);
         }
-        db.collection("usuarios").document(Firebase.getUsuarioActual().getEmail()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException error) {
-                if (error != null) {
-                    Log.i("ErrorListener", "Listen failed.", error);
-                    return;
-                }
-
-                if (snapshot != null && snapshot.exists()) {
-                    Log.i("OkListener", "Datos: " + snapshot.getData());
-                    Map<String, Object> datos = snapshot.getData();
-
-                    for (String solicitud : (ArrayList<String>) datos.get("solicitudes")) {
-                        if (!solicitudesUsuarioActual.contains(solicitud)) {
-                            // Creamos notificación
-                            if (context != null) {
-                                Intent intent = new Intent(context, MainActivity.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-
-                                Notification notification = new NotificationCompat.Builder(context, "canal")
-                                        .setSmallIcon(R.drawable.icono_432)
-                                        .setContentTitle("Unilovi")
-                                        .setContentText("Tienes una nueva solicitud")
-                                        .setPriority(NotificationCompat.PRIORITY_HIGH)
-                                        .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-                                        .setColor(Color.GREEN)
-                                        .setContentIntent(pendingIntent)
-                                        .setAutoCancel(true)
-                                        .build();
-                                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-
-                                notificationManager.notify(1, notification);
-
-                                solicitudesUsuarioActual.add(solicitud);
-                            }
-                        }
-                    }
-
-                    for (String match : (ArrayList<String>) datos.get("matches")) {
-                        if (!matchesUsuarioActual.contains(match)) {
-                            // Creamos notificación
-                            if (context != null) {
-                                Intent intent = new Intent(context, MainActivity.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-
-                                Notification notification = new NotificationCompat.Builder(context, "canal")
-                                        .setSmallIcon(R.drawable.icono_432)
-                                        .setContentTitle("Unilovi")
-                                        .setContentText("Tienes un nuevo match")
-                                        .setPriority(NotificationCompat.PRIORITY_HIGH)
-                                        .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-                                        .setColor(Color.GREEN)
-                                        .setContentIntent(pendingIntent)
-                                        .setAutoCancel(true)
-                                        .build();
-                                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-
-                                notificationManager.notify(1, notification);
-
-                                matchesUsuarioActual.add(match);
-                            }
-                        }
-                    }
-
-                } else {
-                    Log.i("NullListener", "Datos devuelto por el listener: null");
-                }
-            }
-        });
-
     }
 
     private static void crearCanalNotificaciones() {

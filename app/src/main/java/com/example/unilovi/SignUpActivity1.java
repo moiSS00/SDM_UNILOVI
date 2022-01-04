@@ -69,16 +69,21 @@ public class SignUpActivity1 extends AppCompatActivity {
                 if(emailContent.isEmpty()) {
                     correo_error.setError("Necesita introducirse el correo");
                     flag=false;
-                }
-                else {
+                } else if (emailContent.contains("@")) {
+                    correo_error.setError("El usuario del correo no puede contener '@'");
+                    flag=false;
+                } else {
                     correo_error.setErrorEnabled(false);
                 }
                 if(passwordContent.isEmpty()) {
                     pass_error.setError("Necesita introducirse la contraseña");
                     flag=false;
-                }
-                else
+                } else if (passwordContent.length() < 6) {
+                    pass_error.setError("La contraseña debe tener 6 caracteres o más");
+                    flag=false;
+                } else {
                     pass_error.setErrorEnabled(false);
+                }
 
                 if(flag && !passwordContent.equals(repeatPasswordContent)) {
                     repeatPass_error.setError("La contraseña no coincide");

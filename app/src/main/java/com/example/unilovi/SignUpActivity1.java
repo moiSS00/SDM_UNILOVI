@@ -105,7 +105,7 @@ public class SignUpActivity1 extends AppCompatActivity {
                     String emailAux = emailContent + "@uniovi.es";
 
                     // Registramos al usuario
-                    Firebase.registrarUsuario(emailAux, passwordContent, new CallBack() {
+                    Firebase.registrarUsuario(emailAux.toLowerCase(), passwordContent, new CallBack() {
                         @Override
                         public void methodToCallBack(Object object) {
                             if ((boolean) object) { // Si hubo éxito

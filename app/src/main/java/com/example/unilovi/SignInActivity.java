@@ -63,7 +63,7 @@ public class SignInActivity extends AppCompatActivity {
                     String emailContent = editEmail.getText().toString().concat(filledTextFieldCorreo.getSuffixText().toString());
                     String passwordContent = editPassword.getText().toString();
 
-                    Firebase.iniciarSesion(emailContent, passwordContent, new CallBack() {
+                    Firebase.iniciarSesion(emailContent.toLowerCase(), passwordContent, new CallBack() {
                         @Override
                         public void methodToCallBack(Object object) {
                             if ((boolean) object && Firebase.getUsuarioActual().isEmailVerified()) {

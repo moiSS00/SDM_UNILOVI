@@ -79,15 +79,15 @@ public class HomeFragment extends Fragment {
         imagenPretendiente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (pretendiente != null) {
+                    // Se pasa el email del usuario a comprobar
+                    Intent detailIntent = new Intent(getActivity(), ShowUserActivity.class);
+                    detailIntent.putExtra(ShowUserActivity.USUARIO_EMAIL, pretendiente.getEmail());
 
-                // Se pasa el email del usuario a comprobar
-                Intent detailIntent = new Intent(getActivity(), ShowUserActivity.class);
-                detailIntent.putExtra(ShowUserActivity.USUARIO_EMAIL, pretendiente.getEmail());
-
-                // Se muestra la activity con los detalles
-                detail = true;
-                startActivity(detailIntent);
-
+                    // Se muestra la activity con los detalles
+                    detail = true;
+                    startActivity(detailIntent);
+                }
             }
         });
 
@@ -151,6 +151,7 @@ public class HomeFragment extends Fragment {
             Util.showAlert(getContext(), "No hay más usuarios que coincidan con tus preferencias");
             layoutBotones.setVisibility(View.INVISIBLE);
             layoutInfo.setVisibility(View.INVISIBLE);
+            pretendiente = null;
         }
     }
 

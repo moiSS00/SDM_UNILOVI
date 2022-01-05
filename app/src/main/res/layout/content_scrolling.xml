@@ -68,6 +68,7 @@
             android:layout_height="wrap_content"
             android:lines="10"
             android:layout_marginLeft="10dp"
+            android:textSize="18sp"
             android:scrollbars="vertical|horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

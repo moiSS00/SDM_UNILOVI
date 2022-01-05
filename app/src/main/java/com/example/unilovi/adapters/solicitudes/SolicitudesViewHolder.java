@@ -3,6 +3,7 @@ package com.example.unilovi.adapters.solicitudes;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,7 +23,7 @@ public class SolicitudesViewHolder extends RecyclerView.ViewHolder {
     private TextView nombre;
     private TextView facultad;
     private ImageView imagen;
-    private Button btnAceptarSolicitud;
+    private ImageButton btnAceptarSolicitud;
     private Button btnRechazarSolicitud;
 
     public SolicitudesViewHolder(@NonNull View itemView) {
@@ -30,7 +31,7 @@ public class SolicitudesViewHolder extends RecyclerView.ViewHolder {
         nombre = (TextView) itemView.findViewById(R.id.nombreUsuarioLineaText);
         facultad = (TextView) itemView.findViewById(R.id.facultadUsuarioLineaText);
         imagen = (ImageView) itemView.findViewById(R.id.imagenUsuarioLineaImg);
-        btnAceptarSolicitud = (Button) itemView.findViewById(R.id.btnAceptarSolicitud);
+        btnAceptarSolicitud = (ImageButton) itemView.findViewById(R.id.btnAceptarSolicitud);
         btnRechazarSolicitud = (Button) itemView.findViewById(R.id.btnRechazarSolicitud);
     }
 

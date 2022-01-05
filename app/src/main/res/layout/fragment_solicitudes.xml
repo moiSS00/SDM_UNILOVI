@@ -11,9 +11,9 @@
         android:layout_width="369dp"
         android:layout_height="268dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/listaMatchesText"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/listaMatchesText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.112" />
 
@@ -22,11 +22,11 @@
         android:layout_width="368dp"
         android:layout_height="302dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/listaSolicitudesText"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/listaSolicitudesText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.372"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/listaSolicitudesText"
-        app:layout_constraintVertical_bias="0.327" />
+        app:layout_constraintVertical_bias="0.166" />
 
     <TextView
         android:id="@+id/listaMatchesText"
@@ -34,12 +34,14 @@
         android:layout_height="wrap_content"
         android:ems="@integer/tamanoFuente"
         android:text="@string/listaMatches"
+        android:textColor="#F72464"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/matchesRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.096"
+        app:layout_constraintHorizontal_bias="0.084"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.516" />
+        app:layout_constraintVertical_bias="0.787" />
 
     <TextView
         android:id="@+id/listaSolicitudesText"
@@ -47,10 +49,12 @@
         android:layout_height="wrap_content"
         android:ems="@integer/tamanoFuente"
         android:text="@string/listaSolicitudes"
+        android:textColor="#F72464"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/matchesRecyclerView"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/matchesRecyclerView"
+        app:layout_constraintHorizontal_bias="0.115"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/matchesRecyclerView"
-        app:layout_constraintVertical_bias="0.089" />
+        app:layout_constraintVertical_bias="0.091" />
 </androidx.constraintlayout.widget.ConstraintLayout>

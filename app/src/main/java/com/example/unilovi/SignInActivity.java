@@ -11,7 +11,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,6 +27,7 @@ public class SignInActivity extends AppCompatActivity {
     // Atribitos que contendrán una referencia a los componentes usados
     private Button signInButton;
     private Button goToSignUpButton;
+    private Button changePasswordButton;
     private EditText editEmail;
     private EditText editPassword;
     private TextInputLayout filledTextFieldCorreo;
@@ -46,11 +46,12 @@ public class SignInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_in);
 
         // Obtenemos referencias a los componentes
-        signInButton = (Button) findViewById(R.id.signInButton);
+        signInButton = (Button) findViewById(R.id.sendEmailChangePAssword);
         goToSignUpButton = (Button) findViewById(R.id.goToSignUpButton);
-        editEmail = (EditText) findViewById(R.id.emailSignInEdit);
+        changePasswordButton = (Button) findViewById(R.id.changePasswordButton);
+        editEmail = (EditText) findViewById(R.id.emailChangePassword);
         editPassword = (EditText) findViewById(R.id.passwordSignInEdit);
-        filledTextFieldCorreo = (TextInputLayout) findViewById(R.id.filledTextFieldCorreo);
+        filledTextFieldCorreo = (TextInputLayout) findViewById(R.id.filledTextFieldCorreoChangePassword);
 
         // Asignamos listeners
 
@@ -111,6 +112,14 @@ public class SignInActivity extends AppCompatActivity {
                showSignUp();
             }
         });
+
+        changePasswordButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent changePasswordIntent = new Intent(SignInActivity.this, ChangePasswordActivity.class);
+                changePasswordActivityResultLauncher.launch(changePasswordIntent);
+            }
+        });
     }
 
     @Override
@@ -135,6 +144,16 @@ public class SignInActivity extends AppCompatActivity {
                             Toast.makeText(context, "Te hemos mandado un correo de verificación a tu email, por favor verifica el email antes de continuar", Toast.LENGTH_LONG).show();
                         }
                     }
+                }
+            }
+    );
+
+    ActivityResultLauncher<Intent> changePasswordActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    Toast.makeText(context, "Te hemos mandado un correo para cambiar tu contraseña, por favor compruebe su correo", Toast.LENGTH_LONG).show();
                 }
             }
     );

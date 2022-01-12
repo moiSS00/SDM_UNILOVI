@@ -40,7 +40,7 @@ public class SignUpActivity1 extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up1);
 
         //CAMPOS PARA MARCAR EL ERROR EN ROJO
-        correo_error = (TextInputLayout) findViewById(R.id.filledTextFieldCorreo);
+        correo_error = (TextInputLayout) findViewById(R.id.filledTextFieldCorreoChangePassword);
         pass_error = (TextInputLayout) findViewById(R.id.filledTextFieldPass);
         repeatPass_error = (TextInputLayout) findViewById(R.id.filledTextFieldRepeatPass);
 

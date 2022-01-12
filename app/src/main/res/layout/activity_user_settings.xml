@@ -7,28 +7,52 @@
     android:layout_height="match_parent"
     tools:context=".UserSettingsActivity">
 
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/editarSobreMiContenerdor"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="366dp"
+        android:layout_height="174dp"
+        android:hint="Sobre mi"
+        android:paddingTop="30dp"
+        app:errorEnabled="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/filledTextFieldCarreraAjustes">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editarSobreMi"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:ems="10"
+            android:gravity="start|top"
+            android:inputType="textMultiLine" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
     <Switch
         android:id="@+id/switchTemaUserSettings"
         android:layout_width="146dp"
         android:layout_height="49dp"
+        android:layout_marginTop="12dp"
         android:text="Cambiar tema"
         android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroupGeneroUserSettings"
-        app:layout_constraintVertical_bias="0.248" />
+        app:layout_constraintTop_toBottomOf="@+id/radioGroupGeneroUserSettings" />
 
     <RadioGroup
         android:id="@+id/radioGroupGeneroUserSettings"
         android:layout_width="290dp"
         android:layout_height="60dp"
+        android:layout_marginTop="12dp"
         android:orientation="horizontal"
         android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/filledTextFieldFacultadAjustes">
+        app:layout_constraintTop_toBottomOf="@+id/txtGeneroUserSettings">
 
         <RadioButton
             android:id="@+id/radioMasculinoUserSettings"
@@ -92,14 +116,11 @@
         android:id="@+id/txtGeneroUserSettings"
         android:layout_width="125dp"
         android:layout_height="20dp"
+        android:layout_marginTop="24dp"
         android:text="Género:"
         android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.087"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/filledTextFieldCarreraAjustes"
-        app:layout_constraintVertical_bias="0.152" />
+        app:layout_constraintStart_toStartOf="@+id/radioGroupGeneroUserSettings"
+        app:layout_constraintTop_toBottomOf="@+id/editarSobreMiContenerdor" />
 
     <include
         android:id="@+id/layoutLoad"

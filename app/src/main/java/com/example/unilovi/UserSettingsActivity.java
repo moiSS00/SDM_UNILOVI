@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -36,6 +37,7 @@ public class UserSettingsActivity extends AppCompatActivity {
     private RadioButton radioButtonFem;
     private RadioButton radioButtonNoBinario;
     private Switch switchTema;
+    private EditText sobreMi;
 
     // Atributos auxiliares
     private SharedPreferences sharedPreferences;
@@ -58,6 +60,7 @@ public class UserSettingsActivity extends AppCompatActivity {
         radioButtonMasc = (RadioButton) findViewById(R.id.radioMasculinoUserSettings);
         radioButtonFem = (RadioButton) findViewById(R.id.radioFemeninoUserSettings);
         radioButtonNoBinario = (RadioButton) findViewById(R.id.radioOtroUserSettings);
+        sobreMi = (EditText) findViewById(R.id.editarSobreMi);
 
         sharedPreferences = getSharedPreferences("SP", MODE_PRIVATE);
 
@@ -114,6 +117,9 @@ public class UserSettingsActivity extends AppCompatActivity {
                             radioButtonFem.setChecked(true);
                         else
                             radioButtonNoBinario.setChecked(true);
+
+                        // Cogemos la descripcion del usuario
+                        sobreMi.setText(usuarioActual.getSobreMi());
 
                         // Cogemos la facultad del usuario
                         String facultad = usuarioActual.getFacultad();
@@ -230,6 +236,7 @@ public class UserSettingsActivity extends AppCompatActivity {
 
         usuarioActual.setFacultad(editTextFilledExposedDropdownFacultades.getText().toString());
         usuarioActual.setCarrera(editTextFilledExposedDropdownCarreras.getText().toString());
+        usuarioActual.setSobreMi(sobreMi.getText().toString());
     }
 
 }

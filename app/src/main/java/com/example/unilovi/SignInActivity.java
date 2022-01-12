@@ -153,7 +153,9 @@ public class SignInActivity extends AppCompatActivity {
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
-                    Toast.makeText(context, "Te hemos mandado un correo para cambiar tu contraseña, por favor compruebe su correo", Toast.LENGTH_LONG).show();
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Toast.makeText(context, "Te hemos mandado un correo para cambiar tu contraseña, por favor compruebe su correo", Toast.LENGTH_LONG).show();
+                    }
                 }
             }
     );

@@ -43,6 +43,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
                     FirebaseAuth.getInstance().sendPasswordResetEmail(correo);
 
                     Intent intentIniciarSesion = new Intent(ChangePasswordActivity.this, SignInActivity.class);
+                    setResult(RESULT_OK, intentIniciarSesion);
                     startActivity(intentIniciarSesion);
                     finish();
                 }

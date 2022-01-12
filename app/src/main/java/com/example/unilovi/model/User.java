@@ -11,7 +11,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 
-public class User implements Parcelable {
+public class User implements Parcelable, Comparable<User> {
 
     private String email;
     private String password;
@@ -200,6 +200,8 @@ public class User implements Parcelable {
                 '}';
     }
 
+
+
     /**
      * Método que devuelve la edad del usuario
      * @param fechaNacimiento fecha de nacimiento del usuario
@@ -223,5 +225,10 @@ public class User implements Parcelable {
         }
 
         return age;
+    }
+
+    @Override
+    public int compareTo(User otherUser) {
+        return getNombre().compareTo(otherUser.getNombre());
     }
 }

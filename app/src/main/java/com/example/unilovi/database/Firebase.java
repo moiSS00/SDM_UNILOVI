@@ -30,6 +30,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -85,18 +86,17 @@ public class Firebase extends Application {
      * @param callBack CallBack a ejecutar
      */
     public static void registrarUsuario(String email, String password, CallBack callBack) {
-        fAuth.createUserWithEmailAndPassword(email, password)
-                .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                    @Override
-                    public void onSuccess(AuthResult authResult) {
-                        callBack.methodToCallBack(true);
-                    }})
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        callBack.methodToCallBack(false);
-                    }
-                });
+        fAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    callBack.methodToCallBack("OK");
+                } else {
+                    String errorCode = ((FirebaseAuthException) task.getException()).getErrorCode();
+                    callBack.methodToCallBack(errorCode);
+                }
+            }
+        });
     }
 
     /**
@@ -489,6 +489,7 @@ public class Firebase extends Application {
                                         matches.add((User) object);
                                     }
                                     if (matches.size() == matchesEmails.size()) {
+                                        Collections.sort(matches);
                                         callBack.methodToCallBack(matches);
                                     }
                                 }

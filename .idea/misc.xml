@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/drawable/button_error_background.xml" value="0.12291666666666666" />
         <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/drawable/button_rounded.xml" value="0.14635416666666667" />
+        <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/drawable/error_background.xml" value="0.12291666666666666" />
         <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout-w936dp/content_scrolling.xml" value="0.1" />
         <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/activity_dialog_redes_sociales.xml" value="0.12760416666666666" />
         <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/activity_main2.xml" value="0.13020833333333334" />
@@ -22,9 +24,11 @@
         <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/activity_user_settings.xml" value="0.264" />
         <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/activity_users_recycler.xml" value="0.176" />
         <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/content_scrolling.xml" value="0.1793478260869565" />
+        <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/error_background.xml" value="0.10260416666666666" />
         <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/fragment_home.xml" value="0.13125" />
         <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/fragment_preferencias.xml" value="0.16666666666666666" />
         <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/fragment_solicitudes.xml" value="0.176" />
+        <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/layout_error_dialog.xml" value="0.10260416666666666" />
         <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/linea_recycler_view_pelicula.xml" value="0.16666666666666666" />
         <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/linea_recycler_view_solicitud.xml" value="0.536" />
         <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/linea_recycler_view_usuario.xml" value="0.4" />

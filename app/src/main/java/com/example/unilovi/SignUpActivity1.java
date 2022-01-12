@@ -69,9 +69,6 @@ public class SignUpActivity1 extends AppCompatActivity {
                 if(emailContent.isEmpty()) {
                     correo_error.setError("Necesita introducirse el correo");
                     flag=false;
-                } else if (emailContent.contains("@")) {
-                    correo_error.setError("El usuario del correo no puede contener '@'");
-                    flag=false;
                 } else {
                     correo_error.setErrorEnabled(false);
                 }
@@ -108,27 +105,44 @@ public class SignUpActivity1 extends AppCompatActivity {
                     Firebase.registrarUsuario(emailAux.toLowerCase(), passwordContent, new CallBack() {
                         @Override
                         public void methodToCallBack(Object object) {
-                            if ((boolean) object) { // Si hubo éxito
-                                //Mandamos email de verificación
-                                Firebase.getUsuarioActual().sendEmailVerification();
 
-                                // Se pasara a la siguiente pantalla de registro
-                                Intent postIntent = new Intent(SignUpActivity1.this, SignInActivity.class);
+                            String code = (String) object;
 
-                                // Pasamos el usuario
-                                User user = new User();
-                                user.setEmail(emailContent);
-                                user.setPassword(passwordContent);
+                            switch (code) {
+                                case "OK":
+                                    //Mandamos email de verificación
+                                    Firebase.getUsuarioActual().sendEmailVerification();
 
-                                postIntent.putExtra(SignInActivity.USUARIO_REGISTRADO1, user);
+                                    // Se pasara a la siguiente pantalla de registro
+                                    Intent postIntent = new Intent(SignUpActivity1.this, SignInActivity.class);
 
-                                // Devolvemos los datos a la pantalla de inicio de sesión
-                                setResult(RESULT_OK, postIntent);
-                                finish();
-                            } else {
-                                // HAY QUE HACER CONTROL DE EXCEPCIONES
-                                Util.showAlert(context, "Hubo un error al registrarse");
+                                    // Pasamos el usuario
+                                    User user = new User();
+                                    user.setEmail(emailContent);
+                                    user.setPassword(passwordContent);
+
+                                    postIntent.putExtra(SignInActivity.USUARIO_REGISTRADO1, user);
+
+                                    // Devolvemos los datos a la pantalla de inicio de sesión
+                                    setResult(RESULT_OK, postIntent);
+                                    finish();
+
+                                case "ERROR_INVALID_EMAIL":
+                                    Util.showAlert(context, "El email tiene un formato incorrecto");
+                                    correo_error.setError("Formato incorrecto");
+                                    break;
+
+                                case "ERROR_EMAIL_ALREADY_IN_USE":
+                                    Util.showAlert(context, "El email proporcionado ya esta en uso");
+                                    correo_error.setError("Email ya en uso");
+                                    break;
+
+                                case "ERROR_WEAK_PASSWORD":
+                                    Util.showAlert(context, "La contraseña es demasiado débil");
+                                    pass_error.setError("Contraseña demasiado débil");
+                                    break;
                             }
+
                         }
                     });
                 }

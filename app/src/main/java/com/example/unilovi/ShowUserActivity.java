@@ -1,10 +1,12 @@
 package com.example.unilovi;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.example.unilovi.database.Firebase;
@@ -29,6 +31,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.unilovi.databinding.ActivityShowUserBinding;
+import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -93,8 +96,23 @@ public class ShowUserActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDialog();
+
+                // Se crea la activity de email
+                String[] to = {userEmail};
+                Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+                emailIntent.setData(Uri.parse("mailto:"));
+                emailIntent.putExtra(Intent.EXTRA_EMAIL, userEmail);
+
+                // Se lanza la activity de email
+                try {
+                    startActivity(Intent.createChooser(emailIntent, "Elija el cliente para mandar su correo"));
+                } catch (ActivityNotFoundException e) {
+                    Toast.makeText(getApplicationContext(),
+                            "No hay clientes de correo instalados",
+                            Toast.LENGTH_SHORT).show();
+                }
             }
+
         });
 
         // Comprobamos si es macth
@@ -130,33 +148,6 @@ public class ShowUserActivity extends AppCompatActivity {
         facultad.setText(user.getFacultad());
         carrera.setText(user.getCarrera());
         sobreMi.setText(user.getSobreMi());
-    }
-
-    private void showDialog(){
-        AlertDialog.Builder builder= new AlertDialog.Builder(ShowUserActivity.this);
-        LayoutInflater inflater=getLayoutInflater();
-        View view = inflater.inflate(R.layout.activity_dialog_redes_sociales,null);
-
-        builder.setView(view);
-        final AlertDialog dialog=builder.create();
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        // Obtenemos referencias a los componentes del dialog
-        TextView emailRRSS = (TextView) view.findViewById(R.id.emailRRSS);
-        TextView contactoRRSS = (TextView) view.findViewById(R.id.contactoRRSS);
-        Button volver= (Button) view.findViewById(R.id.volverRRSS);
-
-        // Rellenamos con información (se verá si se puede mensajería)
-        emailRRSS.setText(user.getEmail());
-        contactoRRSS.setText(user.getFormaContacto());
-
-        volver.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
     }
 
     @Override

@@ -59,6 +59,7 @@ public class SolicitudesMatchesFragment extends Fragment {
                         clickonItem(usuario);
                     }
                 });
+
         // Asignamos los adapters
         Firebase.addListenerToMatchesRecycler(lmAdater);
         listaMatchesView.setAdapter(lmAdater);

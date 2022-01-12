@@ -13,7 +13,7 @@
         style="@android:style/TextAppearance.DeviceDefault.Large"
         android:layout_width="match_parent"
         android:layout_height="35dp"
-        android:text="Información básica"
+        android:text="Información básica (1 / 2)"
         android:textAlignment="center"
         android:textColor="#F72464"
         android:textSize="20sp"

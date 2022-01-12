@@ -13,11 +13,6 @@ import java.util.List;
 
 public class User implements Parcelable {
 
-    // Géneros posibles (se usan para las preferencias de búsqueda)
-    // public static final String MASCULINO = "M";
-    // public static final String FEMENINO = "F";
-    // public static final String OTRO = "O";
-
     private String email;
     private String password;
     private String nombre;
@@ -27,7 +22,6 @@ public class User implements Parcelable {
     private String facultad;
     private String carrera;
     private String sobreMi;
-    private String formaContacto;
     private int edad;
     private List<String> solicitudes = new ArrayList<String>();
     private List<String> matches = new ArrayList<String>();
@@ -111,14 +105,6 @@ public class User implements Parcelable {
         this.sobreMi = sobreMi;
     }
 
-    public String getFormaContacto() {
-        return formaContacto;
-    }
-
-    public void setFormaContacto(String formaContacto) {
-        this.formaContacto = formaContacto;
-    }
-
     public int getEdad() {
         return edad;
     }
@@ -159,7 +145,6 @@ public class User implements Parcelable {
         facultad = in.readString();
         carrera = in.readString();
         sobreMi = in.readString();
-        formaContacto = in.readString();
         edad = in.readInt();
         in.readStringList(solicitudes);
         in.readStringList(matches);
@@ -194,7 +179,6 @@ public class User implements Parcelable {
         parcel.writeString(facultad);
         parcel.writeString(carrera);
         parcel.writeString(sobreMi);
-        parcel.writeString(formaContacto);
         parcel.writeInt(edad);
         parcel.writeStringList(solicitudes);
         parcel.writeStringList(matches);
@@ -212,7 +196,6 @@ public class User implements Parcelable {
                 ", facultad='" + facultad + '\'' +
                 ", carrera='" + carrera + '\'' +
                 ", sobreMi='" + sobreMi + '\'' +
-                ", formaContacto='" + formaContacto + '\'' +
                 ", edad=" + edad +
                 '}';
     }

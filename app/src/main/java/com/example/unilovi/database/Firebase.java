@@ -885,7 +885,6 @@ public class Firebase extends Application {
         mapUser.put("facultad", user.getFacultad());
         mapUser.put("carrera", user.getCarrera());
         mapUser.put("sobreMi", user.getSobreMi());
-        mapUser.put("contacto", user.getFormaContacto());
         mapUser.put("solicitudes", user.getSolicitudes());
         mapUser.put("matches", user.getMatches());
         mapUser.put("rechazados", user.getRechazados());
@@ -907,7 +906,6 @@ public class Firebase extends Application {
         user.setFacultad(datos.get("facultad").toString());
         user.setCarrera(datos.get("carrera").toString());
         user.setSobreMi(datos.get("sobreMi").toString());
-        user.setFormaContacto(datos.get("contacto").toString());
         user.setSolicitudes((List<String>) datos.get("solicitudes"));
         user.setMatches((List<String>) datos.get("matches"));
         user.setRechazados((List<String>) datos.get("rechazados"));

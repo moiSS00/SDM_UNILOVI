@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -43,6 +44,9 @@ public class SolicitudesViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View v) {
                 Firebase.aceptarSolicitud(usuario.getEmail());
+                Toast.makeText(v.getContext(),
+                        usuario.getNombre() + " añadid@ a matches",
+                        Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -51,6 +55,9 @@ public class SolicitudesViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View v) {
                 Firebase.rechazarSolicitud(usuario.getEmail());
+                Toast.makeText(v.getContext(),
+                        usuario.getNombre() + " rechazad@",
+                        Toast.LENGTH_SHORT).show();
             }
         });
 

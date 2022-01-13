@@ -164,12 +164,15 @@ public class HomeFragment extends Fragment {
                                 layoutBotones.setVisibility(View.VISIBLE);
                                 layoutInfo.setVisibility(View.VISIBLE);
                                 pretendientes = (ArrayList<User>) object;
+                                indicePretendiente = 0;
                                 getNextPretendiente();
                             }
                             else {
                                 // Se cargaria una imagen por defecto
                                 layoutBotones.setVisibility(View.INVISIBLE);
                                 layoutInfo.setVisibility(View.INVISIBLE);
+                                imagenPretendiente.setVisibility(View.INVISIBLE);
+                                //Picasso.get().load(R.drawable.default_user_image).fit().into(imagenPretendiente);
                                 Util.showErrorDialog(getContext(), "No hay usuarios que coincidan con tus preferencias");
                             }
                         }

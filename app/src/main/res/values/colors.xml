@@ -14,7 +14,6 @@
     <color name="colorAccent">#03DAC5</color>
 
     <color name="colorWhite">#FFFFFF</color>
-    <color name="colorError">#CC0000</color>
     <color name="colorErrorText">#212121</color>
 
 </resources>

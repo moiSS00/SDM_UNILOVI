@@ -73,10 +73,11 @@ public class SolicitudesViewHolder extends RecyclerView.ViewHolder {
                 else {
                     Picasso.get().load(R.drawable.default_user_image).fit().into(imagen);
                 }
-                itemView.setOnClickListener((v) -> {
-                    listener.onItemClick(usuario);
-                });
             }
+        });
+
+        itemView.setOnClickListener((v) -> {
+            listener.onItemClick(usuario);
         });
     }
 }

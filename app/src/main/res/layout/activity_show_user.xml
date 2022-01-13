@@ -27,7 +27,6 @@
                 android:id="@+id/suImagenUsuario"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:contentDescription="@string/desc_imagen_usuario"
                 android:scaleType="centerCrop"
                 app:srcCompat="@drawable/default_user_image" />
 

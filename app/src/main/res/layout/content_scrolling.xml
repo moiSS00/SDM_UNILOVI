@@ -21,7 +21,7 @@
                 android:padding="8dp"
                 android:textStyle="bold"
                 android:textColor="#F72464"
-                android:text="@string/facultad"
+                android:text="@string/facultadEditHint"
                 android:textSize="18sp" />
 
             <TextView
@@ -30,7 +30,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginLeft="10dp"
-                android:text="@string/facultad_usuario"
                 android:textSize="18sp" />
 
             <TextView
@@ -40,7 +39,7 @@
                 android:textStyle="bold"
                 android:padding="8dp"
                 android:textColor="#F72464"
-                android:text="@string/carrera"
+                android:text="@string/carreraEditHint"
                 android:textSize="18sp" />
 
             <TextView
@@ -49,7 +48,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginLeft="10dp"
-                android:text="@string/carrera_usuario"
                 android:textSize="18sp" />
 
         <TextView
@@ -59,7 +57,7 @@
             android:padding="8dp"
             android:textStyle="bold"
             android:textColor="#F72464"
-            android:text="@string/sobreMi"
+            android:text="@string/sobreMiEditHint"
             android:textSize="18sp" />
 
         <TextView

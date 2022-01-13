@@ -27,14 +27,12 @@
             android:id="@+id/lsNombreUsuario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/nombre_usuario"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <TextView
             android:id="@+id/lsFacultadUsuario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/facultad_usuario"
             android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
 
     </LinearLayout>

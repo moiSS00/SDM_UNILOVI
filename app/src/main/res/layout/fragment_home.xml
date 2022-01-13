@@ -54,7 +54,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:layout_marginRight="10dp"
-                        android:text="Facultad: "
+                        android:text="@string/facultadSelectText"
                         android:textAppearance="?attr/textAppearanceBody2"
                         android:textColor="?android:attr/textColorSecondary" />
 
@@ -78,7 +78,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:layout_marginRight="10dp"
-                        android:text="Edad:"
+                        android:text="@string/edadSelectText"
                         android:textAppearance="?attr/textAppearanceBody2"
                         android:textColor="?android:attr/textColorSecondary" />
 
@@ -105,14 +105,14 @@
                     android:layout_width="186dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
-                    android:text="Rechazar" />
+                    android:text="@string/hRechazarButtonText" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/hAceptarButton"
                     style="?attr/borderlessButtonStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Aceptar" />
+                    android:text="@string/hAceptarButtonText" />
             </LinearLayout>
 
         </LinearLayout>

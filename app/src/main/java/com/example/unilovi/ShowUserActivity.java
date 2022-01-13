@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -87,10 +88,9 @@ public class ShowUserActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 // Se crea la activity de email
-                String[] to = {userEmail};
-                Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
-                emailIntent.setData(Uri.parse("mailto:"));
-                emailIntent.putExtra(Intent.EXTRA_EMAIL, userEmail);
+                Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                        "mailto",userEmail, null));
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "UNILOVI");
 
                 // Se lanza la activity de email
                 try {

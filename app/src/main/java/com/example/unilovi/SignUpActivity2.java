@@ -1,20 +1,13 @@
 package com.example.unilovi;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.text.InputType;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -30,7 +23,7 @@ import android.widget.Toast;
 
 import com.example.unilovi.database.Firebase;
 import com.example.unilovi.model.User;
-import com.example.unilovi.utils.CallBack;
+import com.example.unilovi.database.CallBack;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -38,9 +31,6 @@ import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -91,16 +81,16 @@ public class SignUpActivity2 extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up2);
 
         // Recogemos componentes
-        imagen = (ImageView) findViewById(R.id.imagenPostSignUp);
-        btnSubirFoto = (Button) findViewById(R.id.btnSubirFotoRegistro2);
-        textFecha = (TextInputEditText) findViewById(R.id.editFechaRegistro2);
-        textNombre = (TextInputEditText) findViewById(R.id.editTextNombreRegistro2);
-        textApellidos = (TextInputEditText) findViewById(R.id.editTextApellidosRegistro2);
+        imagen = (ImageView) findViewById(R.id.su2ImagenUsuario);
+        btnSubirFoto = (Button) findViewById(R.id.su2SubirFotoButton);
+        textFecha = (TextInputEditText) findViewById(R.id.su2FechaNacimientoEdit);
+        textNombre = (TextInputEditText) findViewById(R.id.su2NombreEdit);
+        textApellidos = (TextInputEditText) findViewById(R.id.su2ApellidosEdit);
         rdgSexo = (RadioGroup) findViewById(R.id.rdgSexoRegistro2);
-        editTextFilledExposedDropdownFacultades = (AutoCompleteTextView) findViewById(R.id.cbxFacultadRegistro2);
-        editTextFilledExposedDropdownCarreras = (AutoCompleteTextView) findViewById(R.id.cbxCarreraRegistro2);
+        editTextFilledExposedDropdownFacultades = (AutoCompleteTextView) findViewById(R.id.su2FacultadCbx);
+        editTextFilledExposedDropdownCarreras = (AutoCompleteTextView) findViewById(R.id.su2CarreraCbx);
 
-        btnSiguiente = (Button) findViewById(R.id.btnSiguienteRegisto2);
+        btnSiguiente = (Button) findViewById(R.id.su2SiguienteButton);
         name_error = (TextInputLayout) findViewById(R.id.filledTextFieldNombre);
         surnanme_error = (TextInputLayout) findViewById(R.id.filledTextFieldApellidos);
         date_error = (TextInputLayout) findViewById(R.id.filledTextFieldFecha);

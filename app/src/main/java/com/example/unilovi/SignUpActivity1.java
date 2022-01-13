@@ -13,7 +13,7 @@ import android.widget.Button;
 import com.example.unilovi.database.Firebase;
 import com.example.unilovi.model.User;
 import com.example.unilovi.utils.Util;
-import com.example.unilovi.utils.CallBack;
+import com.example.unilovi.database.CallBack;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -45,12 +45,12 @@ public class SignUpActivity1 extends AppCompatActivity {
         repeatPass_error = (TextInputLayout) findViewById(R.id.filledTextFieldRepeatPass);
 
         //INPUTS QUE INTRODUCE EL USUARIO
-        email = (TextInputEditText) findViewById(R.id.editCorreoRegistro1);
-        password = (TextInputEditText) findViewById(R.id.editPasswordRegistro1);
-        repeatPassword = (TextInputEditText) findViewById(R.id.editRepeatPasswordRegistro1);
+        email = (TextInputEditText) findViewById(R.id.su1CorreoEdit);
+        password = (TextInputEditText) findViewById(R.id.su1PasswordEdit);
+        repeatPassword = (TextInputEditText) findViewById(R.id.su1RepeatPasswordEdit);
 
 
-        signUpButton = (Button) findViewById(R.id.btnSiguienteRegistro1);
+        signUpButton = (Button) findViewById(R.id.su1SiguienteButton);
 
         // Asignamos listeners
 
@@ -128,18 +128,22 @@ public class SignUpActivity1 extends AppCompatActivity {
                                     finish();
 
                                 case "ERROR_INVALID_EMAIL":
-                                    Util.showAlert(context, "El email tiene un formato incorrecto");
+                                    Util.showErrorDialog(context, "El email tiene un formato incorrecto");
                                     correo_error.setError("Formato incorrecto");
                                     break;
 
                                 case "ERROR_EMAIL_ALREADY_IN_USE":
-                                    Util.showAlert(context, "El email proporcionado ya esta en uso");
+                                    Util.showErrorDialog(context, "El email proporcionado ya esta en uso");
                                     correo_error.setError("Email ya en uso");
                                     break;
 
                                 case "ERROR_WEAK_PASSWORD":
-                                    Util.showAlert(context, "La contraseña es demasiado débil");
+                                    Util.showErrorDialog(context, "La contraseña es demasiado débil");
                                     pass_error.setError("Contraseña demasiado débil");
+                                    break;
+
+                                default:
+                                    Util.showErrorDialog(context, "Hubo un error inesperado");
                                     break;
                             }
 

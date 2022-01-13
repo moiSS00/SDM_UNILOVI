@@ -62,7 +62,7 @@
             android:theme="@style/Theme.Unilovi.NoActionBar" />
         <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity" />
 
-        <service android:name=".database.NotificationService" />
+        <service android:name=".notifications.NotificationService" />
     </application>
 
 </manifest>

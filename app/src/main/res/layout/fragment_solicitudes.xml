@@ -7,7 +7,7 @@
     tools:context=".fragments.SolicitudesMatchesFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/matchesRecyclerView"
+        android:id="@+id/lsmMatchesRv"
         android:layout_width="369dp"
         android:layout_height="268dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -18,7 +18,7 @@
         app:layout_constraintVertical_bias="0.112" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/solicitudesRecyclerView"
+        android:id="@+id/lsmSolicitudesRv"
         android:layout_width="368dp"
         android:layout_height="302dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -36,7 +36,7 @@
         android:text="@string/listaMatches"
         android:textColor="#F72464"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/matchesRecyclerView"
+        app:layout_constraintBottom_toTopOf="@+id/lsmMatchesRv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.084"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,9 +52,9 @@
         android:textColor="#F72464"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/matchesRecyclerView"
+        app:layout_constraintEnd_toEndOf="@+id/lsmMatchesRv"
         app:layout_constraintHorizontal_bias="0.115"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/matchesRecyclerView"
+        app:layout_constraintTop_toBottomOf="@+id/lsmMatchesRv"
         app:layout_constraintVertical_bias="0.091" />
 </androidx.constraintlayout.widget.ConstraintLayout>

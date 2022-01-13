@@ -25,7 +25,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
-        android:id="@+id/imagenPostSignUp"
+        android:id="@+id/su2ImagenUsuario"
         android:layout_width="188dp"
         android:layout_height="189dp"
         android:scaleType="centerCrop"
@@ -38,7 +38,7 @@
         tools:srcCompat="@drawable/default_user_image" />
 
     <Button
-        android:id="@+id/btnSubirFotoRegistro2"
+        android:id="@+id/su2SubirFotoButton"
         android:layout_width="253dp"
         android:layout_height="43dp"
         android:text="Subir una foto"
@@ -47,7 +47,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imagenPostSignUp"
+        app:layout_constraintTop_toBottomOf="@+id/su2ImagenUsuario"
         app:layout_constraintVertical_bias="0.015" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -61,11 +61,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSubirFotoRegistro2"
+        app:layout_constraintTop_toBottomOf="@+id/su2SubirFotoButton"
         app:layout_constraintVertical_bias="0.022">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextNombreRegistro2"
+            android:id="@+id/su2NombreEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName" />
@@ -87,7 +87,7 @@
         app:layout_constraintVertical_bias="0.032">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextApellidosRegistro2"
+            android:id="@+id/su2ApellidosEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName" />
@@ -108,7 +108,7 @@
         app:layout_constraintVertical_bias="0.031">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editFechaRegistro2"
+            android:id="@+id/su2FechaNacimientoEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -128,19 +128,19 @@
         app:layout_constraintVertical_bias="0.038">
 
         <RadioButton
-            android:id="@+id/rdMasculinoRegistro2"
+            android:id="@+id/su2MasculinoRd"
             android:layout_width="108dp"
             android:layout_height="match_parent"
             android:text="Masculino" />
 
         <RadioButton
-            android:id="@+id/rdFemeninoRegistro2"
+            android:id="@+id/su2FemeninoRd"
             android:layout_width="109dp"
             android:layout_height="match_parent"
             android:text="Femenino" />
 
         <RadioButton
-            android:id="@+id/rdOtroRegistro2"
+            android:id="@+id/su2OtroRd"
             android:layout_width="73dp"
             android:layout_height="match_parent"
             android:text="Otro" />
@@ -148,7 +148,7 @@
     </RadioGroup>
 
     <Button
-        android:id="@+id/btnSiguienteRegisto2"
+        android:id="@+id/su2SiguienteButton"
         android:layout_width="151dp"
         android:layout_height="38dp"
         android:text="Siguiente"
@@ -185,7 +185,7 @@
         app:layout_constraintVertical_bias="0.0">
 
         <AutoCompleteTextView
-            android:id="@+id/cbxFacultadRegistro2"
+            android:id="@+id/su2FacultadCbx"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="none" />
@@ -204,7 +204,7 @@
         app:layout_constraintVertical_bias="0.0">
 
         <AutoCompleteTextView
-            android:id="@+id/cbxCarreraRegistro2"
+            android:id="@+id/su2CarreraCbx"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="none" />

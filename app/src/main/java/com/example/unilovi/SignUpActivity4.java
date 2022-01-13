@@ -13,14 +13,13 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.SeekBar;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.unilovi.database.Firebase;
 import com.example.unilovi.model.Preferences;
 import com.example.unilovi.model.User;
-import com.example.unilovi.utils.CallBack;
+import com.example.unilovi.database.CallBack;
 import com.example.unilovi.utils.Util;
 
 import java.util.ArrayList;
@@ -170,7 +169,7 @@ public class SignUpActivity4 extends AppCompatActivity {
                                             startActivity(mainIntent);
                                             finish();
                                         } else {
-                                            Util.showAlert(context, "Hubo algún fallo al iniciar sesión. " +
+                                            Util.showErrorDialog(context, "Hubo algún fallo al iniciar sesión. " +
                                                     "Comprueba las credenciales introducidas");
                                         }
                                     }

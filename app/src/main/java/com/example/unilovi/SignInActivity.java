@@ -19,7 +19,7 @@ import android.widget.Toast;
 import com.example.unilovi.database.Firebase;
 import com.example.unilovi.model.User;
 import com.example.unilovi.utils.Util;
-import com.example.unilovi.utils.CallBack;
+import com.example.unilovi.database.CallBack;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class SignInActivity extends AppCompatActivity {
@@ -46,11 +46,11 @@ public class SignInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_in);
 
         // Obtenemos referencias a los componentes
-        signInButton = (Button) findViewById(R.id.sendEmailChangePAssword);
-        goToSignUpButton = (Button) findViewById(R.id.goToSignUpButton);
-        changePasswordButton = (Button) findViewById(R.id.changePasswordButton);
-        editEmail = (EditText) findViewById(R.id.emailChangePassword);
-        editPassword = (EditText) findViewById(R.id.passwordSignInEdit);
+        signInButton = (Button) findViewById(R.id.siSendEmailButton);
+        goToSignUpButton = (Button) findViewById(R.id.siGoToSignUpButton);
+        changePasswordButton = (Button) findViewById(R.id.siChangePasswordButton);
+        editEmail = (EditText) findViewById(R.id.siEmailEdit);
+        editPassword = (EditText) findViewById(R.id.siPasswordEdit);
         filledTextFieldCorreo = (TextInputLayout) findViewById(R.id.filledTextFieldCorreoChangePassword);
 
         // Asignamos listeners
@@ -94,9 +94,9 @@ public class SignInActivity extends AppCompatActivity {
                                 });
                             }
                             else if (Firebase.getUsuarioActual() != null && !Firebase.getUsuarioActual().isEmailVerified()){
-                                Util.showAlert(context, "Debes verificar el correo que hemos mandado a tu cuenta: " + emailContent);
+                                Util.showErrorDialog(context, "Debes verificar el correo que hemos mandado a tu cuenta: " + emailContent);
                             } else {
-                                Util.showAlert(context, "Hubo algún fallo al iniciar sesión. " +
+                                Util.showErrorDialog(context, "Hubo algún fallo al iniciar sesión. " +
                                         "Comprueba las credenciales introducidas");
                             }
                         }
@@ -164,7 +164,7 @@ public class SignInActivity extends AppCompatActivity {
         String emailContent = editEmail.getText().toString();
         String passwordContent = editPassword.getText().toString();
         if (emailContent.isEmpty() || passwordContent.isEmpty()) {
-            Util.showAlert(context,"Debe rellenar todos los campos para iniciar sesión");
+            Util.showErrorDialog(context,"Debe rellenar todos los campos para iniciar sesión");
             return false;
         }
         return true;

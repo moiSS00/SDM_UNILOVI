@@ -40,8 +40,8 @@ public class UsersRecyclerActivity extends AppCompatActivity {
         listaSolicitudes = new ArrayList<User>();
 
         // Obtenemos referencias a los componentes
-        listaMatchesView = (RecyclerView) findViewById(R.id.matchesRecyclerView);
-        listaSolicitudesView = (RecyclerView) findViewById(R.id.solicitudesRecyclerView);
+        listaMatchesView = (RecyclerView) findViewById(R.id.lsmMatchesRv);
+        listaSolicitudesView = (RecyclerView) findViewById(R.id.lsmSolicitudesRv);
 
         // Configuramos el RecyclerView con la lista de matches
         LinearLayoutManager layoutManagerMatches = new LinearLayoutManager(getApplicationContext());

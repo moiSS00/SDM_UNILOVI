@@ -2,28 +2,22 @@ package com.example.unilovi.database;
 
 
 import android.app.Application;
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 
 import com.example.unilovi.MainActivity;
-import com.example.unilovi.R;
 import com.example.unilovi.adapters.matches.ListaMatchesAdapter;
 import com.example.unilovi.adapters.solicitudes.ListaSolicitudesAdapter;
 import com.example.unilovi.model.Preferences;
 import com.example.unilovi.model.User;
-import com.example.unilovi.utils.CallBack;
+import com.example.unilovi.notifications.NotificationService;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -44,7 +38,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;

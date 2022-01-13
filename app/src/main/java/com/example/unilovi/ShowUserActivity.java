@@ -4,37 +4,26 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
 import com.example.unilovi.database.Firebase;
 import com.example.unilovi.model.User;
-import com.example.unilovi.fragments.HomeFragment;
-import com.example.unilovi.utils.CallBack;
+import com.example.unilovi.database.CallBack;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
-import android.telecom.Call;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.unilovi.databinding.ActivityShowUserBinding;
-import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
-
-import java.util.List;
 
 public class ShowUserActivity extends AppCompatActivity {
 
@@ -70,11 +59,11 @@ public class ShowUserActivity extends AppCompatActivity {
         facultad = (TextView) findViewById(R.id.facultadUsuarioText);
         carrera = (TextView) findViewById(R.id.carreraUsuarioText);
         sobreMi = (TextView) findViewById(R.id.sobreMiUsuarioText);
-        imagenPerfil = (ImageView) findViewById(R.id.imagenPerfilUsuario);
+        imagenPerfil = (ImageView) findViewById(R.id.suImagenUsuario);
 
         toolbar = binding.toolbar;
         toolBarLayout = binding.toolbarLayout;
-        fab = binding.fab;
+        fab = binding.suMessageFab;
 
         // -- Código de configuración autogenerado por Android Studio al crear una ScrollActivity--
         setSupportActionBar(toolbar);

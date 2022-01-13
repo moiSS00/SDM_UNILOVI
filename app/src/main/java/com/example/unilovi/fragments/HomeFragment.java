@@ -7,23 +7,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.example.unilovi.MainActivity;
 import com.example.unilovi.R;
 import com.example.unilovi.ShowUserActivity;
-import com.example.unilovi.SignInActivity;
-import com.example.unilovi.SignUpActivity1;
 import com.example.unilovi.database.Firebase;
 import com.example.unilovi.databinding.FragmentHomeBinding;
 import com.example.unilovi.model.Preferences;
 import com.example.unilovi.model.User;
-import com.example.unilovi.utils.CallBack;
+import com.example.unilovi.database.CallBack;
 import com.example.unilovi.utils.Util;
 import com.squareup.picasso.Picasso;
 
@@ -56,12 +52,12 @@ public class HomeFragment extends Fragment {
         View root = binding.getRoot();
 
         // Obtenemos referencias a los componentes
-        imagenPretendiente = root.findViewById(R.id.imagenPretendiente);
-        nombreApellidosPretendiente = root.findViewById(R.id.nombrePretendiente);
-        facultadPretendiente = root.findViewById(R.id.facultadPretendiente);
-        edadPretendiente = root.findViewById(R.id.edadPretendiente);
-        btnAceptar = root.findViewById(R.id.btnAceptar);
-        btnRechazar = root.findViewById(R.id.btnRechazar);
+        imagenPretendiente = root.findViewById(R.id.hImagenPretendiente);
+        nombreApellidosPretendiente = root.findViewById(R.id.hNombrePretendiente);
+        facultadPretendiente = root.findViewById(R.id.hFacultadPretendiente);
+        edadPretendiente = root.findViewById(R.id.hEdadPretendiente);
+        btnAceptar = root.findViewById(R.id.hAceptarButton);
+        btnRechazar = root.findViewById(R.id.hRechazarButton);
         layoutInfo = root.findViewById(R.id.layoutHomeInfo);
         layoutBotones = root.findViewById(R.id.layoutHomeBotones);
 
@@ -148,7 +144,7 @@ public class HomeFragment extends Fragment {
                 }
             });
         } else {
-            Util.showAlert(getContext(), "No hay más usuarios que coincidan con tus preferencias");
+            Util.showErrorDialog(getContext(), "No hay más usuarios que coincidan con tus preferencias");
             layoutBotones.setVisibility(View.INVISIBLE);
             layoutInfo.setVisibility(View.INVISIBLE);
             pretendiente = null;
@@ -174,7 +170,7 @@ public class HomeFragment extends Fragment {
                                 // Se cargaria una imagen por defecto
                                 layoutBotones.setVisibility(View.INVISIBLE);
                                 layoutInfo.setVisibility(View.INVISIBLE);
-                                Util.showAlert(getContext(), "No hay usuarios que coincidan con tus preferencias");
+                                Util.showErrorDialog(getContext(), "No hay usuarios que coincidan con tus preferencias");
                             }
                         }
                     });

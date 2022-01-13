@@ -31,7 +31,7 @@
         app:suffixText="@string/suffix">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editCorreoRegistro1"
+            android:id="@+id/su1CorreoEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -46,7 +46,7 @@
             app:errorEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editPasswordRegistro1"
+                android:id="@+id/su1PasswordEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword" />
@@ -63,7 +63,7 @@
             app:errorEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editRepeatPasswordRegistro1"
+                android:id="@+id/su1RepeatPasswordEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword" />
@@ -75,7 +75,7 @@
             android:layout_height="match_parent">
 
             <Button
-                android:id="@+id/btnSiguienteRegistro1"
+                android:id="@+id/su1SiguienteButton"
                 style="@style/Widget.MaterialComponents.Button.Icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

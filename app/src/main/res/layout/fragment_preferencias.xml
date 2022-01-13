@@ -22,7 +22,7 @@
         app:layout_constraintVertical_bias="0.068" />
 
     <SeekBar
-        android:id="@+id/seekBarEdadMinima"
+        android:id="@+id/pEdadMinimaSb"
         android:layout_width="213dp"
         android:layout_height="40dp"
         android:max="31"
@@ -52,12 +52,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.103"
-        app:layout_constraintStart_toEndOf="@+id/seekBarEdadMinima"
+        app:layout_constraintStart_toEndOf="@+id/pEdadMinimaSb"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.355" />
 
     <SeekBar
-        android:id="@+id/seekBarEdadMaxima"
+        android:id="@+id/psEdadMaximaSb"
         android:layout_width="213dp"
         android:layout_height="40dp"
         android:max="31"
@@ -76,7 +76,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.123"
-        app:layout_constraintStart_toEndOf="@+id/seekBarEdadMaxima"
+        app:layout_constraintStart_toEndOf="@+id/psEdadMaximaSb"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -88,7 +88,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.142"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/seekBarEdadMinima"
+        app:layout_constraintTop_toBottomOf="@+id/pEdadMinimaSb"
         app:layout_constraintVertical_bias="0.084" />
 
     <TextView
@@ -104,31 +104,31 @@
         app:layout_constraintVertical_bias="0.016" />
 
     <CheckBox
-        android:id="@+id/checkMujer"
+        android:id="@+id/pMujerCheck"
         android:layout_width="101dp"
         android:layout_height="48dp"
         android:text="Femenino"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.135"
-        app:layout_constraintStart_toEndOf="@+id/checkHombre"
+        app:layout_constraintStart_toEndOf="@+id/pHombreCheck"
         app:layout_constraintTop_toBottomOf="@+id/carreraText"
         app:layout_constraintVertical_bias="0.062" />
 
     <CheckBox
-        android:id="@+id/checkNoBinario"
+        android:id="@+id/pNoBinarioCheck"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Otro"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.255"
-        app:layout_constraintStart_toEndOf="@+id/checkMujer"
+        app:layout_constraintStart_toEndOf="@+id/pMujerCheck"
         app:layout_constraintTop_toBottomOf="@+id/carreraText"
         app:layout_constraintVertical_bias="0.062" />
 
     <CheckBox
-        android:id="@+id/checkHombre"
+        android:id="@+id/pHombreCheck"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Masculino"
@@ -149,11 +149,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/seekBarEdadMaxima"
+        app:layout_constraintTop_toBottomOf="@+id/psEdadMaximaSb"
         app:layout_constraintVertical_bias="0.156">
 
         <AutoCompleteTextView
-            android:id="@+id/cbxFacultadPreferencias"
+            android:id="@+id/pFacultadPreferenciasCbx"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="none" />
@@ -172,7 +172,7 @@
         app:layout_constraintVertical_bias="0.176">
 
         <AutoCompleteTextView
-            android:id="@+id/cbxCarreraPreferencias"
+            android:id="@+id/pCarreraPreferenciasCbx"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="none" />

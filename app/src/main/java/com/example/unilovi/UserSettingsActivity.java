@@ -3,27 +3,21 @@ package com.example.unilovi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.text.Layout;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.Switch;
 
 import com.example.unilovi.database.Firebase;
 import com.example.unilovi.model.User;
-import com.example.unilovi.utils.Util;
-import com.example.unilovi.utils.CallBack;
+import com.example.unilovi.database.CallBack;
 
 import java.util.List;
 

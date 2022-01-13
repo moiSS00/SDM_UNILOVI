@@ -9,7 +9,7 @@
     android:padding="@dimen/spacing_xlarge">
 
     <ImageView
-        android:id="@+id/imagenUsuarioLineaImg"
+        android:id="@+id/lmImagenUsuario"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:contentDescription="@string/app_name"
@@ -24,14 +24,14 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/nombreUsuarioLineaText"
+            android:id="@+id/lmNombreUsuario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/nombre_usuario"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <TextView
-            android:id="@+id/facultadUsuarioLineaText"
+            android:id="@+id/lmFacultadUsuario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/facultad_usuario"

@@ -1,6 +1,5 @@
 package com.example.unilovi.adapters.solicitudes;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -15,7 +14,7 @@ import com.example.unilovi.R;
 import com.example.unilovi.adapters.OnItemClickListener;
 import com.example.unilovi.database.Firebase;
 import com.example.unilovi.model.User;
-import com.example.unilovi.utils.CallBack;
+import com.example.unilovi.database.CallBack;
 import com.squareup.picasso.Picasso;
 
 public class SolicitudesViewHolder extends RecyclerView.ViewHolder {
@@ -29,11 +28,11 @@ public class SolicitudesViewHolder extends RecyclerView.ViewHolder {
 
     public SolicitudesViewHolder(@NonNull View itemView) {
         super(itemView);
-        nombre = (TextView) itemView.findViewById(R.id.nombreUsuarioLineaText);
-        facultad = (TextView) itemView.findViewById(R.id.facultadUsuarioLineaText);
-        imagen = (ImageView) itemView.findViewById(R.id.imagenUsuarioLineaImg);
-        btnAceptarSolicitud = (ImageButton) itemView.findViewById(R.id.btnAceptarSolicitud);
-        btnRechazarSolicitud = (Button) itemView.findViewById(R.id.btnRechazarSolicitud);
+        nombre = (TextView) itemView.findViewById(R.id.lsNombreUsuario);
+        facultad = (TextView) itemView.findViewById(R.id.lsFacultadUsuario);
+        imagen = (ImageView) itemView.findViewById(R.id.lsImagenUsuario);
+        btnAceptarSolicitud = (ImageButton) itemView.findViewById(R.id.lsAceptarSolicitudButton);
+        btnRechazarSolicitud = (Button) itemView.findViewById(R.id.lsRechazarSolicitudButton);
     }
 
     public void bindUser(final User usuario, final OnItemClickListener listener) {

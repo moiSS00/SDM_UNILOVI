@@ -73,7 +73,7 @@
         app:suffixText="@string/suffix">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/emailChangePassword"
+            android:id="@+id/siEmailEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -88,7 +88,7 @@
             app:errorEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/passwordSignInEdit"
+                android:id="@+id/siPasswordEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword" />
@@ -98,7 +98,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/sendEmailChangePAssword"
+        android:id="@+id/siSendEmailButton"
         android:layout_width="357dp"
         android:layout_height="51dp"
         android:text="Iniciar sesión"
@@ -111,7 +111,7 @@
         app:layout_constraintVertical_bias="0.19" />
 
     <Button
-        android:id="@+id/goToSignUpButton"
+        android:id="@+id/siGoToSignUpButton"
         android:layout_width="357dp"
         android:layout_height="51dp"
         android:text="Registrarse"
@@ -120,11 +120,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sendEmailChangePAssword"
+        app:layout_constraintTop_toBottomOf="@+id/siSendEmailButton"
         app:layout_constraintVertical_bias="0.1" />
 
     <Button
-        android:id="@+id/changePasswordButton"
+        android:id="@+id/siChangePasswordButton"
         style="@android:style/Widget.Button"
         android:layout_width="278dp"
         android:layout_height="44dp"
@@ -134,7 +134,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/goToSignUpButton"
+        app:layout_constraintTop_toBottomOf="@+id/siGoToSignUpButton"
         app:layout_constraintVertical_bias="0.224" />
 
 

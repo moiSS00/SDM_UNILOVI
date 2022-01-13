@@ -16,7 +16,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textTitle"
+            android:id="@+id/edTitulo"
             android:background="@drawable/error_background"
             android:padding="10dp"
             android:textColor="@color/colorWhite"
@@ -24,19 +24,19 @@
             android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent"/>
         <ImageView
-            android:id="@+id/imageIcon"
+            android:id="@+id/edIcon"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginEnd="10dp"
             android:contentDescription="@string/app_name"
-            app:layout_constraintBottom_toBottomOf="@id/textTitle"
+            app:layout_constraintBottom_toBottomOf="@id/edTitulo"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/textTitle"
+            app:layout_constraintTop_toTopOf="@id/edTitulo"
             app:tint="@color/colorWhite" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textMessage"
+            android:id="@+id/edMensaje"
             android:layout_marginStart="20dp"
             android:layout_marginTop="18sp"
             android:layout_marginEnd="20dp"
@@ -44,12 +44,12 @@
             android:textColor="@color/colorErrorText"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textTitle"/>
+            app:layout_constraintTop_toBottomOf="@id/edTitulo"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
     <Button
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:id="@+id/buttonAction"
+        android:id="@+id/edButton"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
         android:background="@drawable/button_error_background"

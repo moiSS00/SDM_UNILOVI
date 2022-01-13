@@ -20,10 +20,8 @@ import com.example.unilovi.adapters.OnItemClickListener;
 import com.example.unilovi.database.Firebase;
 import com.example.unilovi.databinding.FragmentSolicitudesBinding;
 import com.example.unilovi.model.User;
-import com.example.unilovi.utils.CallBack;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class SolicitudesMatchesFragment extends Fragment {
 
@@ -40,8 +38,8 @@ public class SolicitudesMatchesFragment extends Fragment {
         View root = binding.getRoot();
 
         // Obtenemos referencias a los componentes
-        listaMatchesView = (RecyclerView) root.findViewById(R.id.matchesRecyclerView);
-        listaSolicitudesView = (RecyclerView) root.findViewById(R.id.solicitudesRecyclerView);
+        listaMatchesView = (RecyclerView) root.findViewById(R.id.lsmMatchesRv);
+        listaSolicitudesView = (RecyclerView) root.findViewById(R.id.lsmSolicitudesRv);
 
         // Configuramos el RecyclerView con la lista de matches
         LinearLayoutManager layoutManagerMatches = new LinearLayoutManager(root.getContext());

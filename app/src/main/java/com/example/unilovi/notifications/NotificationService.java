@@ -1,4 +1,4 @@
-package com.example.unilovi.database;
+package com.example.unilovi.notifications;
 
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -14,6 +14,7 @@ import androidx.core.app.NotificationManagerCompat;
 
 import com.example.unilovi.MainActivity;
 import com.example.unilovi.R;
+import com.example.unilovi.database.Firebase;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;

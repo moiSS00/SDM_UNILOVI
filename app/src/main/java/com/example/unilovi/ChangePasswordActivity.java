@@ -10,12 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.unilovi.database.Firebase;
-import com.example.unilovi.utils.Util;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-
-import javax.security.auth.callback.Callback;
 
 public class ChangePasswordActivity extends AppCompatActivity {
 
@@ -30,8 +25,8 @@ public class ChangePasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_password);
 
-        sendEmailChangePAssword = (Button) findViewById(R.id.sendEmailChangePAssword);
-        emailChangePassword = (EditText) findViewById(R.id.emailChangePassword);
+        sendEmailChangePAssword = (Button) findViewById(R.id.cpSendEmailButton);
+        emailChangePassword = (EditText) findViewById(R.id.cpPasswordEdit);
 
         sendEmailChangePAssword.setOnClickListener(new View.OnClickListener() {
             @Override

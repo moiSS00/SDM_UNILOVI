@@ -13,8 +13,7 @@ import android.widget.TextView;
 
 import com.example.unilovi.database.Firebase;
 import com.example.unilovi.model.User;
-import com.example.unilovi.utils.Util;
-import com.example.unilovi.utils.CallBack;
+import com.example.unilovi.database.CallBack;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
@@ -64,8 +63,8 @@ public class MainActivity extends AppCompatActivity {
         View headerView = navigationView.getHeaderView(0);
 
         imagen = headerView.findViewById(R.id.imageViewMenu);
-        nombre = headerView.findViewById(R.id.nombreMenuID);
-        email = headerView.findViewById(R.id.emailText);
+        nombre = headerView.findViewById(R.id.menuNombre);
+        email = headerView.findViewById(R.id.menuEmail);
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.

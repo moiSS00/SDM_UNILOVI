@@ -1,7 +1,6 @@
 package com.example.unilovi.fragments;
 
 import android.os.Bundle;
-import android.telecom.Call;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
 import android.widget.SeekBar;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,17 +16,13 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.unilovi.R;
-import com.example.unilovi.SignUpActivity4;
 import com.example.unilovi.database.Firebase;
 import com.example.unilovi.databinding.FragmentPreferenciasBinding;
 import com.example.unilovi.model.Preferences;
-import com.example.unilovi.model.User;
-import com.example.unilovi.utils.Util;
-import com.example.unilovi.utils.CallBack;
+import com.example.unilovi.database.CallBack;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 
 public class PreferenciasBusquedaFragment extends Fragment {
@@ -55,13 +49,13 @@ public class PreferenciasBusquedaFragment extends Fragment {
         // Obtenemos referencias a los componentes
         edadMaxima = (TextView) root.findViewById(R.id.edadMaxima);
         edadMinima = (TextView) root.findViewById(R.id.edadMinima);
-        seekBarMaxima = (SeekBar) root.findViewById(R.id.seekBarEdadMaxima);
-        seekBarMinima = (SeekBar) root.findViewById(R.id.seekBarEdadMinima);
-        editTextFilledExposedDropdownFacultades = (AutoCompleteTextView) root.findViewById(R.id.cbxFacultadPreferencias);
-        editTextFilledExposedDropdownCarreras = (AutoCompleteTextView) root.findViewById(R.id.cbxCarreraPreferencias);
-        checkHombre = (CheckBox) root.findViewById(R.id.checkHombre);
-        checkMujer = (CheckBox) root.findViewById(R.id.checkMujer);
-        checkNoBinario = (CheckBox) root.findViewById(R.id.checkNoBinario);
+        seekBarMaxima = (SeekBar) root.findViewById(R.id.psEdadMaximaSb);
+        seekBarMinima = (SeekBar) root.findViewById(R.id.pEdadMinimaSb);
+        editTextFilledExposedDropdownFacultades = (AutoCompleteTextView) root.findViewById(R.id.pFacultadPreferenciasCbx);
+        editTextFilledExposedDropdownCarreras = (AutoCompleteTextView) root.findViewById(R.id.pCarreraPreferenciasCbx);
+        checkHombre = (CheckBox) root.findViewById(R.id.pHombreCheck);
+        checkMujer = (CheckBox) root.findViewById(R.id.pMujerCheck);
+        checkNoBinario = (CheckBox) root.findViewById(R.id.pNoBinarioCheck);
 
         // Asignamos valores por defecto
         edadMinima.setText("18");

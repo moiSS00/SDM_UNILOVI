@@ -11,7 +11,7 @@ import com.example.unilovi.R;
 import com.example.unilovi.adapters.OnItemClickListener;
 import com.example.unilovi.database.Firebase;
 import com.example.unilovi.model.User;
-import com.example.unilovi.utils.CallBack;
+import com.example.unilovi.database.CallBack;
 import com.squareup.picasso.Picasso;
 
 public class MatchesViewHolder extends RecyclerView.ViewHolder {
@@ -23,9 +23,9 @@ public class MatchesViewHolder extends RecyclerView.ViewHolder {
 
     public MatchesViewHolder(@NonNull View itemView) {
         super(itemView);
-        nombre = (TextView) itemView.findViewById(R.id.nombreUsuarioLineaText);
-        facultad = (TextView) itemView.findViewById(R.id.facultadUsuarioLineaText);
-        imagen = (ImageView) itemView.findViewById(R.id.imagenUsuarioLineaImg);
+        nombre = (TextView) itemView.findViewById(R.id.lmNombreUsuario);
+        facultad = (TextView) itemView.findViewById(R.id.lmFacultadUsuario);
+        imagen = (ImageView) itemView.findViewById(R.id.lmImagenUsuario);
     }
 
     public void bindUser(final User usuario, final OnItemClickListener listener) {

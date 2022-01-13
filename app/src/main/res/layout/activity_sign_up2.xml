@@ -26,8 +26,8 @@
 
     <ImageView
         android:id="@+id/su2ImagenUsuario"
-        android:layout_width="188dp"
-        android:layout_height="189dp"
+        android:layout_width="145dp"
+        android:layout_height="139dp"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,14 +41,14 @@
         android:id="@+id/su2SubirFotoButton"
         android:layout_width="253dp"
         android:layout_height="43dp"
+        android:background="@drawable/button_rounded"
         android:text="@string/s2SubirFotoButtonText"
         app:backgroundTint="@null"
-        android:background="@drawable/button_rounded"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/su2ImagenUsuario"
-        app:layout_constraintVertical_bias="0.015" />
+        app:layout_constraintVertical_bias="0.013" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/filledTextFieldNombre"
@@ -114,63 +114,19 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <RadioGroup
-        android:id="@+id/rdgSexoRegistro2"
-        android:layout_width="290dp"
-        android:layout_height="48dp"
-        android:orientation="horizontal"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
-        app:layout_constraintVertical_bias="0.038">
-
-        <RadioButton
-            android:id="@+id/su2MasculinoRd"
-            android:layout_width="108dp"
-            android:layout_height="match_parent"
-            android:text="@string/masculinoEditHint" />
-
-        <RadioButton
-            android:id="@+id/su2FemeninoRd"
-            android:layout_width="109dp"
-            android:layout_height="match_parent"
-            android:text="@string/femeninoEditHint" />
-
-        <RadioButton
-            android:id="@+id/su2OtroRd"
-            android:layout_width="73dp"
-            android:layout_height="match_parent"
-            android:text="@string/otroEditHint" />
-
-    </RadioGroup>
-
     <Button
         android:id="@+id/su2SiguienteButton"
-        android:layout_width="151dp"
-        android:layout_height="38dp"
+        android:layout_width="194dp"
+        android:layout_height="42dp"
+        android:background="@drawable/button_rounded"
         android:text="@string/siguienteButtonText"
         app:backgroundTint="@null"
-        android:background="@drawable/button_rounded"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/filledTextFieldCarrera"
-        app:layout_constraintVertical_bias="0.458" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/sexoSelectText"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.066"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/filledTextFieldFecha"
-        app:layout_constraintVertical_bias="0.03" />
+        app:layout_constraintVertical_bias="0.228" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/filledTextFieldFacultad"
@@ -181,8 +137,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rdgSexoRegistro2"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/filledTextFieldFecha"
+        app:layout_constraintVertical_bias="0.062">
 
         <AutoCompleteTextView
             android:id="@+id/su2FacultadCbx"
@@ -201,7 +157,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/filledTextFieldFacultad"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="0.076">
 
         <AutoCompleteTextView
             android:id="@+id/su2CarreraCbx"

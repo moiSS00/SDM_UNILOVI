@@ -42,7 +42,6 @@ public class SignUpActivity2 extends AppCompatActivity {
     //Componentes básicos de android studio
     private ImageView imagen;
     private Uri dataImagen;
-    private RadioGroup rdgSexo;
     private Button btnSubirFoto;
     private Button btnSiguiente;
 
@@ -86,7 +85,7 @@ public class SignUpActivity2 extends AppCompatActivity {
         textFecha = (TextInputEditText) findViewById(R.id.su2FechaNacimientoEdit);
         textNombre = (TextInputEditText) findViewById(R.id.su2NombreEdit);
         textApellidos = (TextInputEditText) findViewById(R.id.su2ApellidosEdit);
-        rdgSexo = (RadioGroup) findViewById(R.id.rdgSexoRegistro2);
+
         editTextFilledExposedDropdownFacultades = (AutoCompleteTextView) findViewById(R.id.su2FacultadCbx);
         editTextFilledExposedDropdownCarreras = (AutoCompleteTextView) findViewById(R.id.su2CarreraCbx);
 
@@ -181,14 +180,15 @@ public class SignUpActivity2 extends AppCompatActivity {
                         String carrera = editTextFilledExposedDropdownCarreras
                                 .getText().toString();
 
-                        // Para obtener el radio boton del radioGroup seleccionado
-                        int selectedId = rdgSexo.getCheckedRadioButtonId();
-                        RadioButton rdSeleccionado = (RadioButton) findViewById(selectedId);
-
                         boolean flag = true;
 
-                        if (rdSeleccionado == null) {
-                            Toast.makeText(getApplicationContext(), "Debes seleccionar un sexo", Toast.LENGTH_SHORT).show();
+                        if (nombre.isEmpty()) {
+                            name_error.setError("Debes introducir tu nombre");
+                            flag = false;
+                        }
+
+                        if (apellidos.isEmpty()) {
+                            surnanme_error.setError("Debes introducir tus apellidos");
                             flag = false;
                         }
 
@@ -223,10 +223,6 @@ public class SignUpActivity2 extends AppCompatActivity {
                             user.setFechaNacimiento(fecha);
                             user.setFacultad(facultad);
                             user.setCarrera(carrera);
-
-
-                            String sexo = rdSeleccionado.getText().toString();
-                            user.setSexo(sexo);
 
                             postIntent.putExtra(USUARIO_REGISTRADO2, user);
                             postIntent.putExtra(URI_FOTO2, dataImagen.toString());

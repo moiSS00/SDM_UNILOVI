@@ -6,6 +6,38 @@
     android:layout_height="match_parent"
     tools:context=".SignUpActivity3">
 
+    <RadioGroup
+        android:id="@+id/rdgSexoRegistro3"
+        android:layout_width="289dp"
+        android:layout_height="49dp"
+        android:orientation="horizontal"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintVertical_bias="0.044">
+
+        <RadioButton
+            android:id="@+id/su2MasculinoRd"
+            android:layout_width="108dp"
+            android:layout_height="match_parent"
+            android:text="@string/masculinoEditHint" />
+
+        <RadioButton
+            android:id="@+id/su2FemeninoRd"
+            android:layout_width="109dp"
+            android:layout_height="match_parent"
+            android:text="@string/femeninoEditHint" />
+
+        <RadioButton
+            android:id="@+id/su2OtroRd"
+            android:layout_width="73dp"
+            android:layout_height="match_parent"
+            android:text="@string/otroEditHint" />
+
+    </RadioGroup>
+
     <TextView
         android:id="@+id/textView2Registro"
         style="@android:style/TextAppearance.DeviceDefault.Large"
@@ -33,8 +65,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.195"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2Registro"
-        app:layout_constraintVertical_bias="0.284" />
+        app:layout_constraintTop_toBottomOf="@+id/rdgSexoRegistro3"
+        app:layout_constraintVertical_bias="0.098" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/filledTextFieldSobreMi"
@@ -73,5 +105,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/filledTextFieldSobreMi"
         app:layout_constraintVertical_bias="0.3" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¿Como te identificas?"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.162"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2Registro"
+        app:layout_constraintVertical_bias="0.099" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

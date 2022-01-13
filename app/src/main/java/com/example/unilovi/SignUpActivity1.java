@@ -126,6 +126,7 @@ public class SignUpActivity1 extends AppCompatActivity {
                                     // Devolvemos los datos a la pantalla de inicio de sesión
                                     setResult(RESULT_OK, postIntent);
                                     finish();
+                                    break;
 
                                 case "ERROR_INVALID_EMAIL":
                                     Util.showErrorDialog(context, "El email tiene un formato incorrecto");

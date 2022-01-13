@@ -50,8 +50,8 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/lsRechazarSolicitudButton"
         style="@style/Widget.MaterialComponents.Button.Icon"
-        android:layout_width="47dp"
-        android:layout_height="47dp"
+        android:layout_width="46dp"
+        android:layout_height="46dp"
         app:cornerRadius="30dp"
         android:insetLeft="0dp"
         android:insetTop="0dp"

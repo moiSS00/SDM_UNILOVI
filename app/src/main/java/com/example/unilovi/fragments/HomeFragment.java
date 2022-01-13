@@ -148,6 +148,7 @@ public class HomeFragment extends Fragment {
             Util.showErrorDialog(getContext(), "No hay más usuarios que coincidan con tus preferencias");
             layoutBotones.setVisibility(View.INVISIBLE);
             layoutInfo.setVisibility(View.INVISIBLE);
+            imagenPretendiente.setVisibility(View.INVISIBLE);
             pretendiente = null;
         }
     }

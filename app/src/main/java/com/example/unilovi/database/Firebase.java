@@ -8,11 +8,13 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.unilovi.MainActivity;
+import com.example.unilovi.R;
 import com.example.unilovi.adapters.matches.ListaMatchesAdapter;
 import com.example.unilovi.adapters.solicitudes.ListaSolicitudesAdapter;
 import com.example.unilovi.model.Preferences;
@@ -688,7 +690,7 @@ public class Firebase extends Application {
      * Activa el listener perteneciente al recyclerView de solicitudes.
      * @param adapter Adapter del recyclerView a manipular.
      */
-    public static void addListenerToSolicitudesRecycler(ListaSolicitudesAdapter adapter) {
+    public static void addListenerToSolicitudesRecycler(ListaSolicitudesAdapter adapter, View root) {
 
         // Si no estaba ya activado el listener
         if (!listenerSolicitudesRecyclerAdded) {
@@ -700,6 +702,7 @@ public class Firebase extends Application {
                 public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException error) {
                     if (error != null) {
                         Log.i("ErrorListener", "Listen failed.", error);
+                        root.findViewById(R.id.layoutLoadSolicitudes).setVisibility(View.GONE);
                         return;
                     }
 
@@ -714,12 +717,16 @@ public class Firebase extends Application {
                                 @Override
                                 public void methodToCallBack(Object object) {
                                     adapter.swap((List<User>) object);
+                                    root.findViewById(R.id.layoutLoadSolicitudes).setVisibility(View.GONE);
                                 }
                             });
 
+                        } else {
+                            root.findViewById(R.id.layoutLoadSolicitudes).setVisibility(View.GONE);
                         }
 
                     } else {
+                        root.findViewById(R.id.layoutLoadSolicitudes).setVisibility(View.GONE);
                         Log.i("NullListener", "Datos devuelto por el listener: null");
                     }
                 }

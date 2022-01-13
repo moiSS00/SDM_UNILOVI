@@ -178,4 +178,11 @@
             android:inputType="none" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <include
+        android:id="@+id/layoutLoadPreferencias"
+        layout="@layout/load_layout"
+        android:background="@color/colorWhite"
+        android:backgroundTint="@color/colorWhite"
+        android:visibility="visible" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

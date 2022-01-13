@@ -37,6 +37,7 @@ public class HomeFragment extends Fragment {
     private Button btnRechazar;
     private LinearLayout layoutInfo;
     private LinearLayout layoutBotones;
+    View root;
 
     // Atributos auxiliares
     private User pretendiente;
@@ -49,7 +50,7 @@ public class HomeFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+        root = binding.getRoot();
 
         // Obtenemos referencias a los componentes
         imagenPretendiente = root.findViewById(R.id.hImagenPretendiente);

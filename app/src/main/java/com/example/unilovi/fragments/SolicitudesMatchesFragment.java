@@ -73,6 +73,7 @@ public class SolicitudesMatchesFragment extends Fragment {
         // Asignamos los adapters
         Firebase.addListenerToSolicitudesRecycler(lsAdater);
         listaSolicitudesView.setAdapter(lsAdater);
+        root.findViewById(R.id.layoutLoadSolicitudes).setVisibility(View.GONE);
 
         return root;
     }

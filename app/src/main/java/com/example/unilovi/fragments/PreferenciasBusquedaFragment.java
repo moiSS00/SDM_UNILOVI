@@ -28,6 +28,7 @@ import java.util.List;
 public class PreferenciasBusquedaFragment extends Fragment {
 
     private FragmentPreferenciasBinding binding;
+    View root;
 
     // Atribitos que contendrán una referencia a los componentes usados
     private SeekBar seekBarMinima;
@@ -44,7 +45,7 @@ public class PreferenciasBusquedaFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
         binding = FragmentPreferenciasBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+        root = binding.getRoot();
 
         // Obtenemos referencias a los componentes
         edadMaxima = (TextView) root.findViewById(R.id.edadMaxima);
@@ -233,6 +234,8 @@ public class PreferenciasBusquedaFragment extends Fragment {
                                 else
                                     checkNoBinario.setChecked(true);
                             }
+
+                            root.findViewById(R.id.layoutLoadPreferencias).setVisibility(View.GONE);
 
                         } else {
                             Toast.makeText(getContext(), "No se pudieron recuperar las preferencias del usuario", Toast.LENGTH_SHORT).show();

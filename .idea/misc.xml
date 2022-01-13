@@ -3,47 +3,31 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/drawable-v21/bottom_bg.xml" value="0.24375" />
-        <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/drawable/boton_accept_solicitud.xml" value="0.24375" />
-        <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/drawable/button_error_background.xml" value="0.12291666666666666" />
         <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/drawable/button_rounded.xml" value="0.14635416666666667" />
-        <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/drawable/dialog_background.xml" value="0.24375" />
-        <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/drawable/error_background.xml" value="0.12291666666666666" />
         <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout-w936dp/content_scrolling.xml" value="0.1" />
-        <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/activity_change_password.xml" value="0.11865942028985507" />
         <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/activity_dialog_redes_sociales.xml" value="0.12760416666666666" />
-        <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/activity_main.xml" value="0.11865942028985507" />
         <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/activity_main2.xml" value="0.13020833333333334" />
         <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/activity_post_sign_up.xml" value="0.264" />
         <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/activity_search_preferences.xml" value="0.16666666666666666" />
         <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/activity_show_user.xml" value="0.1793478260869565" />
         <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/activity_sign_in.xml" value="0.2" />
         <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/activity_sign_up.xml" value="0.1793478260869565" />
-        <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/activity_sign_up1.xml" value="0.2" />
-        <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/activity_sign_up2.xml" value="0.176" />
-        <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/activity_sign_up3.xml" value="0.264" />
-        <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/activity_sign_up4.xml" value="0.264" />
+        <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/activity_sign_up1.xml" value="0.264" />
+        <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/activity_sign_up2.xml" value="0.4" />
+        <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/activity_sign_up3.xml" value="0.4" />
+        <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/activity_sign_up4.xml" value="0.16" />
         <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/activity_sign_up5.xml" value="0.10833333333333334" />
-        <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/activity_splash.xml" value="0.11865942028985507" />
         <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/activity_three_button.xml" value="0.264" />
         <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/activity_user_details.xml" value="0.264" />
-        <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/activity_user_settings.xml" value="0.264" />
+        <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/activity_user_settings.xml" value="0.152" />
         <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/activity_users_recycler.xml" value="0.176" />
-        <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/app_bar_main.xml" value="0.103125" />
-        <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/content_main.xml" value="0.264" />
         <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/content_scrolling.xml" value="0.1793478260869565" />
-        <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/dropdown_menu_popup_item.xml" value="0.11865942028985507" />
-        <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/error_background.xml" value="0.10260416666666666" />
-        <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/fragment_home.xml" value="0.4" />
-        <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/fragment_preferencias.xml" value="0.2" />
+        <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/fragment_home.xml" value="0.13125" />
+        <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/fragment_preferencias.xml" value="0.16666666666666666" />
         <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/fragment_solicitudes.xml" value="0.176" />
-        <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/layout_error_dialog.xml" value="0.10260416666666666" />
-        <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/linea_recycler_view_match.xml" value="0.176" />
         <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/linea_recycler_view_pelicula.xml" value="0.16666666666666666" />
         <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/linea_recycler_view_solicitud.xml" value="0.536" />
         <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/linea_recycler_view_usuario.xml" value="0.4" />
-        <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/load_layout.xml" value="0.11865942028985507" />
-        <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/nav_header_main.xml" value="0.11865942028985507" />
         <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/prueba.xml" value="0.1265625" />
         <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/layout/signup_form.xml" value="0.16799999999999998" />
         <entry key="..\:/Git/SDM_UNILOVI/app/src/main/res/menu/activity_main_drawer.xml" value="0.13020833333333334" />
@@ -89,6 +73,10 @@
         <entry key="..\:/Users/danie/StudioProjects/SDM_UNILOVI/app/src/main/res/layout/activity_show_user.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/danie/StudioProjects/SDM_UNILOVI/app/src/main/res/layout/activity_sign_in.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/danie/StudioProjects/SDM_UNILOVI/app/src/main/res/layout/activity_sign_up.xml" value="0.33" />
+        <entry key="..\:/Users/danie/StudioProjects/SDM_UNILOVI/app/src/main/res/layout/activity_sign_up1.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/danie/StudioProjects/SDM_UNILOVI/app/src/main/res/layout/activity_sign_up2.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/danie/StudioProjects/SDM_UNILOVI/app/src/main/res/layout/activity_sign_up3.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/danie/StudioProjects/SDM_UNILOVI/app/src/main/res/layout/activity_sign_up4.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/danie/StudioProjects/SDM_UNILOVI/app/src/main/res/layout/activity_splash.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/danie/StudioProjects/SDM_UNILOVI/app/src/main/res/layout/activity_three_button.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/danie/StudioProjects/SDM_UNILOVI/app/src/main/res/layout/activity_user_details.xml" value="0.36666666666666664" />
@@ -100,6 +88,8 @@
         <entry key="..\:/Users/danie/StudioProjects/SDM_UNILOVI/app/src/main/res/layout/fragment_home.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/danie/StudioProjects/SDM_UNILOVI/app/src/main/res/layout/fragment_preferencias.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/danie/StudioProjects/SDM_UNILOVI/app/src/main/res/layout/fragment_solicitudes.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/danie/StudioProjects/SDM_UNILOVI/app/src/main/res/layout/layout_error_dialog.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/danie/StudioProjects/SDM_UNILOVI/app/src/main/res/layout/linea_recycler_view_solicitud.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/danie/StudioProjects/SDM_UNILOVI/app/src/main/res/layout/linea_recycler_view_usuario.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/danie/StudioProjects/SDM_UNILOVI/app/src/main/res/layout/nav_header_main.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/danie/StudioProjects/SDM_UNILOVI/app/src/main/res/layout/probando_materialui.xml" value="0.36666666666666664" />
@@ -117,14 +107,13 @@
         <entry key="..\:/Users/pardi/AndroidStudioProjects/SDM_UNILOVI/app/src/main/res/drawable/side_nav_bar.xml" value="0.5703125" />
         <entry key="..\:/Users/pardi/AndroidStudioProjects/SDM_UNILOVI/app/src/main/res/drawable/splash_screem.xml" value="0.5661458333333333" />
         <entry key="..\:/Users/pardi/AndroidStudioProjects/SDM_UNILOVI/app/src/main/res/drawable/splash_screen.xml" value="0.5615384615384615" />
-        <entry key="..\:/Users/pardi/AndroidStudioProjects/SDM_UNILOVI/app/src/main/res/layout/activity_change_password.xml" value="0.5448369565217391" />
         <entry key="..\:/Users/pardi/AndroidStudioProjects/SDM_UNILOVI/app/src/main/res/layout/activity_dialog_redes_sociales.xml" value="0.5479166666666667" />
         <entry key="..\:/Users/pardi/AndroidStudioProjects/SDM_UNILOVI/app/src/main/res/layout/activity_load.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/pardi/AndroidStudioProjects/SDM_UNILOVI/app/src/main/res/layout/activity_main.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/pardi/AndroidStudioProjects/SDM_UNILOVI/app/src/main/res/layout/activity_post_sign_up.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/pardi/AndroidStudioProjects/SDM_UNILOVI/app/src/main/res/layout/activity_search_preferences.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/pardi/AndroidStudioProjects/SDM_UNILOVI/app/src/main/res/layout/activity_show_user.xml" value="0.5479166666666667" />
-        <entry key="..\:/Users/pardi/AndroidStudioProjects/SDM_UNILOVI/app/src/main/res/layout/activity_sign_in.xml" value="0.5" />
+        <entry key="..\:/Users/pardi/AndroidStudioProjects/SDM_UNILOVI/app/src/main/res/layout/activity_sign_in.xml" value="0.3307291666666667" />
         <entry key="..\:/Users/pardi/AndroidStudioProjects/SDM_UNILOVI/app/src/main/res/layout/activity_sign_up.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/pardi/AndroidStudioProjects/SDM_UNILOVI/app/src/main/res/layout/activity_sign_up1.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/pardi/AndroidStudioProjects/SDM_UNILOVI/app/src/main/res/layout/activity_sign_up2.xml" value="0.5541666666666667" />

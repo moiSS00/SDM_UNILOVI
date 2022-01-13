@@ -69,6 +69,7 @@
 
     <!-- Sign up 3 -->
     <string name="s3Titulo">Información básica (2 / 2)</string>
+    <string name="s3Desc">¡Cuéntanos más acerca de ti!</string>
 
     <!-- Sign up 4 -->
     <string name="s4Titulo">Preferencias de búsqueda</string>

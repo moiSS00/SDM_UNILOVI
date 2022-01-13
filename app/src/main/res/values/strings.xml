@@ -27,7 +27,7 @@
     <string name="siguienteButtonText">Siguiente</string>
     <string name="registrarseButtonText">Registrarse</string>
 
-    <string name="sexoSelectText">Sexo:</string>
+    <string name="sexoSelectText">¿Como te identificas?</string>
     <string name="edadMinimaSelectText">Edad mínima:</string>
     <string name="edadMaximaSelectText">Edad máxima:</string>
     <string name="facultadSelectText">Facultad:</string>

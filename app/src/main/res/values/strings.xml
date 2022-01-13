@@ -1,6 +1,7 @@
 <resources>
 
     <!-- Genéricos -->
+
     <string name="app_name">Unilovi</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -9,7 +10,33 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Editar perfil</string>
 
-    <!-- Pantalla inicial de los 3 botones -->
+    <string name="emailEditHint">Correo</string>
+    <string name="passwordEditHint">Contraseña</string>
+    <string name="repeatPasswordEditHint">Repita la contraseña</string>
+    <string name="nombreEditHint">Nombre</string>
+    <string name="apellidosEditHint">Apellidos</string>
+    <string name="fechaNacimientoEditHint">Fecha de nacimiento</string>
+    <string name="facultadEditHint">Facultad</string>
+    <string name="carreraEditHint">Carrera</string>
+    <string name="facultadOpcionalEditHint">Facultad (opcional)</string>
+    <string name="carreraOpcionalEditHint">Carrera (opcional)</string>
+    <string name="masculinoEditHint">Masculino</string>
+    <string name="femeninoEditHint">Femenino</string>
+    <string name="otroEditHint">Otro</string>
+    <string name="sobreMiEditHint">Sobre mí</string>
+    <string name="siguienteButtonText">Siguiente</string>
+    <string name="registrarseButtonText">Registrarse</string>
+
+    <string name="sexoSelectText">Sexo:</string>
+    <string name="edadMinimaSelectText">Edad mínima:</string>
+    <string name="edadMaximaSelectText">Edad máxima:</string>
+    <string name="facultadSelectText">Facultad:</string>
+    <string name="edadSelectText">Edad:</string>
+
+    <string name="cambiarTema">Cambiar tema</string>
+    <string name="suffix">\@uniovi.es</string>
+
+    <!-- Opciones del menú desplegable derecho -->
     <string name="menu_home">Inicio</string>
     <string name="menu_solicitudes">Solicitudes y matches</string>
     <string name="menu_preferencias">Preferencias de búsqueda</string>
@@ -18,33 +45,36 @@
     <string name="listaMatches">Lista de matches</string>
     <string name="listaSolicitudes">Lista de solicitudes</string>
 
-    <!-- Pantalla que muestra los detalles del ususario (ShowUserActivity) -->
-    <string name="email">Email</string>
-    <string name="edad">Edad</string>
-    <string name="facultad">Facultad</string>
-    <string name="carrera">Carrera</string>
-    <string name="sobreMi">Sobre mí</string>
-
-    <string name="nombre_usuario">Moisés</string>
-    <string name="email_usuario">Moisés@email.com</string>
-    <string name="edad_usuario">21</string>
-    <string name="facultad_usuario">Escuela ingeniería informática</string>
-    <string name="carrera_usuario">Ingeniería del software</string>
-    <string name="sobreMi_usuario">Mi descripción</string>
-    <string name="imagen_usuario">imagen</string>
-    <string name="desc_imagen_usuario">Descripción imagen</string>
-
     <!-- Pantalla de edición de preferencias -->
-    <string name="no_guardado">Debes elegir un género como mínimo</string>
     <string name="title_activity_show_user">ShowUserActivity</string>
 
     <!-- Dialog -->
-    <string name="dialog_rrss">Redes sociales</string>
-    <string name="dialog_volver">Volver</string>
-    <string name="ejemplo_RRSS">\@ejemplo111</string>
-    <string name="email_rrss">prueba@email.com</string>
     <string name="title_activity_sign_up">SignUpActivity</string>
     <string name="large_text"></string>
-    <string name="suffix">\@uniovi.es</string>
+
+    <!-- Change password -->
+    <string name="cpSendEmailButtonText">Enviar correo</string>
+
+    <!-- Sign in -->
+    <string name="siIniciarSesiónButtonText">Iniciar sesión</string>
+    <string name="siRegistrarseButtonText">Registrarse</string>
+    <string name="siRecuperarPasswordButtonText">He olvidado mi contraseña</string>
+
+    <!-- Sign up 1 -->
+    <string name="s1Titulo">Crea una cuenta nueva</string>
+
+    <!-- Sign up 2 -->
+    <string name="s2Titulo">Información básica (1 / 2)</string>
+    <string name="s2SubirFotoButtonText">Subir una foto</string>
+
+    <!-- Sign up 3 -->
+    <string name="s3Titulo">Información básica (2 / 2)</string>
+
+    <!-- Sign up 4 -->
+    <string name="s4Titulo">Preferencias de búsqueda</string>
+
+    <!-- Pretendientes -->
+    <string name="hAceptarButtonText">Aceptar</string>
+    <string name="hRechazarButtonText">Rechazar</string>
 
 </resources>

@@ -15,7 +15,7 @@
         android:textAlignment="center"
         android:textColor="#F72464"
         style="@android:style/TextAppearance.DeviceDefault.Large"
-        android:text="Crea una cuenta nueva" />
+        android:text="@string/s1Titulo" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/filledTextFieldCorreoChangePassword"
@@ -24,7 +24,7 @@
         android:layout_height="391dp"
         android:layout_marginHorizontal="10dp"
         android:layout_marginTop="50dp"
-        android:hint="Correo"
+        android:hint="@string/emailEditHint"
         android:maxWidth="488dp"
         android:minWidth="88dp"
         app:errorEnabled="true"
@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:hint="Contraseña"
+            android:hint="@string/passwordEditHint"
             app:endIconMode="password_toggle"
             app:errorEnabled="true">
 
@@ -58,7 +58,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:hint="Repita Contraseña"
+            android:hint="@string/repeatPasswordEditHint"
             app:endIconMode="password_toggle"
             app:errorEnabled="true">
 
@@ -79,7 +79,7 @@
                 style="@style/Widget.MaterialComponents.Button.Icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Siguiente"
+                android:text="@string/siguienteButtonText"
                 app:backgroundTint="@null"
                 android:background="@drawable/button_rounded"
                 app:layout_constraintBottom_toBottomOf="parent"
